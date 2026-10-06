@@ -1,0 +1,101 @@
+{
+  "commit": "beff565dd0cd6edab36c76efc0bec7ccb25232f6",
+  "purpose": "Pure source sizing functions for project imports; no upstream browser state or actions are imported",
+  "sources": [
+    {
+      "path": "LICENSE",
+      "sha256": "afe9d4c621e3cbf79da027f876298cdf15bf7bbf9398f4311ec1ee7958ace093"
+    },
+    {
+      "path": "src/engine/aks.ts",
+      "sha256": "cb1bdea8e0077b545fa000acfcfed86b0877b0efe27a61a646abcf19ac611554"
+    },
+    {
+      "path": "src/engine/avd-pools.ts",
+      "sha256": "09cea464cb1a1cb875dc1efbf073f2795881f0ddb9865a8ffe425bb911ee4175"
+    },
+    {
+      "path": "src/engine/avd.ts",
+      "sha256": "c3583fe02fccf6b5dee9f86ad633cc1c230d6e0f1f77cf8bca232092a317aae5"
+    },
+    {
+      "path": "src/engine/capacity.ts",
+      "sha256": "44e61a94c3f6963bfe1f9bcf8d1423b82d58afdd8eb21e3888e5a6b174c60594"
+    },
+    {
+      "path": "src/engine/compute.ts",
+      "sha256": "270a580e32628e471e58ef508b892543fff1a89ebad6b6eff7345f777b89c46a"
+    },
+    {
+      "path": "src/engine/custom-workloads.ts",
+      "sha256": "6a35862c388edc8ad14c5f88a798a361f3741baf71859de99f6935f43804eb0f"
+    },
+    {
+      "path": "src/engine/fit.ts",
+      "sha256": "ab1af9f49f9891657ff8702df67129c38b6a165e8424fe269739c9193df73ada"
+    },
+    {
+      "path": "src/engine/healthcheck.ts",
+      "sha256": "61aa4b829a67762a314f77b82d829bc036ae991c01217d1705bec04f345695d6"
+    },
+    {
+      "path": "src/engine/inventory.ts",
+      "sha256": "a00aa48bf0b92a0b38fae8777b0be335011fb45932a9b6ee8e82518b0b597ba3"
+    },
+    {
+      "path": "src/engine/mabs.ts",
+      "sha256": "555ef4be4ed534643b3281a96a0df37d9fb3dd0eea9f73db4581b0ca8be13bdc"
+    },
+    {
+      "path": "src/engine/planning.ts",
+      "sha256": "447c7fb2b21320c5aa73b13635cc46a285e5de337954504df51da37d9cfc8209"
+    },
+    {
+      "path": "src/engine/service-presets.ts",
+      "sha256": "40c44fa7f84d6f4d51cc4c8c82132e2bf8835846c33ce6e1149ad0c9ad5ff0a0"
+    },
+    {
+      "path": "src/engine/sofs.ts",
+      "sha256": "a4cc89be83064b397746449275401554cc572c50d63038a519d678461fadf2bf"
+    },
+    {
+      "path": "src/engine/types.ts",
+      "sha256": "1d1603f5253d36a6348cd313940fd34e6e67cdaca12cd3aee986426d49fe032b"
+    },
+    {
+      "path": "src/engine/volumes.ts",
+      "sha256": "6fda8eff5ebec840669a1c8073fe982e80a142268a02dc3c61a3bd90f95272cc"
+    },
+    {
+      "path": "src/engine/workload-volumes.ts",
+      "sha256": "e49cf6462717173f68bd1d7321a623633031a972941bc3d29263e96a00ab0e7f"
+    },
+    {
+      "path": "src/engine/workloads.ts",
+      "sha256": "4ce6648447f63b9a8ac7515214262c328c0809e2d4f175c8e68d2494881749a0"
+    },
+    {
+      "path": "src/exporters/json.ts",
+      "sha256": "5605b41afaf82dcc9f0aff0960f63162012b76ddf0d00d93150a5b1e52c7f89d"
+    }
+  ],
+  "adaptations": [
+    "exporters/json.ts: local package version import path only",
+    "state/store.ts: local type-only boundary; browser state/actions excluded",
+    "package.json: fixed upstream version; no scripts or dependencies"
+  ],
+  "localBoundaries": [
+    {
+      "path": "exporters/json.ts",
+      "sha256": "c18d3f3ad30c7c631432d69f92a8faa058249f0de8f7676c67280f2ed95c65ec"
+    },
+    {
+      "path": "state/store.ts",
+      "sha256": "5df4252843c9a5039f111f57edfc1b11f7ba3eafa98bea32230819c041a64628"
+    },
+    {
+      "path": "package.json",
+      "sha256": "d8bdb519944a632bea7814a909da2b73164bf6fd7b192ed47a901190ddea7e35"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "version": "0.1.0",
+  "reviewed": "2026-09-11",
+  "apiVersion": "2025-09-15-preview",
+  "license": "MIT",
+  "templates": [
+    {
+      "url": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/b56eb9051390299afe2d913bf2d10861fef279fd/quickstarts/microsoft.azurestackhci/create-cluster/azuredeploy.json",
+      "id": "ad",
+      "file": "ad.template.json",
+      "sha256": "a95bf9a734cc7433f171a31685193ea053941b24f33111bddc9552ce20195f58",
+      "repository": "https://github.com/Azure/azure-quickstart-templates",
+      "commit": "b56eb9051390299afe2d913bf2d10861fef279fd",
+      "path": "quickstarts/microsoft.azurestackhci/create-cluster/azuredeploy.json"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/8a9101dccd2d0af06ab9387d8487d9f397360569/quickstarts/microsoft.azurestackhci/create-adless-cluster-external-dns-public-preview/azuredeploy.json",
+      "id": "local",
+      "file": "local.template.json",
+      "sha256": "8684bdcf6e166b8ded3caefc7de2aeebc70bfb66f0fae18baae183df5e976cbd",
+      "repository": "https://github.com/Azure/azure-quickstart-templates",
+      "commit": "8a9101dccd2d0af06ab9387d8487d9f397360569",
+      "path": "quickstarts/microsoft.azurestackhci/create-adless-cluster-external-dns-public-preview/azuredeploy.json"
+    }
+  ],
+  "qualification": "design-only",
+  "apiSchemaQualification": "Full deploymentSettings body, pure variable expressions and top-level resource conditions tested; nested resource/provider and native deployment qualification remain open",
+  "knownLimitations": [
+    "Validate and Deploy submissions modify Azure resources.",
+    "Witness storage account and witness secret are unconditional in both templates.",
+    "No SAN-only or rack-aware parameter mapping exists in these pinned templates.",
+    "Partner credential list is a non-secure array and cannot accept secret literals in this application."
+  ],
+  "apiSources": [
+    {
+      "commit": "6a1458db4f782c36d6f82ecfa288ab0bd0a29b34",
+      "path": "specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-09-15-preview/deploymentSettings.json",
+      "file": "deploymentSettings.api.json",
+      "url": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/6a1458db4f782c36d6f82ecfa288ab0bd0a29b34/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-09-15-preview/deploymentSettings.json",
+      "sha256": "66bad596e7c4d7a9f951ca6c27dade3e99c9c486518301beb2bc22e9b7c9775c",
+      "blobSha": "3748514cc8f72f93e5b308c308e5b64ab5e256e7"
+    },
+    {
+      "commit": "6a1458db4f782c36d6f82ecfa288ab0bd0a29b34",
+      "path": "specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-09-15-preview/hciCommon.json",
+      "file": "hciCommon.api.json",
+      "url": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/6a1458db4f782c36d6f82ecfa288ab0bd0a29b34/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-09-15-preview/hciCommon.json",
+      "sha256": "833d8db60fbb0942d737a5348c5f7e7c977520bf8b8908a27e8fb6b78deec2bd",
+      "blobSha": "b6828b62ef762b941e43b52a9a202852cf0989ba"
+    }
+  ],
+  "licenses": [
+    {
+      "file": "LICENSE.txt",
+      "commit": "b56eb9051390299afe2d913bf2d10861fef279fd",
+      "repository": "Azure/azure-quickstart-templates",
+      "sha256": "1a8bf1b166f1133dd98ac61ad1e7246afdf4fde80a5b3fafaf0231fcae75a6ee"
+    },
+    {
+      "file": "API-LICENSE.txt",
+      "commit": "6a1458db4f782c36d6f82ecfa288ab0bd0a29b34",
+      "repository": "Azure/azure-rest-api-specs",
+      "sha256": "b37363bf2295aa0acde60ce78a60034a71a0955075fc01aa09cc23eadff44436"
+    }
+  ],
+  "validator": {
+    "name": "ajv",
+    "useDefaults": false,
+    "coerceTypes": false,
+    "version": "8.20.0",
+    "removeAdditional": false,
+    "formatsVersion": "3.0.1"
+  }
+}

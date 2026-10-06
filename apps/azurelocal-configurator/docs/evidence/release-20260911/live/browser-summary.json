@@ -1,0 +1,40 @@
+{
+  "session": 56816,
+  "exitCode": 0,
+  "runtimeQualified": false,
+  "passed": 17,
+  "duration": "1.2 minutes",
+  "failed": 0,
+  "commit": "fdb7ebf4bd099b35e5565674b9c6740c3f56f2a0",
+  "tests": 17,
+  "infrastructureChanged": false,
+  "platform": "Native Windows Chrome",
+  "url": "https://tierpoint.gitlab.io/prodtech/hybrid-cloud/toolkits/configurators/azurelocal-configurator/",
+  "originalDownloads": [
+    {
+      "sha256": "e2479990a6a66273ee2fe68df4e6b6e73d728e25e5b3e8db495570aeaef13c0b",
+      "file": "azurelocal-ansible-design.zip",
+      "bytes": 416911
+    },
+    {
+      "sha256": "1a6da5bc6c6a6933ef6a2c6beefe95155b378eee80f34109b5b9247de9cf39c1",
+      "file": "azurelocal-design.zip",
+      "bytes": 246308
+    },
+    {
+      "sha256": "3fcbeff2414a3ae45677e38b96b1aaa47c4b8637a138a22d2f7b1a2ec4b2a3df",
+      "file": "azurelocal-imported-design.zip",
+      "bytes": 476931
+    },
+    {
+      "sha256": "83d104e116be96e3318782daaec0a083ef081807ab027cfcfb1e4cb366a85430",
+      "file": "azurelocal-terraform-design.zip",
+      "bytes": 376227
+    },
+    {
+      "sha256": "cc9819f35120f92f9ce2dcd98b281583bf1e3660a3d7950c53e83cfb7f1c84d7",
+      "file": "azurelocal-toolkit-design.zip",
+      "bytes": 416204
+    }
+  ]
+}

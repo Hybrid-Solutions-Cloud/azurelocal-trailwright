@@ -1,0 +1,107 @@
+[
+  {
+    "package": "azurelocal-ansible-design.zip",
+    "appVersion": "0.1.0",
+    "schema": 8,
+    "manifestFiles": 133,
+    "worksheets": 76,
+    "diagramPages": 4,
+    "reports": [
+      {
+        "report": "design",
+        "pages": 32,
+        "textOriginsOutsidePage": 0
+      },
+      {
+        "report": "implementation",
+        "pages": 14,
+        "textOriginsOutsidePage": 0
+      }
+    ],
+    "runtimeQualified": false
+  },
+  {
+    "package": "azurelocal-design.zip",
+    "appVersion": "0.1.0",
+    "schema": 8,
+    "manifestFiles": 111,
+    "worksheets": 76,
+    "diagramPages": 4,
+    "reports": [
+      {
+        "report": "design",
+        "pages": 18,
+        "textOriginsOutsidePage": 0
+      },
+      {
+        "report": "implementation",
+        "pages": 12,
+        "textOriginsOutsidePage": 0
+      }
+    ],
+    "runtimeQualified": false
+  },
+  {
+    "package": "azurelocal-imported-design.zip",
+    "appVersion": "0.1.0",
+    "schema": 8,
+    "manifestFiles": 111,
+    "worksheets": 76,
+    "diagramPages": 4,
+    "reports": [
+      {
+        "report": "design",
+        "pages": 42,
+        "textOriginsOutsidePage": 0
+      },
+      {
+        "report": "implementation",
+        "pages": 15,
+        "textOriginsOutsidePage": 0
+      }
+    ],
+    "runtimeQualified": false
+  },
+  {
+    "package": "azurelocal-terraform-design.zip",
+    "appVersion": "0.1.0",
+    "schema": 8,
+    "manifestFiles": 120,
+    "worksheets": 76,
+    "diagramPages": 4,
+    "reports": [
+      {
+        "report": "design",
+        "pages": 31,
+        "textOriginsOutsidePage": 0
+      },
+      {
+        "report": "implementation",
+        "pages": 14,
+        "textOriginsOutsidePage": 0
+      }
+    ],
+    "runtimeQualified": false
+  },
+  {
+    "package": "azurelocal-toolkit-design.zip",
+    "appVersion": "0.1.0",
+    "schema": 8,
+    "manifestFiles": 129,
+    "worksheets": 76,
+    "diagramPages": 4,
+    "reports": [
+      {
+        "report": "design",
+        "pages": 31,
+        "textOriginsOutsidePage": 0
+      },
+      {
+        "report": "implementation",
+        "pages": 14,
+        "textOriginsOutsidePage": 0
+      }
+    ],
+    "runtimeQualified": false
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "reviewed": "2026-09-11",
+  "baseline": "2604.0.0",
+  "note": "Storage design and capacity references. Documented math is not deployment qualification. API consumer contracts remain separate.",
+  "sources": [
+    {
+      "rawUrl": "https://raw.githubusercontent.com/MicrosoftDocs/windowsserverdocs/2b6696197bc41e7d770c70ee354bdb49c6642697/WindowsServerDocs/storage/storage-spaces/plan-volumes.md",
+      "sha256": "c4286dcf60a47685b8882abfc05fdc65c38b804ea9711c804aa3f1b7e585bcf0",
+      "repository": "https://github.com/MicrosoftDocs/windowsserverdocs",
+      "url": "https://learn.microsoft.com/en-us/windows-server/storage/storage-spaces/plan-volumes",
+      "immutableUrl": "https://github.com/MicrosoftDocs/windowsserverdocs/blob/2b6696197bc41e7d770c70ee354bdb49c6642697/WindowsServerDocs/storage/storage-spaces/plan-volumes.md",
+      "commit": "2b6696197bc41e7d770c70ee354bdb49c6642697",
+      "path": "WindowsServerDocs/storage/storage-spaces/plan-volumes.md"
+    },
+    {
+      "rawUrl": "https://raw.githubusercontent.com/MicrosoftDocs/windowsserverdocs/2b6696197bc41e7d770c70ee354bdb49c6642697/WindowsServerDocs/storage/storage-spaces/fault-tolerance.md",
+      "sha256": "ec25809be2fe8d92786ea3d56d8d1eaecbe7b3739f1f8305c60d90658d4f7d83",
+      "repository": "https://github.com/MicrosoftDocs/windowsserverdocs",
+      "url": "https://learn.microsoft.com/en-us/windows-server/storage/storage-spaces/fault-tolerance",
+      "immutableUrl": "https://github.com/MicrosoftDocs/windowsserverdocs/blob/2b6696197bc41e7d770c70ee354bdb49c6642697/WindowsServerDocs/storage/storage-spaces/fault-tolerance.md",
+      "commit": "2b6696197bc41e7d770c70ee354bdb49c6642697",
+      "path": "WindowsServerDocs/storage/storage-spaces/fault-tolerance.md"
+    },
+    {
+      "rawUrl": "https://raw.githubusercontent.com/MicrosoftDocs/windowsserverdocs/2b6696197bc41e7d770c70ee354bdb49c6642697/WindowsServerDocs/storage/storage-spaces/nested-resiliency.md",
+      "sha256": "546d54e624d05afb107ce19367b33dfe3122b35f2378f9294d5cef1f1e55dcc3",
+      "repository": "https://github.com/MicrosoftDocs/windowsserverdocs",
+      "url": "https://learn.microsoft.com/en-us/windows-server/storage/storage-spaces/nested-resiliency",
+      "immutableUrl": "https://github.com/MicrosoftDocs/windowsserverdocs/blob/2b6696197bc41e7d770c70ee354bdb49c6642697/WindowsServerDocs/storage/storage-spaces/nested-resiliency.md",
+      "commit": "2b6696197bc41e7d770c70ee354bdb49c6642697",
+      "path": "WindowsServerDocs/storage/storage-spaces/nested-resiliency.md"
+    },
+    {
+      "rawUrl": "https://raw.githubusercontent.com/MicrosoftDocs/azure-stack-docs/c320ca069a5e1f5137a0b6c6ff934c984ece08de/azure-local/manage/manage-thin-provisioning-23h2.md",
+      "sha256": "172b47ccac0fbb47eb9fb78f19b314bdd929f51900bd5eaf0f2f093e9e630831",
+      "repository": "https://github.com/MicrosoftDocs/azure-stack-docs",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/manage/manage-thin-provisioning-23h2?view=azloc-2604",
+      "immutableUrl": "https://github.com/MicrosoftDocs/azure-stack-docs/blob/c320ca069a5e1f5137a0b6c6ff934c984ece08de/azure-local/manage/manage-thin-provisioning-23h2.md",
+      "commit": "c320ca069a5e1f5137a0b6c6ff934c984ece08de",
+      "path": "azure-local/manage/manage-thin-provisioning-23h2.md"
+    },
+    {
+      "rawUrl": "https://raw.githubusercontent.com/MicrosoftDocs/azure-stack-docs/c320ca069a5e1f5137a0b6c6ff934c984ece08de/azure-local/manage/create-storage-path.md",
+      "sha256": "d7069aef0cc3238bcd20cb33e4b1668dc49519618d9362e903522b797f4f2427",
+      "repository": "https://github.com/MicrosoftDocs/azure-stack-docs",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/manage/create-storage-path?view=azloc-2604",
+      "immutableUrl": "https://github.com/MicrosoftDocs/azure-stack-docs/blob/c320ca069a5e1f5137a0b6c6ff934c984ece08de/azure-local/manage/create-storage-path.md",
+      "commit": "c320ca069a5e1f5137a0b6c6ff934c984ece08de",
+      "path": "azure-local/manage/create-storage-path.md"
+    }
+  ]
+}

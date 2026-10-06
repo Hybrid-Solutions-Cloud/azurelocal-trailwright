@@ -1,0 +1,16 @@
+{
+  "reviewedAt": "2026-09-11T19:29:21.58Z",
+  "url": "https://azurelocal.cloud/azurelocal-surveyor/",
+  "title": "Azure Local Surveyor",
+  "status": 200,
+  "displayedVersion": "2.8.0",
+  "format": "azurelocal-surveyor-project",
+  "schemaVersion": 1,
+  "stateVersion": 10,
+  "fixture": "2.8.0.live-project.json",
+  "fixtureSha256": "6f7861705209e78fcd24077f9dac17a5dc814ef3f10243a6ce5aad3331488183",
+  "method": "Native Windows Chrome, fresh isolated browser context, default storage plan, visible Storage Report > Export project JSON button",
+  "sourceCommit": "beff565dd0cd6edab36c76efc0bec7ccb25232f6",
+  "commitEvidence": "Pinned upstream source types/functions and matching output contract; deployed website does not expose an exact commit receipt",
+  "runtimeQualified": false
+}

@@ -1,0 +1,4 @@
+import { defineConfig } from '@playwright/test'
+const url=process.env.E2E_BASE_URL,token=process.env.E2E_PAGES_TOKEN
+if(token&&(!url||new URL(url).origin!=='https://tierpoint.gitlab.io'))throw new Error('Pages credentials are restricted to TierPoint Pages')
+export default defineConfig({testDir:'./e2e',timeout:90000,workers:1,retries:0,reporter:'list',outputDir:'.artifacts/browser',use:{actionTimeout:15000,baseURL:url||'http://127.0.0.1:4327/',browserName:'chromium',channel:process.platform==='win32'?'chrome':undefined,acceptDownloads:true,extraHTTPHeaders:token?{Authorization:`Bearer ${token}`}:undefined,trace:token?'off':'retain-on-failure',screenshot:'only-on-failure'},webServer:url?undefined:{command:'npm run dev -- --host 127.0.0.1 --port 4327 --strictPort',url:'http://127.0.0.1:4327/',reuseExistingServer:false,timeout:60000}})

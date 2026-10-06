@@ -1,0 +1,20 @@
+import {newProject,newRecord} from '../project'
+/** Synthetic mapping fixture only. No target exists and no deployment has been qualified. */
+export function armFixture(identity:'ad'|'local'='ad'){
+ const p=newProject(),subscription='11111111-1111-1111-1111-111111111111',scope=`/subscriptions/${subscription}/resourceGroups/synthetic-rg`
+ Object.assign(p.config.architecture,{route:'arm',identity,release:'2604.0.0',intent:'new',topology:'standard',storage:'s2d'})
+ Object.assign(p.config.azure,{tenant:'22222222-2222-2222-2222-222222222222',subscription,region:'eastus',resourceGroup:'synthetic-rg',clusterName:'synthetic-hci',witness:'cloud'})
+ Object.assign(p.config.identity,{domain:'synthetic.test',ou:'OU=HCI,DC=synthetic,DC=test',deploymentUser:'hciDeploy',deploymentAccount:'secret-ref://synthetic/lcm',dnsServers:'192.0.2.5',localUser:'hciAdmin',localAdmin:'secret-ref://synthetic/local'})
+ const resource=(name:string,kind:string,lifecycle='new')=>{const r=newRecord('azureResources');Object.assign(r.values,{name,kind,lifecycle,resourceId:`${scope}/providers/${kind==='key-vault'?'Microsoft.KeyVault/vaults':'Microsoft.Storage/storageAccounts'}/${name}`,region:'eastus'});p.records.azureResources.push(r);return r}
+ const vault=resource('synthetic-vault','key-vault','extend'),diagnostics=resource('syntheticlogs','storage-account'),witness=resource('syntheticwitness','storage-account')
+ vault.values.configuration='Synthetic explicit extension: create cluster credential secrets and reviewed role assignments. No other changes.'
+ for(const key of ['local','lcm']){const r=newRecord('armSecretBindings');Object.assign(r.values,{name:key,reference:`secret-ref://synthetic/${key}`,vault:vault.id,secretName:key,permissions:'Synthetic review of template-enabled vault and deploy/action scope. Not runtime evidence.'});p.records.armSecretBindings.push(r)}
+ const net=newRecord('networks');Object.assign(net.values,{name:'Management',role:'management',cidr:'192.0.2.0/24',poolStart:'192.0.2.100',poolEnd:'192.0.2.105',gateway:'192.0.2.1'});p.records.networks.push(net)
+ const intent=newRecord('intents');Object.assign(intent.values,{name:'Converged',traffic:'management-compute-storage',network:net.id});p.records.intents.push(intent)
+ for(let index=1;index<=2;index++){const node=newRecord('nodes');Object.assign(node.values,{name:`node${index}`,managementIp:`192.0.2.${10+index}`,arcId:`${scope}/providers/Microsoft.HybridCompute/machines/node${index}`});p.records.nodes.push(node);for(let port=1;port<=2;port++){const r=newRecord('adapters');Object.assign(r.values,{node:node.id,name:`node${index} port${port}`,osName:`pNIC${port}`,intent:intent.id,ownership:'network-atc',kind:'nic'});p.records.adapters.push(r)}}
+ for(let index=1;index<=2;index++){const n=newRecord('networks');Object.assign(n.values,{name:`Storage ${index}`,role:'s2d-storage',cidr:`198.51.${99+index}.0/24`,vlan:700+index});p.records.networks.push(n);const r=newRecord('armStorageNetworks');Object.assign(r.values,{name:`Storage${index}`,network:n.id,adapterName:`pNIC${index}`});p.records.armStorageNetworks.push(r);for(const [i,node]of p.records.nodes.entries()){const address=newRecord('storageAddresses');Object.assign(address.values,{name:`Storage${index} node${i+1}`,storageNetwork:r.id,node:node.id,ip:`198.51.${99+index}.${11+i}`});p.records.storageAddresses.push(address)}}
+ Object.assign(p.config.arm,{managementNetwork:net.id,namingPrefix:'hci',keyVault:vault.id,diagnosticsAccount:diagnostics.id,witnessAccount:witness.id,hciResourceProviderObjectId:'33333333-3333-3333-3333-333333333333',configurationMode:'InfraOnly',storageHandling:'Explicit CSV provisioning is a separate handoff.',localAdminUsername:'hciAdmin',localAdminSecret:'secret-ref://synthetic/local',previewApiReviewed:true,templateEffects:'Synthetic source review only; no infrastructure operation authorized.',enableStorageAutoIp:false,customLocationName:'synthetic-location'})
+ const zone=newRecord('dnsZones');Object.assign(zone.values,{name:'synthetic.test',forwarders:'192.0.2.5'});p.records.dnsZones.push(zone)
+ p.config.arm.sbeManifestCreationDate='2026-09-11T12:00:00Z'
+ return p
+}

@@ -1,0 +1,1150 @@
+{
+  "type": "object",
+  "properties": {
+    "planningArea": {
+      "anyOf": [
+        {
+          "const": "workload"
+        },
+        {
+          "const": "storage"
+        }
+      ]
+    },
+    "kind": {
+      "const": "azurelocal-surveyor-project"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "stateVersion": {
+      "const": 10
+    },
+    "appVersion": {
+      "const": "2.8.0"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 12000
+    },
+    "savedAt": {
+      "type": "string",
+      "maxLength": 12000
+    },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "hardware": {
+          "type": "object",
+          "properties": {
+            "nodeCount": {
+              "type": "number"
+            },
+            "capacityDrivesPerNode": {
+              "type": "number"
+            },
+            "capacityDriveSizeTB": {
+              "type": "number"
+            },
+            "cacheDrivesPerNode": {
+              "type": "number"
+            },
+            "cacheDriveSizeTB": {
+              "type": "number"
+            },
+            "cacheMediaType": {
+              "anyOf": [
+                {
+                  "const": "nvme"
+                },
+                {
+                  "const": "ssd"
+                },
+                {
+                  "const": "none"
+                }
+              ]
+            },
+            "capacityMediaType": {
+              "anyOf": [
+                {
+                  "const": "nvme"
+                },
+                {
+                  "const": "ssd"
+                },
+                {
+                  "const": "hdd"
+                }
+              ]
+            },
+            "coresPerNode": {
+              "type": "number"
+            },
+            "memoryPerNodeGB": {
+              "type": "number"
+            },
+            "hyperthreadingEnabled": {
+              "anyOf": [
+                {
+                  "const": false
+                },
+                {
+                  "const": true
+                }
+              ]
+            }
+          },
+          "required": [
+            "nodeCount",
+            "capacityDrivesPerNode",
+            "capacityDriveSizeTB",
+            "cacheDrivesPerNode",
+            "cacheDriveSizeTB",
+            "cacheMediaType",
+            "capacityMediaType",
+            "coresPerNode",
+            "memoryPerNodeGB",
+            "hyperthreadingEnabled"
+          ],
+          "additionalProperties": false
+        },
+        "advanced": {
+          "type": "object",
+          "properties": {
+            "infraVolumeSizeTB": {
+              "type": "number"
+            },
+            "vCpuOversubscriptionRatio": {
+              "type": "number"
+            },
+            "systemReservedMemoryGB": {
+              "type": "number"
+            },
+            "systemReservedVCpus": {
+              "type": "number"
+            },
+            "defaultResiliency": {
+              "anyOf": [
+                {
+                  "const": "two-way-mirror"
+                },
+                {
+                  "const": "three-way-mirror"
+                },
+                {
+                  "const": "dual-parity"
+                },
+                {
+                  "const": "nested-two-way"
+                }
+              ]
+            },
+            "overrides": {
+              "type": "object",
+              "properties": {
+                "driveUsableTb": {
+                  "type": "number"
+                },
+                "avdSessionHostsNeeded": {
+                  "type": "number"
+                },
+                "avdProfileLogicalTb": {
+                  "type": "number"
+                },
+                "sofsProfileDemandTb": {
+                  "type": "number"
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            },
+            "maintenanceReserveMode": {
+              "anyOf": [
+                {
+                  "const": "none"
+                },
+                {
+                  "const": "n+1"
+                },
+                {
+                  "const": "n+2"
+                }
+              ]
+            }
+          },
+          "required": [
+            "infraVolumeSizeTB",
+            "vCpuOversubscriptionRatio",
+            "systemReservedMemoryGB",
+            "systemReservedVCpus",
+            "defaultResiliency",
+            "overrides"
+          ],
+          "additionalProperties": false
+        },
+        "volumes": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "resiliency": {
+                "anyOf": [
+                  {
+                    "const": "two-way-mirror"
+                  },
+                  {
+                    "const": "three-way-mirror"
+                  },
+                  {
+                    "const": "dual-parity"
+                  },
+                  {
+                    "const": "nested-two-way"
+                  }
+                ]
+              },
+              "provisioning": {
+                "anyOf": [
+                  {
+                    "const": "fixed"
+                  },
+                  {
+                    "const": "thin"
+                  }
+                ]
+              },
+              "plannedSizeTB": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "resiliency",
+              "provisioning",
+              "plannedSizeTB"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "workloads": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "vmCount": {
+                "type": "number"
+              },
+              "vCpusPerVm": {
+                "type": "number"
+              },
+              "memoryPerVmGB": {
+                "type": "number"
+              },
+              "storagePerVmGB": {
+                "type": "number"
+              },
+              "resiliency": {
+                "anyOf": [
+                  {
+                    "const": "two-way-mirror"
+                  },
+                  {
+                    "const": "three-way-mirror"
+                  },
+                  {
+                    "const": "dual-parity"
+                  },
+                  {
+                    "const": "nested-two-way"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "vmCount",
+              "vCpusPerVm",
+              "memoryPerVmGB",
+              "storagePerVmGB",
+              "resiliency"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "volumeMode": {
+          "anyOf": [
+            {
+              "const": "workload"
+            },
+            {
+              "const": "generic"
+            }
+          ]
+        },
+        "avd": {
+          "type": "object",
+          "properties": {
+            "pools": {
+              "type": "array",
+              "maxItems": 2000,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "totalUsers": {
+                    "type": "number"
+                  },
+                  "concurrentUsers": {
+                    "type": "number"
+                  },
+                  "workloadType": {
+                    "anyOf": [
+                      {
+                        "const": "light"
+                      },
+                      {
+                        "const": "medium"
+                      },
+                      {
+                        "const": "heavy"
+                      },
+                      {
+                        "const": "power"
+                      }
+                    ]
+                  },
+                  "multiSession": {
+                    "anyOf": [
+                      {
+                        "const": false
+                      },
+                      {
+                        "const": true
+                      }
+                    ]
+                  },
+                  "fslogixEnabled": {
+                    "anyOf": [
+                      {
+                        "const": false
+                      },
+                      {
+                        "const": true
+                      }
+                    ]
+                  },
+                  "profileSizeGB": {
+                    "type": "number"
+                  },
+                  "officeContainerEnabled": {
+                    "anyOf": [
+                      {
+                        "const": false
+                      },
+                      {
+                        "const": true
+                      }
+                    ]
+                  },
+                  "officeContainerSizeGB": {
+                    "type": "number"
+                  },
+                  "dataDiskPerHostGB": {
+                    "type": "number"
+                  },
+                  "profileStorageLocation": {
+                    "anyOf": [
+                      {
+                        "const": "sofs"
+                      },
+                      {
+                        "const": "azure-files"
+                      },
+                      {
+                        "const": "external"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "totalUsers",
+                  "concurrentUsers",
+                  "workloadType",
+                  "multiSession",
+                  "fslogixEnabled",
+                  "profileSizeGB",
+                  "officeContainerEnabled",
+                  "officeContainerSizeGB",
+                  "dataDiskPerHostGB",
+                  "profileStorageLocation"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "userTypeMixEnabled": {
+              "anyOf": [
+                {
+                  "const": false
+                },
+                {
+                  "const": true
+                }
+              ]
+            },
+            "userTypeMix": {
+              "type": "object",
+              "properties": {
+                "taskPct": {
+                  "type": "number"
+                },
+                "taskProfileGB": {
+                  "type": "number"
+                },
+                "knowledgePct": {
+                  "type": "number"
+                },
+                "knowledgeProfileGB": {
+                  "type": "number"
+                },
+                "powerPct": {
+                  "type": "number"
+                },
+                "powerProfileGB": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "taskPct",
+                "taskProfileGB",
+                "knowledgePct",
+                "knowledgeProfileGB",
+                "powerPct",
+                "powerProfileGB"
+              ],
+              "additionalProperties": false
+            },
+            "growthBufferPct": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "pools",
+            "userTypeMixEnabled",
+            "userTypeMix",
+            "growthBufferPct"
+          ],
+          "additionalProperties": false
+        },
+        "avdEnabled": {
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "const": true
+            }
+          ]
+        },
+        "sofs": {
+          "type": "object",
+          "properties": {
+            "userCount": {
+              "type": "number"
+            },
+            "concurrentUsers": {
+              "type": "number"
+            },
+            "profileSizeGB": {
+              "type": "number"
+            },
+            "redirectedFolderSizeGB": {
+              "type": "number"
+            },
+            "containerType": {
+              "anyOf": [
+                {
+                  "const": "single"
+                },
+                {
+                  "const": "split"
+                },
+                {
+                  "const": "three"
+                }
+              ]
+            },
+            "sofsGuestVmCount": {
+              "type": "number"
+            },
+            "sofsVCpusPerVm": {
+              "type": "number"
+            },
+            "sofsMemoryPerVmGB": {
+              "type": "number"
+            },
+            "internalMirror": {
+              "anyOf": [
+                {
+                  "const": "two-way"
+                },
+                {
+                  "const": "three-way"
+                },
+                {
+                  "const": "simple"
+                }
+              ]
+            },
+            "autoSizeDrivesPerNode": {
+              "type": "number"
+            },
+            "autoSizeNodes": {
+              "type": "number"
+            },
+            "volumeLayout": {
+              "anyOf": [
+                {
+                  "const": "shared"
+                },
+                {
+                  "const": "per-vm"
+                }
+              ]
+            },
+            "sofsOsDiskPerVmGB": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "userCount",
+            "concurrentUsers",
+            "profileSizeGB",
+            "redirectedFolderSizeGB",
+            "containerType",
+            "sofsGuestVmCount",
+            "sofsVCpusPerVm",
+            "sofsMemoryPerVmGB",
+            "internalMirror",
+            "autoSizeDrivesPerNode",
+            "autoSizeNodes",
+            "volumeLayout",
+            "sofsOsDiskPerVmGB"
+          ],
+          "additionalProperties": false
+        },
+        "sofsEnabled": {
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "const": true
+            }
+          ]
+        },
+        "mabs": {
+          "type": "object",
+          "properties": {
+            "protectedDataTB": {
+              "type": "number"
+            },
+            "dailyChangeRatePct": {
+              "type": "number"
+            },
+            "onPremRetentionDays": {
+              "type": "number"
+            },
+            "scratchCachePct": {
+              "type": "number"
+            },
+            "mabsVCpus": {
+              "type": "number"
+            },
+            "mabsMemoryGB": {
+              "type": "number"
+            },
+            "mabsOsDiskGB": {
+              "type": "number"
+            },
+            "internalMirror": {
+              "anyOf": [
+                {
+                  "const": "two-way"
+                },
+                {
+                  "const": "three-way"
+                },
+                {
+                  "const": "simple"
+                }
+              ]
+            },
+            "mabsOsDiskPlacement": {
+              "anyOf": [
+                {
+                  "const": "shared"
+                },
+                {
+                  "const": "dedicated"
+                }
+              ]
+            }
+          },
+          "required": [
+            "protectedDataTB",
+            "dailyChangeRatePct",
+            "onPremRetentionDays",
+            "scratchCachePct",
+            "mabsVCpus",
+            "mabsMemoryGB",
+            "mabsOsDiskGB",
+            "internalMirror"
+          ],
+          "additionalProperties": false
+        },
+        "mabsEnabled": {
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "const": true
+            }
+          ]
+        },
+        "aks": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "anyOf": [
+                {
+                  "const": false
+                },
+                {
+                  "const": true
+                }
+              ]
+            },
+            "clusters": {
+              "type": "array",
+              "maxItems": 2000,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "controlPlaneNodesPerCluster": {
+                    "anyOf": [
+                      {
+                        "const": 1
+                      },
+                      {
+                        "const": 3
+                      }
+                    ]
+                  },
+                  "workerNodesPerCluster": {
+                    "type": "number"
+                  },
+                  "vCpusPerWorker": {
+                    "type": "number"
+                  },
+                  "memoryPerWorkerGB": {
+                    "type": "number"
+                  },
+                  "osDiskPerNodeGB": {
+                    "type": "number"
+                  },
+                  "persistentVolumesTB": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "controlPlaneNodesPerCluster",
+                  "workerNodesPerCluster",
+                  "vCpusPerWorker",
+                  "memoryPerWorkerGB",
+                  "osDiskPerNodeGB",
+                  "persistentVolumesTB"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "enabled",
+            "clusters"
+          ],
+          "additionalProperties": false
+        },
+        "virtualMachines": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "anyOf": [
+                {
+                  "const": false
+                },
+                {
+                  "const": true
+                }
+              ]
+            },
+            "vCpuOvercommitRatio": {
+              "type": "number"
+            },
+            "groups": {
+              "type": "array",
+              "maxItems": 2000,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "vmCount": {
+                    "type": "number"
+                  },
+                  "vCpusPerVm": {
+                    "type": "number"
+                  },
+                  "memoryPerVmGB": {
+                    "type": "number"
+                  },
+                  "storagePerVmGB": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "vmCount",
+                  "vCpusPerVm",
+                  "memoryPerVmGB",
+                  "storagePerVmGB"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "enabled",
+            "vCpuOvercommitRatio",
+            "groups"
+          ],
+          "additionalProperties": false
+        },
+        "servicePresets": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "catalogId": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "enabled": {
+                "anyOf": [
+                  {
+                    "const": false
+                  },
+                  {
+                    "const": true
+                  }
+                ]
+              },
+              "instanceCount": {
+                "type": "number"
+              },
+              "vCpusOverride": {
+                "type": "number"
+              },
+              "memoryGBOverride": {
+                "type": "number"
+              },
+              "storageTBOverride": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "catalogId",
+              "enabled",
+              "instanceCount"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "customWorkloads": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "enabled": {
+                "anyOf": [
+                  {
+                    "const": false
+                  },
+                  {
+                    "const": true
+                  }
+                ]
+              },
+              "vmCount": {
+                "type": "number"
+              },
+              "vCpusPerVm": {
+                "type": "number"
+              },
+              "memoryPerVmGB": {
+                "type": "number"
+              },
+              "osDiskPerVmGB": {
+                "type": "number"
+              },
+              "storageTB": {
+                "type": "number"
+              },
+              "internalMirrorFactor": {
+                "type": "number"
+              },
+              "bandwidthMbps": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "description",
+              "enabled",
+              "vmCount",
+              "vCpusPerVm",
+              "memoryPerVmGB",
+              "osDiskPerVmGB",
+              "storageTB",
+              "internalMirrorFactor",
+              "bandwidthMbps"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "inventory": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "tier": {
+                "anyOf": [
+                  {
+                    "const": "general"
+                  },
+                  {
+                    "const": "database"
+                  },
+                  {
+                    "const": "vdi"
+                  },
+                  {
+                    "const": "infrastructure"
+                  }
+                ]
+              },
+              "include": {
+                "anyOf": [
+                  {
+                    "const": false
+                  },
+                  {
+                    "const": true
+                  }
+                ]
+              },
+              "vCpu": {
+                "type": "number"
+              },
+              "memoryGiB": {
+                "type": "number"
+              },
+              "consumedGiB": {
+                "type": "number"
+              },
+              "provisionedGiB": {
+                "type": "number"
+              },
+              "powerState": {
+                "anyOf": [
+                  {
+                    "const": "on"
+                  },
+                  {
+                    "const": "off"
+                  },
+                  {
+                    "const": "suspended"
+                  },
+                  {
+                    "const": "unknown"
+                  }
+                ]
+              },
+              "sourceCluster": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "sourceHost": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "guestOs": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "reviewed": {
+                "anyOf": [
+                  {
+                    "const": false
+                  },
+                  {
+                    "const": true
+                  }
+                ]
+              },
+              "measurement": {
+                "type": "object",
+                "properties": {
+                  "cpuP95Pct": {
+                    "type": "number"
+                  },
+                  "memoryP95Pct": {
+                    "type": "number"
+                  },
+                  "iopsP95": {
+                    "type": "number"
+                  },
+                  "throughputMBpsP95": {
+                    "type": "number"
+                  },
+                  "observationDays": {
+                    "type": "number"
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "tier",
+              "include",
+              "vCpu",
+              "memoryGiB",
+              "consumedGiB",
+              "provisionedGiB",
+              "powerState",
+              "sourceCluster",
+              "sourceHost",
+              "guestOs",
+              "reviewed"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "inventorySettings": {
+          "type": "object",
+          "properties": {
+            "sizingBasis": {
+              "anyOf": [
+                {
+                  "const": "allocation"
+                },
+                {
+                  "const": "measured-p95"
+                }
+              ]
+            },
+            "storageBasis": {
+              "anyOf": [
+                {
+                  "const": "provisioned"
+                },
+                {
+                  "const": "consumed"
+                }
+              ]
+            },
+            "comfortFactor": {
+              "type": "number"
+            },
+            "growthPct": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "sizingBasis",
+            "storageBasis",
+            "comfortFactor",
+            "growthPct"
+          ],
+          "additionalProperties": false
+        },
+        "inventorySources": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "anyOf": [
+                  {
+                    "const": "rvtools"
+                  },
+                  {
+                    "const": "performance"
+                  }
+                ]
+              },
+              "fileName": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "importedAt": {
+                "type": "string",
+                "maxLength": 12000
+              },
+              "rows": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "kind",
+              "fileName",
+              "importedAt",
+              "rows"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "planName": {
+          "type": "string",
+          "maxLength": 12000
+        },
+        "planningPurpose": {
+          "anyOf": [
+            {
+              "const": "buy"
+            },
+            {
+              "const": "existing"
+            }
+          ]
+        }
+      },
+      "required": [
+        "hardware",
+        "advanced",
+        "volumes",
+        "workloads",
+        "volumeMode",
+        "avd",
+        "avdEnabled",
+        "sofs",
+        "sofsEnabled",
+        "mabs",
+        "mabsEnabled",
+        "aks",
+        "virtualMachines",
+        "servicePresets",
+        "customWorkloads",
+        "inventory",
+        "inventorySettings",
+        "inventorySources",
+        "planName",
+        "planningPurpose"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "stateVersion",
+    "appVersion",
+    "name",
+    "savedAt",
+    "inputs"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:azurelocal-configurator:surveyor-project:2.8.0:1:10"
+}

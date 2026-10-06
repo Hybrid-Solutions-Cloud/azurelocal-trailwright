@@ -1,0 +1,68 @@
+{
+  "reviewed": "2026-09-11",
+  "contracts": [
+    {
+      "version": "2.7.0",
+      "schema": "1.0",
+      "commit": "ce881af2f027520ab594cde7ac010b26b533600f",
+      "repository": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators",
+      "schemaSha256": "c07927a6b92f8e8f25603a2ea6f490d9c08149e9aec2fc8262cf6c6e0968b4c1",
+      "sources": [
+        {
+          "path": "src/exporters/json.ts",
+          "sha256": "4e2ac9aad3b2f5f7c67f9be4e82fefaa862849b2042d0dac05f3c9d8c41c0aa0"
+        },
+        {
+          "path": "src/engine/types.ts",
+          "sha256": "267afedcc6555338469d05d3d5f092d8bb966500d5f4109afee2bbf8f9703e4b"
+        },
+        {
+          "path": "src/engine/service-presets.ts",
+          "sha256": "12d4eadba95591387a694cdbc0be30f8a089b82928ae76a6bad7385bcbaa2112"
+        }
+      ]
+    },
+    {
+      "version": "2.8.0",
+      "schema": "1.0",
+      "commit": "beff565dd0cd6edab36c76efc0bec7ccb25232f6",
+      "repository": "https://github.com/AzureLocal/azurelocal-surveyor",
+      "schemaSha256": "7ae2a9a5fe524693d239b35fd9d905bcb9244a66a99b9a869492a7ece70883d6",
+      "sources": [
+        {
+          "path": "src/exporters/json.ts",
+          "sha256": "5605b41afaf82dcc9f0aff0960f63162012b76ddf0d00d93150a5b1e52c7f89d"
+        },
+        {
+          "path": "src/engine/types.ts",
+          "sha256": "1d1603f5253d36a6348cd313940fd34e6e67cdaca12cd3aee986426d49fe032b"
+        },
+        {
+          "path": "src/engine/service-presets.ts",
+          "sha256": "40c44fa7f84d6f4d51cc4c8c82132e2bf8835846c33ce6e1149ad0c9ad5ff0a0"
+        },
+        {
+          "path": "src/engine/inventory.ts",
+          "sha256": "a00aa48bf0b92a0b38fae8777b0be335011fb45932a9b6ee8e82518b0b597ba3"
+        },
+        {
+          "path": "src/engine/fit.ts",
+          "sha256": "ab1af9f49f9891657ff8702df67129c38b6a165e8424fe269739c9193df73ada"
+        },
+        {
+          "path": "src/engine/planning.ts",
+          "sha256": "447c7fb2b21320c5aa73b13635cc46a285e5de337954504df51da37d9cfc8209"
+        },
+        {
+          "path": "src/state/project.ts",
+          "sha256": "75e075fc257b6e252d0cb44abcbfd233b4c49ce4a4f213162794db75ce87edbb"
+        },
+        {
+          "path": "src/state/store.ts",
+          "sha256": "52e17f25b71a1147bd086ae58ede2bbe4b49eaa4e01c2a48f4f911d6c05cebf6"
+        }
+      ],
+      "projectSchemaSha256": "b9ddc74576a117181d5ede809304cfa45ca6baba8bd265b6e05009331dd0c7d8"
+    }
+  ]
+}

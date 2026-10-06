@@ -1,0 +1,10 @@
+# Azure Local Trailwright
+
+Copied from the Configurators workspace. The application is in apps/azurelocal-configurator; required shared packages are in packages/ui and packages/output.
+
+## Local development
+
+Run npm install, then npm run dev. Use npm test and npm run build to validate the application.
+
+The original application documentation is in apps/azurelocal-configurator/README.md.
+

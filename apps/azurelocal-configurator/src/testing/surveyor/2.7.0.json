@@ -1,0 +1,421 @@
+{
+  "schemaVersion": "1.0",
+  "surveyorVersion": "2.7.0",
+  "generatedAt": "2026-09-11T12:00:00.000Z",
+  "provenance": {
+    "source": "manual"
+  },
+  "inputs": {
+    "hardware": {
+      "nodeCount": 4,
+      "capacityDrivesPerNode": 6,
+      "capacityDriveSizeTB": 3.84,
+      "cacheDrivesPerNode": 2,
+      "cacheDriveSizeTB": 1.6,
+      "cacheMediaType": "nvme",
+      "capacityMediaType": "ssd",
+      "coresPerNode": 32,
+      "memoryPerNodeGB": 256,
+      "hyperthreadingEnabled": true
+    },
+    "advanced": {
+      "infraVolumeSizeTB": 0.25,
+      "vCpuOversubscriptionRatio": 4,
+      "systemReservedMemoryGB": 8,
+      "systemReservedVCpus": 4,
+      "defaultResiliency": "three-way-mirror",
+      "overrides": {},
+      "maintenanceReserveMode": "n+1"
+    },
+    "volumes": [
+      {
+        "id": "volume-1",
+        "name": "Workload CSV sizing",
+        "resiliency": "three-way-mirror",
+        "provisioning": "fixed",
+        "plannedSizeTB": 4
+      }
+    ],
+    "volumeMode": "workload",
+    "avdEnabled": true,
+    "avd": {
+      "pools": [
+        {
+          "id": "pool-1",
+          "name": "Desktop pool",
+          "totalUsers": 32,
+          "concurrentUsers": 16,
+          "workloadType": "medium",
+          "multiSession": true,
+          "fslogixEnabled": true,
+          "profileSizeGB": 40,
+          "officeContainerEnabled": true,
+          "officeContainerSizeGB": 10,
+          "dataDiskPerHostGB": 20,
+          "profileStorageLocation": "sofs"
+        }
+      ],
+      "userTypeMixEnabled": false,
+      "userTypeMix": {
+        "taskPct": 30,
+        "taskProfileGB": 15,
+        "knowledgePct": 50,
+        "knowledgeProfileGB": 40,
+        "powerPct": 20,
+        "powerProfileGB": 80
+      },
+      "growthBufferPct": 20
+    },
+    "sofsEnabled": true,
+    "sofs": {
+      "userCount": 32,
+      "concurrentUsers": 16,
+      "profileSizeGB": 60,
+      "redirectedFolderSizeGB": 10,
+      "containerType": "split",
+      "sofsGuestVmCount": 2,
+      "sofsVCpusPerVm": 4,
+      "sofsMemoryPerVmGB": 16,
+      "internalMirror": "three-way",
+      "autoSizeDrivesPerNode": 4,
+      "autoSizeNodes": 2,
+      "volumeLayout": "shared",
+      "sofsOsDiskPerVmGB": 127
+    },
+    "mabsEnabled": true,
+    "mabs": {
+      "protectedDataTB": 10,
+      "dailyChangeRatePct": 10,
+      "onPremRetentionDays": 14,
+      "scratchCachePct": 15,
+      "mabsVCpus": 8,
+      "mabsMemoryGB": 32,
+      "mabsOsDiskGB": 200,
+      "internalMirror": "two-way",
+      "mabsOsDiskPlacement": "dedicated"
+    },
+    "aks": {
+      "enabled": true,
+      "clusters": [
+        {
+          "id": "aks-1",
+          "name": "Application cluster",
+          "controlPlaneNodesPerCluster": 3,
+          "workerNodesPerCluster": 4,
+          "vCpusPerWorker": 8,
+          "memoryPerWorkerGB": 32,
+          "osDiskPerNodeGB": 200,
+          "persistentVolumesTB": 2
+        }
+      ]
+    },
+    "virtualMachines": {
+      "enabled": true,
+      "vCpuOvercommitRatio": 2,
+      "groups": [
+        {
+          "id": "vm-1",
+          "name": "Business VMs",
+          "vmCount": 5,
+          "vCpusPerVm": 4,
+          "memoryPerVmGB": 16,
+          "storagePerVmGB": 200
+        }
+      ]
+    },
+    "servicePresets": [
+      {
+        "id": "service-1",
+        "catalogId": "arc-sql-mi-gp",
+        "enabled": true,
+        "instanceCount": 1
+      }
+    ],
+    "customWorkloads": [
+      {
+        "id": "custom-1",
+        "name": "Reporting service",
+        "description": "Synthetic sizing fixture",
+        "enabled": true,
+        "vmCount": 2,
+        "vCpusPerVm": 4,
+        "memoryPerVmGB": 16,
+        "osDiskPerVmGB": 127,
+        "storageTB": 0.5,
+        "internalMirrorFactor": 2,
+        "bandwidthMbps": 100
+      }
+    ]
+  },
+  "outputs": {
+    "capacity": {
+      "nodeCount": 4,
+      "rawPoolTB": 92.16,
+      "usablePerDriveTB": 3.84,
+      "totalUsableTB": 91.2384,
+      "reserveDrives": 4,
+      "reserveTB": 15.36,
+      "infraVolumeTB": 0.75,
+      "availableForVolumesTB": 75.1284,
+      "availableForVolumesTiB": 68.3289,
+      "resiliencyType": "three-way-mirror",
+      "resiliencyFactor": 0.3333333333333333,
+      "effectiveUsableTB": 25.0428,
+      "resiliencyClamped": false,
+      "resiliencyRequested": "three-way-mirror"
+    },
+    "compute": {
+      "nodeCount": 4,
+      "physicalCores": 128,
+      "logicalCores": 256,
+      "logicalCoresPerNode": 64,
+      "hyperthreadingEnabled": true,
+      "systemReservedVCpus": 16,
+      "usableVCpus": 1008,
+      "usableVCpusN1": 756,
+      "usableVCpusN2": 504,
+      "usableMemoryGBN1": 744,
+      "usableMemoryGBN2": 496,
+      "physicalMemoryGB": 1024,
+      "systemReservedMemoryGB": 32,
+      "usableMemoryGB": 992,
+      "numaDomainsEstimate": 8
+    },
+    "volumeSummary": {
+      "volumes": [
+        {
+          "id": "volume-1",
+          "name": "Workload CSV sizing",
+          "resiliency": "three-way-mirror",
+          "provisioning": "fixed",
+          "plannedSizeTB": 4,
+          "calculatorSizeTB": 4,
+          "wacSizeTB": 4,
+          "wacSizeGB": 4096
+        }
+      ],
+      "totalPlannedTB": 4,
+      "totalWacTB": 4,
+      "totalPoolFootprintTB": 12,
+      "remainingUsableTB": 63.13,
+      "utilizationPct": 16
+    },
+    "workloadTotals": {
+      "totalVCpus": 86,
+      "totalMemoryGB": 384,
+      "totalStorageTB": 35.58
+    },
+    "health": {
+      "passed": true,
+      "issues": [
+        {
+          "code": "HC_VOLUME_COUNT_NOT_MULTIPLE",
+          "severity": "info",
+          "message": "1 volumes on a 4-node cluster is not a multiple of 4. Consider 4 volumes for balanced slab distribution across nodes.",
+          "details": [
+            {
+              "label": "Balanced slab distribution check",
+              "status": "info",
+              "calculation": "1 active volume(s) across 4 node(s).",
+              "threshold": "A balanced count is typically a multiple of 4; next multiple is 4.",
+              "outcome": "The plan is still valid, but a node-aligned volume count generally distributes slabs more evenly.",
+              "ruleSource": "Operational best practice for balanced slab distribution"
+            }
+          ]
+        }
+      ],
+      "volumeDetails": [
+        {
+          "name": "Workload CSV sizing",
+          "resiliency": "three-way-mirror",
+          "plannedSizeTiB": 3.64,
+          "poolFootprintTB": 12,
+          "status": "pass",
+          "checks": [
+            {
+              "label": "Per-volume size limit",
+              "status": "pass",
+              "calculation": "4.00 TB planned for volume \"Workload CSV sizing\" (3.64 TiB in WAC terms).",
+              "threshold": "Each Azure Local volume must stay at or below 64 TB.",
+              "outcome": "The planned size stays within the supported per-volume limit.",
+              "ruleSource": "Windows Admin Center / New-Volume practical limit on Azure Local"
+            },
+            {
+              "label": "Resiliency node requirement",
+              "status": "pass",
+              "calculation": "4 cluster node(s) selected with Three-Way Mirror.",
+              "threshold": "Three-Way Mirror requires at least 3 node(s).",
+              "outcome": "The selected cluster size supports this resiliency mode.",
+              "ruleSource": "Azure Local / Storage Spaces Direct resiliency requirements"
+            },
+            {
+              "label": "Pool footprint for this volume",
+              "status": "pass",
+              "calculation": "4.00 TB logical ÷ 0.33 efficiency = 12.00 TB pool footprint. Full plan footprint is 12.00 TB.",
+              "threshold": "75.13 TB is available for Azure Local volumes before the effective-usable guardrail is exceeded.",
+              "outcome": "The full plan fits within available pool space and the rebuild reserve stays intact.",
+              "ruleSource": "Azure Local available volume pool and rebuild-headroom guidance"
+            }
+          ]
+        }
+      ],
+      "totalPoolFootprintTB": 12,
+      "availablePoolTB": 75.1284,
+      "utilizationPct": 16,
+      "errorCount": 0,
+      "warningCount": 0,
+      "infoCount": 1
+    },
+    "expansionHeadroom": {
+      "availableForVolumesTB": 75.1284,
+      "totalPoolFootprintTB": 12,
+      "copies": 3,
+      "resiliencyLabel": "three-way-mirror",
+      "currentUtilizationPct": 15.972654814956794,
+      "rows": [
+        {
+          "targetFraction": 0.7,
+          "footprintBudgetTB": 52.589879999999994,
+          "footprintBudgetTiB": 47.830217226874076,
+          "remainingFootprintTB": 40.589879999999994,
+          "remainingFootprintTiB": 36.91628080559894,
+          "remainingNewUsableTB": 13.529959999999997,
+          "remainingNewUsableTiB": 12.305426935199646,
+          "pastLine": false,
+          "sizeToEnterTiB": 12.3
+        },
+        {
+          "targetFraction": 0.8,
+          "footprintBudgetTB": 60.102720000000005,
+          "footprintBudgetTiB": 54.66310540214182,
+          "remainingFootprintTB": 48.102720000000005,
+          "remainingFootprintTiB": 43.74916898086668,
+          "remainingNewUsableTB": 16.03424,
+          "remainingNewUsableTiB": 14.583056326955557,
+          "pastLine": false,
+          "sizeToEnterTiB": 14.58
+        },
+        {
+          "targetFraction": 0.9,
+          "footprintBudgetTB": 67.61556,
+          "footprintBudgetTiB": 61.495993577409536,
+          "remainingFootprintTB": 55.61556,
+          "remainingFootprintTiB": 50.5820571561344,
+          "remainingNewUsableTB": 18.538520000000002,
+          "remainingNewUsableTiB": 16.86068571871147,
+          "pastLine": false,
+          "sizeToEnterTiB": 16.86
+        },
+        {
+          "targetFraction": 1,
+          "footprintBudgetTB": 75.1284,
+          "footprintBudgetTiB": 68.32888175267726,
+          "remainingFootprintTB": 63.1284,
+          "remainingFootprintTiB": 57.41494533140212,
+          "remainingNewUsableTB": 21.0428,
+          "remainingNewUsableTiB": 19.138315110467374,
+          "pastLine": false,
+          "sizeToEnterTiB": 19.13
+        }
+      ]
+    },
+    "avd": {
+      "poolCount": 1,
+      "totalUsers": 32,
+      "totalConcurrentUsers": 16,
+      "pools": [
+        {
+          "id": "pool-1",
+          "name": "Desktop pool",
+          "totalUsers": 32,
+          "concurrentUsers": 16,
+          "workloadType": "medium",
+          "multiSession": true,
+          "profileStorageLocation": "sofs",
+          "usersPerHost": 8,
+          "sessionHostCount": 2,
+          "sizingUsers": 16,
+          "vCpusPerHost": 4,
+          "memoryPerHostGB": 16,
+          "cpuLimitedUsersPerHost": 8,
+          "ramLimitedUsersPerHost": 8,
+          "limitingFactor": "preset",
+          "effectiveProfileSizeGB": 40,
+          "osDiskPerHostGB": 128,
+          "dataDiskPerHostGB": 20,
+          "totalVCpus": 8,
+          "totalMemoryGB": 32,
+          "totalOsStorageTB": 0.25,
+          "totalDataDiskStorageTB": 0.04,
+          "totalProfileStorageTB": 1.5,
+          "profileStorageWithGrowthTB": 1.5,
+          "totalOfficeContainerStorageTB": 0.31,
+          "totalStorageTB": 2.1,
+          "externalizedStorageTB": 0,
+          "bandwidthPerUserMbps": 0.35,
+          "totalBandwidthMbps": 5.6
+        }
+      ],
+      "usersPerHost": 8,
+      "sessionHostCount": 2,
+      "sizingUsers": 16,
+      "vCpusPerHost": 4,
+      "memoryPerHostGB": 16,
+      "cpuLimitedUsersPerHost": 8,
+      "ramLimitedUsersPerHost": 8,
+      "limitingFactor": "preset",
+      "totalVCpus": 8,
+      "totalMemoryGB": 32,
+      "effectiveProfileSizeGB": 40,
+      "osDiskPerHostGB": 128,
+      "dataDiskPerHostGB": 20,
+      "totalOsStorageTB": 0.25,
+      "totalDataDiskStorageTB": 0.04,
+      "totalProfileStorageTB": 1.5,
+      "profileStorageWithGrowthTB": 1.5,
+      "totalOfficeContainerStorageTB": 0.31,
+      "totalStorageTB": 2.1,
+      "totalExternalStorageTB": 0,
+      "bandwidthPerUserMbps": 0.35,
+      "totalBandwidthMbps": 5.6,
+      "sofsLinkedUserCount": 32,
+      "sofsLinkedConcurrentUsers": 16,
+      "sofsLinkedProfileSizeGB": 40
+    },
+    "sofs": {
+      "totalProfileStorageTB": 1.88,
+      "totalRedirectedStorageTB": 0.31,
+      "totalStorageTB": 2.19,
+      "sofsVCpusTotal": 8,
+      "sofsMemoryTotalGB": 32,
+      "internalMirrorFactor": 3,
+      "internalFootprintTB": 6.57,
+      "steadyStateIopsPerUser": 10,
+      "loginStormIopsPerUser": 50,
+      "totalSteadyStateIops": 160,
+      "totalLoginStormIops": 800,
+      "autoSizeDriveSizeTB": 0.82
+    },
+    "aks": {
+      "totalNodes": 7,
+      "totalControlPlaneVCpus": 12,
+      "totalWorkerVCpus": 32,
+      "totalVCpus": 44,
+      "totalControlPlaneMemoryGB": 48,
+      "totalWorkerMemoryGB": 128,
+      "totalMemoryGB": 176,
+      "osDiskTB": 1.37,
+      "totalStorageTB": 3.37
+    },
+    "mabs": {
+      "scratchVolumeTB": 1.5,
+      "backupDataVolumeTB": 24,
+      "totalStorageTB": 25.5,
+      "internalMirrorFactor": 2,
+      "internalFootprintTB": 51,
+      "mabsVCpus": 8,
+      "mabsMemoryGB": 32,
+      "mabsOsDiskTB": 0.2
+    }
+  }
+}

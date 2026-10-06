@@ -1,0 +1,301 @@
+{
+  "identity": "ad",
+  "powershell": "7.6.6",
+  "operatingSystem": "Win32NT",
+  "sourceCommit": "b56eb9051390299afe2d913bf2d10861fef279fd",
+  "templateSha256": "a95bf9a734cc7433f171a31685193ea053941b24f33111bddc9552ce20195f58",
+  "parameterSha256": "b7965997f21a2d658e2458c138583984fde61f89728a0cbc150801ba4752af84",
+  "toolCommit": "0ec9a41a4503e970a0ec8efb0cd08415cc172175",
+  "parameterChecksPassed": true,
+  "passedChecks": 30,
+  "failedSourceChecks": 6,
+  "runtimeQualified": false,
+  "checks": [
+    {
+      "name": "JSONFiles Should Be Valid",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "adminPassword Should Not Be A Literal",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "adminUsername Should Not Be A Literal",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "apiVersions Should Be Recent In Reference Functions",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "apiVersions Should Be Recent",
+      "file": "azuredeploy.json",
+      "passed": false,
+      "errors": [
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2023-01-01 of Microsoft.Storage/storageAccounts is 1349 days old",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-04-01 of Microsoft.Resources/deployments is 1989 days old",
+        "Microsoft.AzureStackHCI/edgeDevices uses a preview version ( 2025-09-15-preview ) and there are more recent versions available.",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-04-01 of Microsoft.Resources/deployments is 1989 days old",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-04-01 of Microsoft.Resources/deployments is 1989 days old",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-04-01 of Microsoft.Resources/deployments is 1989 days old",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2023-01-01 of Microsoft.Storage/storageAccounts is 1349 days old",
+        "Microsoft.KeyVault/vaults uses a preview version ( 2021-06-01-preview ) and there are more recent versions available.",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-06-01-preview of Microsoft.KeyVault/vaults is 1928 days old",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-04-01 of Microsoft.Resources/deployments is 1989 days old",
+        "Microsoft.AzureStackHCI/clusters uses a preview version ( 2025-09-15-preview ) and there are more recent versions available.",
+        "Microsoft.KeyVault/vaults/secrets uses a preview version ( 2021-06-01-preview ) and there are more recent versions available.",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-06-01-preview of Microsoft.KeyVault/vaults/secrets is 1928 days old",
+        "Microsoft.KeyVault/vaults/secrets uses a preview version ( 2021-06-01-preview ) and there are more recent versions available.",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-06-01-preview of Microsoft.KeyVault/vaults/secrets is 1928 days old",
+        "Microsoft.KeyVault/vaults/secrets uses a preview version ( 2021-06-01-preview ) and there are more recent versions available.",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-06-01-preview of Microsoft.KeyVault/vaults/secrets is 1928 days old",
+        "Microsoft.KeyVault/vaults/secrets uses a preview version ( 2021-06-01-preview ) and there are more recent versions available.",
+        "Api versions must be the latest or under 2 years old (730 days) - API version 2021-06-01-preview of Microsoft.KeyVault/vaults/secrets is 1928 days old",
+        "microsoft.azurestackhci/clusters/deploymentSettings uses a preview version ( 2025-09-15-preview ) and there are more recent versions available."
+      ],
+      "warnings": []
+    },
+    {
+      "name": "artifacts parameter",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "CommandToExecute Must Use ProtectedSettings For Secrets",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "DependsOn Best Practices",
+      "file": "azuredeploy.json",
+      "passed": false,
+      "errors": [
+        "Depends On Must not start with [concat("
+      ],
+      "warnings": []
+    },
+    {
+      "name": "Deployment Resources Must Not Be Debug",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "DeploymentTemplate Must Not Contain Hardcoded Uri",
+      "file": "azuredeploy.json",
+      "passed": false,
+      "errors": [
+        "Found hardcoded reference to core.windows.net",
+        "Found hardcoded reference to vault.azure.net"
+      ],
+      "warnings": []
+    },
+    {
+      "name": "DeploymentTemplate Schema Is Correct",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Dynamic Variable References Should Not Use Concat",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "IDs Should Be Derived From ResourceIDs",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Location Should Not Be Hardcoded",
+      "file": "azuredeploy.json",
+      "passed": false,
+      "errors": [
+        "azuredeploy.json must use the location parameter, not resourceGroup().location or deployment().location (except when used as a default value in the main template)"
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ManagedIdentityExtension must not be used",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Min And Max Value Are Numbers",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Outputs Must Not Contain Secrets",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Parameter Types Should Be Consistent",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Parameters Must Be Referenced",
+      "file": "azuredeploy.json",
+      "passed": false,
+      "errors": [
+        "Unreferenced parameter: securityLevel",
+        "Unreferenced parameter: networkingType",
+        "Unreferenced parameter: networkingPattern"
+      ],
+      "warnings": []
+    },
+    {
+      "name": "Password params must be secure",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "providers apiVersions Is Not Permitted",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "ResourceIds should not contain",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Resources Should Have Location",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Resources Should Not Be Ambiguous",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Secure Params In Nested Deployments",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Secure String Parameters Cannot Have Default",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Template Should Not Contain Blanks",
+      "file": "azuredeploy.json",
+      "passed": false,
+      "errors": [
+        "Empty property:  \"\""
+      ],
+      "warnings": []
+    },
+    {
+      "name": "URIs Should Be Properly Constructed",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Variables Must Be Referenced",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Virtual Machines Should Not Be Preview",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "VM Images Should Use Latest Version",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "VM Size Should Be A Parameter",
+      "file": "azuredeploy.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "DeploymentParameters Should Have ContentVersion",
+      "file": "azuredeploy.parameters.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "DeploymentParameters Should Have Parameters",
+      "file": "azuredeploy.parameters.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "DeploymentParameters Should Have Schema",
+      "file": "azuredeploy.parameters.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "DeploymentParameters Should Have Value",
+      "file": "azuredeploy.parameters.json",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

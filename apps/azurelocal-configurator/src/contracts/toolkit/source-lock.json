@@ -1,0 +1,21 @@
+{
+  "repository": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/azl-toolkit",
+  "commit": "2af2f2a0698bb178e95c9fe5579d955770cb9d60",
+  "schemaVersion": "4.0.0",
+  "recoveredAt": "2026-09-11",
+  "access": "private; preserve repository access controls",
+  "files": [
+    {
+      "path": "configs/variables/assets/infrastructure.schema.json",
+      "file": "infrastructure.schema.json",
+      "sha256": "4f5d12032e170735fa942ce0fe21a497c4e4fe3cad131d2379c8e78319099f66"
+    },
+    {
+      "path": "configs/variables/assets/master-registry.yaml",
+      "file": "master-registry.yaml",
+      "sha256": "229e6f8b7cbd3943cb78d48f63e3b0d652b3e51b5b80c9383069898ad11de636"
+    }
+  ],
+  "readerQualification": "blocked: duplicate WhatIf parameter; hierarchy and identity contracts disagree",
+  "runtimeQualified": false
+}

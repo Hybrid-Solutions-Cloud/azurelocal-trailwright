@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-09-12T00:50:55.817Z",
+  "url": "https://tierpoint.gitlab.io/prodtech/hybrid-cloud/toolkits/configurators/azurelocal-configurator/",
+  "screens": 14,
+  "results": [
+    {
+      "name": "Azure Local Configurator",
+      "version": {
+        "name": "azurelocal-configurator",
+        "version": "0.1.0",
+        "commit": "fdb7ebf4bd099b35e5565674b9c6740c3f56f2a0"
+      },
+      "catalogStatus": "Available — Preview"
+    },
+    {
+      "name": "Hyper-V Configurator",
+      "version": {
+        "name": "hyperv-configurator",
+        "version": "0.32.0",
+        "commit": "fdb7ebf4bd099b35e5565674b9c6740c3f56f2a0"
+      },
+      "catalogStatus": "Available — Preview"
+    }
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "repository": "https://github.com/Azure/arm-ttk",
+  "archiveSha256": "8b48f5d0da5fe02cc44883a3c552a6cb0ba4a5607a1275c74f720c4abb38f31e",
+  "commit": "0ec9a41a4503e970a0ec8efb0cd08415cc172175",
+  "reviewed": "2026-09-11",
+  "knownSourceFindings": [
+    {
+      "qualification": "unresolved-source-recommendation",
+      "errorCounts": {
+        "local": 19,
+        "ad": 20
+      },
+      "name": "apiVersions Should Be Recent"
+    },
+    {
+      "qualification": "unresolved-source-recommendation",
+      "errorCounts": {
+        "local": 1,
+        "ad": 1
+      },
+      "name": "DependsOn Best Practices"
+    },
+    {
+      "qualification": "unresolved-source-recommendation",
+      "errorCounts": {
+        "local": 2,
+        "ad": 2
+      },
+      "name": "DeploymentTemplate Must Not Contain Hardcoded Uri"
+    },
+    {
+      "qualification": "unresolved-source-recommendation",
+      "errorCounts": {
+        "local": 1,
+        "ad": 1
+      },
+      "name": "Location Should Not Be Hardcoded"
+    },
+    {
+      "qualification": "unresolved-source-recommendation",
+      "errorCounts": {
+        "local": 3,
+        "ad": 3
+      },
+      "name": "Parameters Must Be Referenced"
+    },
+    {
+      "qualification": "unresolved-source-recommendation",
+      "errorCounts": {
+        "local": 1,
+        "ad": 1
+      },
+      "name": "Template Should Not Contain Blanks"
+    }
+  ],
+  "runtimeQualified": false,
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "9906940f61b1f0b533fa7d99baf55178b2808fbe113ea51dfbfad8572ccd5f2b"
+    },
+    {
+      "path": "arm-ttk/arm-ttk.format.ps1xml",
+      "sha256": "9bac2a472a71786cf301960e5f55d6beaa2f20d99ff98298905f380135a8193a"
+    },
+    {
+      "path": "arm-ttk/arm-ttk.psd1",
+      "sha256": "7774602b9ffb9003b473c5fb0c8f2ca02cf3f18fd68037ff8f1f91c0812eb757"
+    },
+    {
+      "path": "arm-ttk/arm-ttk.psm1",
+      "sha256": "67189dca3deb89c1c2f3724ffa399f8011a2acf17b40c07e6458b3bc15ae1238"
+    },
+    {
+      "path": "arm-ttk/AzRMTester.psd1",
+      "sha256": "9dba6bc8c7acc7bd8b752503acec4decfd2fc13f669ba232563d479a90846f96"
+    },
+    {
+      "path": "arm-ttk/ConvertFrom-JSON.ps1",
+      "sha256": "dae27a389a3de5b5665da4dda10b179535a810da396bb2df4c84d1d93b279ee8"
+    },
+    {
+      "path": "arm-ttk/Expand-AzTemplate.ps1",
+      "sha256": "344072edf43bc3324e218526faa7933273bc0cd161b8617940e20624de3044e3"
+    },
+    {
+      "path": "arm-ttk/Find-JsonContent.ps1",
+      "sha256": "2f5743681c806f372e082fe6fe65662a2a3824e703b80d273e246bf65374708f"
+    },
+    {
+      "path": "arm-ttk/Format-AzTemplate.ps1",
+      "sha256": "98cd3af4918d146e0eedc9c2da5d739ec79a6085b1d48d1d2176ba30744b7b08"
+    },
+    {
+      "path": "arm-ttk/Format-Json.ps1",
+      "sha256": "9ab7e156190de3fab0ed7a479645654c512ce6a5dbb9c4042e09757411818c94"
+    },
+    {
+      "path": "arm-ttk/Import-Json.ps1",
+      "sha256": "31bf268f970291396848a0d305818353e080e54ef356a9a4dc868df1c00c11e5"
+    },
+    {
+      "path": "arm-ttk/README.md",
+      "sha256": "8d46668c8b424cef8f9efcc983ef37feb414258e82c5128378b63547e3e34dd6"
+    },
+    {
+      "path": "arm-ttk/Resolve-JSONContent.ps1",
+      "sha256": "8728a52d14cdd206b3639f71e8fe0a473e4a41a5fae0018de625783edab5564f"
+    },
+    {
+      "path": "arm-ttk/SampleWorkflow.yml",
+      "sha256": "eddb9215a7e67d27308158ae27146eaa1924b5917789558949ce8a70d30582c0"
+    },
+    {
+      "path": "arm-ttk/Test-AzMarketplacePackage.ps1",
+      "sha256": "069da998e742e4d054cefdc2df8e484ed3222bdd7167d0eedfdbaae19c4cb5d8"
+    },
+    {
+      "path": "arm-ttk/Test-AzTemplate.cmd",
+      "sha256": "7ee457af0c48305e4cca830b50281d37ce5dffafa4f4158a37dd07c9fb0d6341"
+    },
+    {
+      "path": "arm-ttk/Test-AzTemplate.ps1",
+      "sha256": "007ddcbd424034c5b177f087d45245e9e4a1adc9dc9c661d152b0aa6fb43a174"
+    },
+    {
+      "path": "arm-ttk/Test-AzTemplate.sh",
+      "sha256": "e4c75c5dab6a4349f548beff49d5e429406769b1dce65ffb27daefb2dbc3b879"
+    },
+    {
+      "path": "arm-ttk/ttk.ezformat.ps1",
+      "sha256": "894f5c1a15a068891f2ffa5f3b239adaa8bc48b8cc547fc0f12cb98381938673"
+    },
+    {
+      "path": "arm-ttk/ttk.irregular.ps1",
+      "sha256": "0da42888f6c529ef514dff393e99d851cff7ae4ce43311901645f27f6764c836"
+    },
+    {
+      "path": "arm-ttk/ttk.SampleWorkflow.PSDevOps.ps1",
+      "sha256": "996760c8a949563c4977c301c06bc448dba081a8be403006cdfaeb6ea0fed350"
+    },
+    {
+      "path": "arm-ttk/ttk.test.workflow.psdevops.ps1",
+      "sha256": "0d94c34a1469b6847c0bd7196d9d12bd058694f301f84425e5fe556b4f2e6e37"
+    },
+    {
+      "path": "arm-ttk/Update-TTKCache.ps1",
+      "sha256": "7913d7494a09dabf1442fd01719d4ff81513d43433a15cd2a5c1b2df05441b45"
+    },
+    {
+      "path": "arm-ttk/Writing_TTK_Tests.md",
+      "sha256": "056250b21464746364fa9e78ac278f3976b62adcff9a3ab5a7eb43ce2798bdb3"
+    },
+    {
+      "path": "arm-ttk/Writing_TTK_Unit_Tests.md",
+      "sha256": "d0aff99e075960688deb66193bf964339b1513aeaf2e581b9f5e124d8e9e2d13"
+    },
+    {
+      "path": "arm-ttk/.github/workflows/run-unit-tests.yml",
+      "sha256": "a21cb9ee18cefe31f4362c685598ff0a38740ab67392d42740c4949eacedd1db"
+    },
+    {
+      "path": "arm-ttk/cache/AllAzureResources.cache.json",
+      "sha256": "70b6fd0ae71d6c0f78507700fec324a99b88347dc6f5a2fedabfc65ab5b1122f"
+    },
+    {
+      "path": "arm-ttk/cache/AllAzureResources.init.cache.ps1",
+      "sha256": "066a8b92e321c17baea3b36f35d8edd32e64a7d3e9c62eaf5f45b2ce29e20607"
+    },
+    {
+      "path": "arm-ttk/cache/AllEnvironments.cache.json",
+      "sha256": "9d5bd42a4a2dfe5d252ac13c793933e7a7d117ff29c525aea3c610abef992d7d"
+    },
+    {
+      "path": "arm-ttk/cache/AllEnvironments.init.cache.ps1",
+      "sha256": "2655a2b2535528297756c347e1f8934c2e8bf2200739d464ff3ae08daef1a51a"
+    },
+    {
+      "path": "arm-ttk/cache/AllImages.cache.json",
+      "sha256": "5306e9015316e14122f64fa3c9240f4f6deb44262dc56bf243b3e08244d0d1b8"
+    },
+    {
+      "path": "arm-ttk/cache/AllImages.init.cache.ps1",
+      "sha256": "cec8af74e4c1e329e98cabec73fa1ef4cc9e797332e9c459a19b44a989ac0d46"
+    },
+    {
+      "path": "arm-ttk/cache/README.md",
+      "sha256": "1631706224cc00b57833d7ff62c0dc6da1d32fd5cd312d8b34cd6cfb73ca6aee"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Jobs/RunTTK.psd1",
+      "sha256": "c970e35b07646effe89a8e7dd6343513d42a529da8fc61ea4397d07e62d033fd"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Jobs/TestPowerShellOnLinux.psd1",
+      "sha256": "eb0cc9cb7660c842af33229198df033e15a46e208c286a44d52d8f9ab2d61a7d"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Jobs/UpdateTTKCache.psd1",
+      "sha256": "822f33c13384048574e08fe4e40d8d439d97788db44023b37f9211ec59f6ec0e"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Steps/CheckoutTTK.psd1",
+      "sha256": "7fdf9c540993ea06aa51a585c16a6df69d02ddc607030f67983d709ca7f76e51"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Steps/InstallPester.ps1",
+      "sha256": "c54475f68762017802e5ce9f9584a89e5ad89de28136b73041c8e966411d2ceb"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Steps/RunPester.ps1",
+      "sha256": "201c3e8f90b0c158994fe06033cf7525d6bf9fbeae52aad37177a3fdf49b6983"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Steps/RunTTK.ps1",
+      "sha256": "2157cab18742101f797256aab27ecb34fc430ca7aa0b3f1130db4bc03ed97fe0"
+    },
+    {
+      "path": "arm-ttk/GitHubWorkflow/Steps/UpdateTTKCache.psd1",
+      "sha256": "f8af58e682706d913341bdf846929bbfb7186b46de441c066f940bf1cad553d4"
+    },
+    {
+      "path": "arm-ttk/Regex/README.md",
+      "sha256": "17bedf3af493a9e7592268c3abafaff765ead7b2e1759342ace2765141ed7d55"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/API_Version.regex.txt",
+      "sha256": "fc5790f6c6e803aa58bcd57dc79b18227c886d815ccee28ae3a0c0a1769edb90"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/BracketOrQuote.regex.txt",
+      "sha256": "31c720d779e5fcfac08c0ad744614b9db1e4a2a4a0f586a88068c36db1599ab8"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/List_Function.regex.txt",
+      "sha256": "e04acb139bbc8563daa68768651e1e14731f337dce049caf97c910f406959fc2"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/Parameter.regex.ps1",
+      "sha256": "92bc396888627f6122e96aa6ff883871296738c0d3955d522155339eb770f659"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/Template_Expression.regex.txt",
+      "sha256": "d14074ec3392e7110fa89d6611182bdf91d5e11920cd3e5d2392f1050a447219"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/Template_Function.regex.ps1",
+      "sha256": "160ea603dbc546eb8e435b2b59586b9a838aafa2e464575d17e8c0c2b0c02580"
+    },
+    {
+      "path": "arm-ttk/Regex/ARM/Variable.regex.ps1",
+      "sha256": "3971370e5b5fb7a0c3a813c2c06d67f7b678d5b2bd2eb9c91cb60bff638388f3"
+    },
+    {
+      "path": "arm-ttk/Regex/CreateUIDefinition/Output.regex.ps1",
+      "sha256": "addf125fb170ac95158526af5a9d1c5354910efad1cb43bd439ebc85b11c785b"
+    },
+    {
+      "path": "arm-ttk/testcases/AllFiles/JSONFiles-Should-Be-Valid.test.ps1",
+      "sha256": "888d7fe7de0366035e4f118a7dd26ad9dcf10aaccca3890db839337fdf4b77d0"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Allowed-Values-Should-Actually-Be-Allowed.test.ps1",
+      "sha256": "e6fe09c3d2dc2452f59841b0b7bd9fd0614fc7104b43e2cb12c3683c501155c4"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Controls-In-Outputs-Must-Exist.test.ps1",
+      "sha256": "aad8c50e4215ce0ab9512bcef11d90c6d4a3f972aa00145493e781ac9b79e1cb"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/CreateUIDefinition-Must-Not-Have-Blanks.test.ps1",
+      "sha256": "493e120cddd794223d9f054f85aa31f40e02faf5f43a782a143d35aae5126c78"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/CreateUIDefinition-Should-Have-Schema.test.ps1",
+      "sha256": "114710c10db7e5d03207779510479c114c2cb13c3c8ff2a2472b3b7b060506ad"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Credential-Confirmation-Should-Not-Be-Hidden.test.ps1",
+      "sha256": "fe664680ad08de6150509295e21ab63505f5629490038a58afc4bcb30712b68a"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Handler-Must-Be-Correct.test.ps1",
+      "sha256": "9d32dda1a7d8ad3c20fbc672846ef61d47337b0b4e8daf333c24560eb6d7130d"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/HideExisting-Must-Be-Correctly-Handled.test.ps1",
+      "sha256": "1cc0c69f9e05b7f0bdd3f863b3cecc8e1e2608a1db7cf7fa0fb3eb0933070110"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Location-Should-Be-In-Outputs.test.ps1",
+      "sha256": "551b5002822af48cad464019563f70d8888a6479851b8e61a2f099b1c05ca5c1"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Outputs-Must-Be-Present-In-Template-Parameters.test.ps1",
+      "sha256": "74d1dafb9e41df69b1c076a10dc162fe76b0661cf1be4270dd160ed098aada79"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Parameters-Without-Default-Must-Exist-In-CreateUIDefinition.test.ps1",
+      "sha256": "836b89d94fabceed600c5cbb1d662034bb7765aec121574e41d2eeef66282f0c"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Password-Textboxes-Must-Be-Used-For-Password-Parameters.test.ps1",
+      "sha256": "333800429be15d230a697c188a1453af3f67f7cac6680cf65497fcf660d6ca83"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/PasswordBoxes-Must-Have-Min-Length.test.ps1",
+      "sha256": "0801ac31dad807e1fbf35a55b7bb0a3bb403194b650057eb8e32a1f2fc85493d"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Textboxes-Are-Well-Formed.test.ps1",
+      "sha256": "d307267173303fbdaaf9a77d913b5821f40cab2b1f02452c4cebab7d8c67ad01"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Tooltips-Should-Be-Present.test.ps1",
+      "sha256": "c438a805f524dc63286e83141613a136966e4f1342ce37b1471110f91b2d1171"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Usernames-Should-Not-Have-A-Default.test.ps1",
+      "sha256": "d9890b857ae271fc77e4dfe4419033db9fe44b04ee3cbb057ea2ce0bbb74d14a"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/Validations-Must-Have-Message.test.ps1",
+      "sha256": "5ff3bcfc0e2f6f97f57f7364e9030e35ace350622a34b2272d88a4772f73a8c6"
+    },
+    {
+      "path": "arm-ttk/testcases/CreateUIDefinition/VMSizes-Must-Match-Template.test.ps1",
+      "sha256": "d807fac5fd803394d7b34623a41f392a9b9f3f009032f38375b52c41ed552f89"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentParameters/DeploymentParameters-Should-Have-ContentVersion.test.ps1",
+      "sha256": "051978d8327fa0b80fa82f02f9ae51b1775c6aadec587b7f3aba36b1ebb5bf48"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentParameters/DeploymentParameters-Should-Have-Parameters.test.ps1",
+      "sha256": "d4d414d8264d2d75b43cbe27b8116fea9b5fa8b9c9aa714f025ee0fce9f66f2c"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentParameters/DeploymentParameters-Should-Have-Schema.test.ps1",
+      "sha256": "b0148b28df40387215b92c296d3e3b1dc06168306f71ac0c4a22bf21f7baa770"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentParameters/DeploymentParameters-Should-Have-Value.test.ps1",
+      "sha256": "bf0f754c95838afec9a5503e88fb757b625b812b8dd9a5e213a62fbd2ea7cae9"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/adminPassword-Should-Not-Be-A-Literal.test.ps1",
+      "sha256": "50e3536dd9de1cd66f06ac1032deaa41c034ba182dc3d299b367936a78a17ba7"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/adminUsername-Should-Not-Be-A-Literal.test.ps1",
+      "sha256": "8929cce40dc1c38d0ef61c6e193e47b18cd889f825ac493869595a1a209cfbc8"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/apiVersions-Should-Be-Recent-In-Reference-Functions.test.ps1",
+      "sha256": "2ff498b8fbb7983ea8d78ce31322ee05a0dae767236d9bf3ebdd10fff5896e39"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/apiVersions-Should-Be-Recent.test.ps1",
+      "sha256": "d3d818a4e93e5624655d08f0a287b34a762123d367421c52b4ca8499a28e46cb"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/artifacts-parameter.test.ps1",
+      "sha256": "12500774810891422674d72324c1a3a739d164613d6db60750ba7ad15a6c8967"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/CommandToExecute-Must-Use-ProtectedSettings-For-Secrets.test.ps1",
+      "sha256": "1d01b03ae34006ba42159d02e3f967fea83f89ef0cbaa823806e031a7b10008d"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/DependsOn-Best-Practices.test.ps1",
+      "sha256": "770a8c085823b9447c19b50a033a3b822771071af0341d4fed05f205818e3cb5"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Deployment-Resources-Must-Not-Be-Debug.test.ps1",
+      "sha256": "15306ff7e18fc44fbf0022433ddb7b01fea13c71f627813d93e3ce3c343a8a61"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/DeploymentTemplate-Must-Not-Contain-Hardcoded-Uri.test.ps1",
+      "sha256": "fc267c484fd0c24278ddf2e80c0c916c5270b20a8d191507f13650671dc9c2bf"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/DeploymentTemplate-Schema-Is-Correct.test.ps1",
+      "sha256": "dddeb352d64ea70ba4a3d5b4085b8fe07f1b2c2fc58240a0281475ae6065a0ba"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Dynamic-Variable-References-Should-Not-Use-Concat.test.ps1",
+      "sha256": "44946775b6d4aab8a226966712a181632f2808176b0c458e14905526ad2a33f4"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/IDs-Should-Be-Derived-From-ResourceIDs.test.ps1",
+      "sha256": "0d8ff656bfee2e5d08926a50caa69aff82ca1f3a575667fb15e0133fd329b370"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Location-Should-Not-Be-Hardcoded.test.ps1",
+      "sha256": "1edf74f258d722dc522d7bab6ae7667165417cc6281221b202c3b29f34704fe8"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/ManagedIdentityExtension-must-not-be-used.test.ps1",
+      "sha256": "195a6ecbcb6e8e53a9673c6d02ae24f5131e9cd0de0b36298c066a201cd35bb0"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Min-And-Max-Value-Are-Numbers.test.ps1",
+      "sha256": "097adc5c5100554d0d092532dfb6cc82738db292f4039cb01611a0decde0bd97"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Outputs-Must-Not-Contain-Secrets.test.ps1",
+      "sha256": "963b51e4c5d59ebd3a2abdb7854a04e44786a93f023b5c54d8bc2abdc225d5e9"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Parameter-Types-Should-Be-Consistent.test.ps1",
+      "sha256": "49a06d581385f201152fc4b2e75e68e6e8d6ffb407aa46311dc19899f7997bc4"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Parameters-Must-Be-Referenced.test.ps1",
+      "sha256": "83e4fef02c3038ed59a89f8f98358cc2cbe57bf66c6013283eeab1d851e98b7e"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Password-params-must-be-secure.test.ps1",
+      "sha256": "0eea95d626066de402a4b14f36fd5d91e7528908996e91740fd5b64aa5b5b9b3"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/providers_apiVersions-Is-Not-Permitted.test.ps1",
+      "sha256": "a341c4f0ace4fd2a8cb070a69dd951ce18720a6059a82f1829fd051754d650ed"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/ResourceIds-should-not-contain.test.ps1",
+      "sha256": "481554becd89b01efefcba2819306edcfdea04fc56d680f8be4a18458e3bb8fb"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Resources-Should-Have-Location.test.ps1",
+      "sha256": "6c92e41f56716ee0c299b430d47961fecd0eb3fc4ab228dfc138f5b6172674f3"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Resources-Should-Not-Be-Ambiguous.test.ps1",
+      "sha256": "2459cdfa02327f694cf3bb9ac0d6f8ba8ab6402ef3cebd0910cddbaf1ffbc254"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Secure-Params-In-Nested-Deployments.test.ps1",
+      "sha256": "8bf2fdca11c2562dc98b6b68898f71c3ca6db86d160c86468a185b71889b59ac"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Secure-String-Parameters-Cannot-Have-Default.test.ps1",
+      "sha256": "ac78394e66132e53601732152d00f90825824f21a7ddc43eb61dc7de444ebba2"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Template-Should-Not-Contain-Blanks.test.ps1",
+      "sha256": "3fc1317a86ea6b5a77b65f71711acb8b445900dd142f44f4714b75e516c93ea6"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/URIs-Should-Be-Properly-Constructed.test.ps1",
+      "sha256": "8e4c5a9b3294331a10c5810934a9c4bd37d638e321718ee57270d6f3913990a2"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Variables-Must-Be-Referenced.test.ps1",
+      "sha256": "4d74ded4841b1a428d9b585f3095133b4022f08583deb2e22275d0995ea2bcea"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/Virtual-Machines-Should-Not-Be-Preview.test.ps1",
+      "sha256": "06c759aa557c0d419070d3de53f852353336abd91526684d3d8dec3f0d9584d8"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/VM-Images-Should-Use-Latest-Version.test.ps1",
+      "sha256": "28a2c76779496aa04b3f442c13817f2ae227fda84ee85fc5b53792df048cb522"
+    },
+    {
+      "path": "arm-ttk/testcases/deploymentTemplate/VM-Size-Should-Be-A-Parameter.test.ps1",
+      "sha256": "b51cd008078810ca8cfb2ca638b231d865841276a7a51b9edd1e090d19ecef3e"
+    }
+  ],
+  "archiveUrl": "https://api.github.com/repos/Azure/arm-ttk/zipball/0ec9a41a4503e970a0ec8efb0cd08415cc172175",
+  "qualification": "parameter-file-checks-passed; source-findings-open",
+  "version": "0.27"
+}

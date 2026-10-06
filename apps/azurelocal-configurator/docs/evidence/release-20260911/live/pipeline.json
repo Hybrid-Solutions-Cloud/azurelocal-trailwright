@@ -1,0 +1,64 @@
+{
+  "commit": "fdb7ebf4bd099b35e5565674b9c6740c3f56f2a0",
+  "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/pipelines/2842373283",
+  "pipeline": 2842373283,
+  "jobs": [
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970426",
+      "status": "success",
+      "id": 16458970426,
+      "name": "pages"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970425",
+      "status": "success",
+      "id": 16458970425,
+      "name": "browser"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970424",
+      "status": "success",
+      "id": 16458970424,
+      "name": "discovery_import"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970423",
+      "status": "success",
+      "id": 16458970423,
+      "name": "ansible_contract"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970422",
+      "status": "success",
+      "id": 16458970422,
+      "name": "terraform_contract"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970421",
+      "status": "success",
+      "id": 16458970421,
+      "name": "arm_contract"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970420",
+      "status": "success",
+      "id": 16458970420,
+      "name": "vmm_consumer"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970419",
+      "status": "success",
+      "id": 16458970419,
+      "name": "test"
+    },
+    {
+      "url": "https://gitlab.com/tierpoint/prodtech/hybrid-cloud/toolkits/configurators/-/jobs/16458970418",
+      "status": "success",
+      "id": 16458970418,
+      "name": "secret_detection"
+    }
+  ],
+  "status": "success",
+  "projectVisibility": "private",
+  "pagesAccess": "private"
+}

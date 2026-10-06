@@ -1,0 +1,2857 @@
+{
+  "groups": {
+    "operations": {
+      "matrix": "B13-B15",
+      "tests": [
+        "src/automationHandoff.test.ts",
+        "src/storage.test.ts"
+      ],
+      "code": [
+        "src/catalog.ts",
+        "src/commercial.ts",
+        "src/assessment.ts"
+      ]
+    },
+    "management": {
+      "matrix": "B03-B06,B12",
+      "tests": [
+        "src/preparation.test.ts",
+        "src/delivery.test.ts",
+        "e2e/workflow.spec.ts"
+      ],
+      "code": [
+        "src/catalog.ts",
+        "src/assessment.ts",
+        "src/networkRules.ts"
+      ]
+    },
+    "journey": {
+      "matrix": "A01-A06",
+      "tests": [
+        "e2e/workflow.spec.ts",
+        "e2e/delivery.spec.ts"
+      ],
+      "code": [
+        "src/App.tsx",
+        "src/catalog.ts",
+        "src/project.ts",
+        "src/persistence.ts",
+        "src/surveyor.ts"
+      ]
+    },
+    "support": {
+      "matrix": "B01,C05-C10",
+      "boundaries": "Version-specific support and source conflicts are retained in application findings and contract documentation; unknown support does not pass.",
+      "tests": [
+        "src/storage.test.ts",
+        "src/toolkit.test.ts",
+        "src/ansible.test.ts"
+      ],
+      "code": [
+        "src/support.ts",
+        "src/contracts/microsoft",
+        "src/contracts/arm",
+        "src/contracts/toolkit",
+        "src/contracts/terraform",
+        "src/contracts/ansible",
+        "src/contracts/surveyor"
+      ]
+    },
+    "storage": {
+      "matrix": "B01-B02,B07-B11",
+      "tests": [
+        "src/storage.test.ts",
+        "src/preparation.test.ts"
+      ],
+      "code": [
+        "src/assessment.ts",
+        "src/catalog.ts",
+        "src/support.ts"
+      ]
+    },
+    "delivery": {
+      "matrix": "D01-D04,T01-T05,R01-R04",
+      "boundaries": "Final Pages and live evidence recorded after the exact-source pipeline succeeds. R04 native infrastructure qualification remains open.",
+      "tests": [
+        "e2e/workflow.spec.ts",
+        "e2e/delivery.spec.ts"
+      ],
+      "code": [
+        "docs/design/flows.drawio",
+        "docs/REQUIREMENT_AUDIT.md"
+      ]
+    },
+    "outputs": {
+      "matrix": "C01-C04,C11,T01-T04",
+      "evidence": "evidence/release-20260911/local-artifacts.json",
+      "tests": [
+        "src/delivery.test.ts",
+        "e2e/workflow.spec.ts"
+      ],
+      "code": [
+        "src/exports.ts",
+        "src/topology.ts",
+        "src/pdfTopology.ts",
+        "src/evidence.ts"
+      ]
+    },
+    "contracts": {
+      "matrix": "C05-C11",
+      "boundaries": "Original Toolkit reader broken; corrected local conversion tested. DSC resource deployment unavailable. ARM source conflicts retained. Terraform mock tests and local Ansible validation do not qualify infrastructure deployment.",
+      "tests": [
+        "src/automationHandoff.test.ts",
+        "src/ansible.test.ts",
+        "src/toolkit.test.ts"
+      ],
+      "code": [
+        "src/portal.ts",
+        "src/automationHandoff.ts",
+        "src/evidence.ts"
+      ]
+    }
+  },
+  "kind": "azurelocal-requirement-evidence-map",
+  "releaseCommit": "83b8edcecdc513a69fc6d8557c91bb236407b382",
+  "note": "All 342 original source entries are retained by ID, including headings and flow connectors. Original index is immutable inventory, not 342 separate acceptance tests. Matrix outcomes and consumer boundaries govern acceptance.",
+  "entries": [
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Azure Local Configurator — detailed design",
+      "id": "outline-L1"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Azure Local Configurator — detailed design",
+      "id": "outline-L3"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Azure Local Configurator — detailed design",
+      "id": "outline-L5"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "1. Start with the user's task",
+      "id": "outline-L7"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "1. Start with the user's task",
+      "id": "outline-L9"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "1. Start with the user's task",
+      "id": "outline-L11"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "1. Start with the user's task",
+      "id": "outline-L13"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L15"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L17"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L18"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L19"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L20"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L21"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L22"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L23"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L24"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L25"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L26"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L27"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L28"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L29"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L30"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L31"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "2. Screen order",
+      "id": "outline-L32"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "3. Project, release and import",
+      "id": "outline-L34"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "3. Project, release and import",
+      "id": "outline-L36"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "3. Project, release and import",
+      "id": "outline-L38"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "3. Project, release and import",
+      "id": "outline-L40"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "3. Project, release and import",
+      "id": "outline-L42"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L44"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L46"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L47"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L48"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L49"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L50"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L51"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L52"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L53"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L55"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "4. Architecture and deployment choices",
+      "id": "outline-L57"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L59"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L61"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L63"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L64"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L65"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L66"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L67"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L68"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L69"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L70"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L71"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L73"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "5. TierPoint management solution",
+      "id": "outline-L75"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L77"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L79"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L81"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L82"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L83"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L84"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "6. Bootstrap solution",
+      "id": "outline-L86"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "7. Azure foundation, identity and security",
+      "id": "outline-L88"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "7. Azure foundation, identity and security",
+      "id": "outline-L90"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "7. Azure foundation, identity and security",
+      "id": "outline-L92"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "7. Azure foundation, identity and security",
+      "id": "outline-L94"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "7. Azure foundation, identity and security",
+      "id": "outline-L96"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "8. Hardware and host networking",
+      "id": "outline-L98"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "8. Hardware and host networking",
+      "id": "outline-L100"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "8. Hardware and host networking",
+      "id": "outline-L102"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "8. Hardware and host networking",
+      "id": "outline-L104"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "9. Storage sources: S2D, SAN and hybrid",
+      "id": "outline-L106"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "S2D source",
+      "id": "outline-L108"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "S2D source",
+      "id": "outline-L110"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L112"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L114"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L116"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L117"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L118"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L119"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L120"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L121"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L122"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L123"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L125"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "SAN source",
+      "id": "outline-L127"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Hybrid source",
+      "id": "outline-L129"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Hybrid source",
+      "id": "outline-L131"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L133"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L135"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L137"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L139"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L140"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L141"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L142"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L143"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L144"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L145"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L146"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L147"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L148"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L150"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L152"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L154"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L155"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L156"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "10. CSVs, provisioning and storage paths",
+      "id": "outline-L158"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "11. Azure Local SDN",
+      "id": "outline-L160"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "11. Azure Local SDN",
+      "id": "outline-L162"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "11. Azure Local SDN",
+      "id": "outline-L164"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "11. Azure Local SDN",
+      "id": "outline-L166"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "11. Azure Local SDN",
+      "id": "outline-L168"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "11. Azure Local SDN",
+      "id": "outline-L170"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "operations",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "12. Workloads, licensing and operations",
+      "id": "outline-L172"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "operations",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "12. Workloads, licensing and operations",
+      "id": "outline-L174"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "operations",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "12. Workloads, licensing and operations",
+      "id": "outline-L176"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "operations",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "12. Workloads, licensing and operations",
+      "id": "outline-L178"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "13. Owned model and automation contracts",
+      "id": "outline-L180"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "13. Owned model and automation contracts",
+      "id": "outline-L182"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "13. Owned model and automation contracts",
+      "id": "outline-L184"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "13. Owned model and automation contracts",
+      "id": "outline-L186"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "13. Owned model and automation contracts",
+      "id": "outline-L188"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L190"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L192"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L194"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L195"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L196"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L197"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L198"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L199"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L200"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L201"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L202"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L203"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L204"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L205"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L206"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L207"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L208"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L209"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L210"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "14. Export menu and package layout",
+      "id": "outline-L212"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "15. Validation and delivery flow",
+      "id": "outline-L214"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "15. Validation and delivery flow",
+      "id": "outline-L216"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "15. Validation and delivery flow",
+      "id": "outline-L218"
+    },
+    {
+      "source": "design/outline.md",
+      "sourceSha256": "4dd8ddf25acd6352a0d0d95316708d4845e699a2cf5b81e534ced3444dc36d05",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "15. Validation and delivery flow",
+      "id": "outline-L220"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Azure Local implementation checklist",
+      "id": "implementation-L1"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Azure Local implementation checklist",
+      "id": "implementation-L3"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design artifacts",
+      "id": "implementation-L5"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design artifacts",
+      "id": "implementation-L7"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design artifacts",
+      "id": "implementation-L8"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design artifacts",
+      "id": "implementation-L9"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design artifacts",
+      "id": "implementation-L10"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L12"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L14"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L15"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L16"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L17"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L18"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Project and user journey",
+      "id": "implementation-L19"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L21"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L23"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L24"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L25"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L26"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L27"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L28"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L29"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L30"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L31"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L32"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L33"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L34"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L35"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L36"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Design and rules",
+      "id": "implementation-L37"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L39"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L41"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L42"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L43"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L44"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L45"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L46"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L47"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L48"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L49"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L50"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "contracts",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Outputs and consumers",
+      "id": "implementation-L51"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L53"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L55"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L56"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L57"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L58"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L59"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L60"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L61"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L62"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L63"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L64"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L65"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L66"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L68"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L69"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L70"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L71"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L72"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L73"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L74"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L75"
+    },
+    {
+      "source": "design/implementation.md",
+      "sourceSha256": "27ff9a83070e5d46ea154a5655cca84faa913d6393774086839d48205ac30067",
+      "evidenceGroup": "delivery",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Acceptance matrix",
+      "id": "implementation-L76"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Reference and contract review",
+      "id": "references-L1"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Reference and contract review",
+      "id": "references-L3"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L5"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L7"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L8"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L9"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L10"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L11"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L13"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L15"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L16"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L17"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Local source baselines",
+      "id": "references-L18"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L20"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L22"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L23"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L24"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L25"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L26"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L27"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L28"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L29"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L30"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Observed contract mismatches",
+      "id": "references-L32"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L34"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L36"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L38"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L39"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L40"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L41"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L42"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Public references",
+      "id": "references-L43"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L45"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L47"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L48"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L49"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L50"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L51"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L52"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L53"
+    },
+    {
+      "source": "design/references.md",
+      "sourceSha256": "38f6ee25b3900d78d5e7bde7f5f1bdff2f1520acb9ee2a64fa260b1b64f4c39f",
+      "evidenceGroup": "support",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "Qualification questions to resolve during implementation",
+      "id": "references-L55"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-title"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-start"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-size"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-scope"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-route"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-mgmt"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-platform"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-storage"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-sdn"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-ops"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-review"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-0"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-1"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-2"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-3"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-4"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-5"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-6"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-7"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-8"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "journey",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "01 — User journey",
+      "id": "flow-page-1-edge-9"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-title"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-start"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-s2d"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-san"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-hybrid"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-csv"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-paths"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-ad"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-local"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-gate"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-portal"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-arm"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-iac"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-0"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-1"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-2"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-3"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-4"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-5"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-6"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-7"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-8"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-9"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-10"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-11"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-12"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "storage",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "02 — Storage and deployment decisions",
+      "id": "flow-page-2-edge-13"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-title"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-management"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-bootstrap"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-deps"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-ready"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-choice"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-no"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-gate"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-blocked"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-nc"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-nets"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-handover"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-0"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-1"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-2"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-3"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-4"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-5"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-6"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-7"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-8"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-9"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "management",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "03 — Management, bootstrap and SDN",
+      "id": "flow-page-3-edge-10"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-title"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-snapshot"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-validate"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-reports"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-findings"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-adapter"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-blocked"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-package"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-zip"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-execute"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-evidence"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-0"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-1"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-2"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-3"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-4"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-5"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-6"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-7"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-8"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-9"
+    },
+    {
+      "source": "design/flows.drawio",
+      "sourceSha256": "b3fcb8cb2837da2146a3062cf67f23fea8107dcd750d5ef4dc179e9e5c157300",
+      "evidenceGroup": "outputs",
+      "review": "Reviewed against the saved scope; application and qualification outcomes are stated in the referenced matrix, not inferred from the source inventory.",
+      "section": "04 — Validation, exports and delivery",
+      "id": "flow-page-4-edge-10"
+    }
+  ],
+  "version": 1,
+  "matrix": "REQUIREMENT_AUDIT.md",
+  "indexSha256": "413e114fba60979e6f1fcb432e56f9d4e2251223fd909fd28744d53d24bd003d"
+}

@@ -1,0 +1,1515 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "const": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#"
+    },
+    "contentVersion": {
+      "const": "1.0.0.0"
+    },
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "adouPath": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "arcNodeResourceIds": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "AzureStackLCMAdminPassword": {
+          "additionalProperties": false,
+          "properties": {
+            "reference": {
+              "additionalProperties": false,
+              "properties": {
+                "keyVault": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "pattern": "^/[sS][uU][bB][sS][cC][rR][iI][pP][tT][iI][oO][nN][sS]/[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}/[rR][eE][sS][oO][uU][rR][cC][eE][gG][rR][oO][uU][pP][sS]/[^/]+/[pP][rR][oO][vV][iI][dD][eE][rR][sS]/[mM][iI][cC][rR][oO][sS][oO][fF][tT]\\.[kK][eE][yY][vV][aA][uU][lL][tT]/[vV][aA][uU][lL][tT][sS]/[a-zA-Z0-9-]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                "secretName": {
+                  "pattern": "^[a-zA-Z0-9-]{1,127}$",
+                  "type": "string"
+                },
+                "secretVersion": {
+                  "pattern": "^[a-fA-F0-9]{32}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyVault",
+                "secretName"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "reference"
+          ],
+          "type": "object"
+        },
+        "AzureStackLCMAdminUsername": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "bitlockerBootVolume": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "bitlockerDataVolumes": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "clusterName": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "maxLength": 15,
+                  "minLength": 3,
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "clusterWitnessStorageAccountName": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "configurationMode": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "Express",
+                    "InfraOnly",
+                    "KeepStorage"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "createNewKeyVault": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "credentialGuardEnforced": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "customLocation": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "defaultGateway": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "deploymentMode": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "Validate",
+                    "Deploy"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "enum": [
+                    "Validate",
+                    "Deploy"
+                  ],
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "diagnosticStorageAccountName": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "dnsServers": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "domainFqdn": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "driftControlEnforced": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "enableStorageAutoIp": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "endingIPAddress": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "episodicDataUpload": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "euLocation": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "hciResourceProviderObjectID": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "intentList": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "adapter": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "adapterPropertyOverrides": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "jumboPacket": {
+                            "type": "string"
+                          },
+                          "networkDirect": {
+                            "type": "string"
+                          },
+                          "networkDirectTechnology": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "overrideAdapterProperty": {
+                        "type": "boolean"
+                      },
+                      "overrideQosPolicy": {
+                        "type": "boolean"
+                      },
+                      "overrideVirtualSwitchConfiguration": {
+                        "type": "boolean"
+                      },
+                      "qosPolicyOverrides": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "bandwidthPercentage_SMB": {
+                            "type": "string"
+                          },
+                          "priorityValue8021Action_Cluster": {
+                            "type": "string"
+                          },
+                          "priorityValue8021Action_SMB": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "trafficType": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "virtualSwitchConfigurationOverrides": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "enableIov": {
+                            "type": "string"
+                          },
+                          "loadBalancingAlgorithm": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "adapter": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "adapterPropertyOverrides": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "jumboPacket": {
+                            "type": "string"
+                          },
+                          "networkDirect": {
+                            "type": "string"
+                          },
+                          "networkDirectTechnology": {
+                            "enum": [
+                              "iWARP",
+                              "RoCEv2",
+                              "RoCE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "jumboPacket",
+                          "networkDirect",
+                          "networkDirectTechnology"
+                        ],
+                        "type": "object"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "overrideAdapterProperty": {
+                        "type": "boolean"
+                      },
+                      "overrideQosPolicy": {
+                        "type": "boolean"
+                      },
+                      "overrideVirtualSwitchConfiguration": {
+                        "type": "boolean"
+                      },
+                      "qosPolicyOverrides": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "bandwidthPercentage_SMB": {
+                            "type": "string"
+                          },
+                          "priorityValue8021Action_Cluster": {
+                            "type": "string"
+                          },
+                          "priorityValue8021Action_SMB": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "bandwidthPercentage_SMB",
+                          "priorityValue8021Action_Cluster",
+                          "priorityValue8021Action_SMB"
+                        ],
+                        "type": "object"
+                      },
+                      "trafficType": {
+                        "items": {
+                          "enum": [
+                            "Management",
+                            "Compute",
+                            "Storage"
+                          ],
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "virtualSwitchConfigurationOverrides": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "enableIov": {
+                            "type": "string"
+                          },
+                          "loadBalancingAlgorithm": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "enableIov",
+                          "loadBalancingAlgorithm"
+                        ],
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "trafficType",
+                      "adapter",
+                      "overrideAdapterProperty",
+                      "overrideQosPolicy",
+                      "overrideVirtualSwitchConfiguration"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "keyVaultName": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "localAdminPassword": {
+          "additionalProperties": false,
+          "properties": {
+            "reference": {
+              "additionalProperties": false,
+              "properties": {
+                "keyVault": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "pattern": "^/[sS][uU][bB][sS][cC][rR][iI][pP][tT][iI][oO][nN][sS]/[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}/[rR][eE][sS][oO][uU][rR][cC][eE][gG][rR][oO][uU][pP][sS]/[^/]+/[pP][rR][oO][vV][iI][dD][eE][rR][sS]/[mM][iI][cC][rR][oO][sS][oO][fF][tT]\\.[kK][eE][yY][vV][aA][uU][lL][tT]/[vV][aA][uU][lL][tT][sS]/[a-zA-Z0-9-]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                "secretName": {
+                  "pattern": "^[a-zA-Z0-9-]{1,127}$",
+                  "type": "string"
+                },
+                "secretVersion": {
+                  "pattern": "^[a-fA-F0-9]{32}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyVault",
+                "secretName"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "reference"
+          ],
+          "type": "object"
+        },
+        "localAdminUserName": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "location": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "logsRetentionInDays": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "maximum": 365,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "namingPrefix": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "pattern": "^[a-zA-Z0-9-]{1,8}$",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "networkingPattern": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "hyperConverged",
+                    "convergedManagementCompute",
+                    "convergedComputeStorage",
+                    "custom"
+                  ],
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "networkingType": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "switchedMultiServerDeployment",
+                    "switchlessMultiServerDeployment",
+                    "singleServerDeployment"
+                  ],
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "partnerCredentiallist": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 0,
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "partnerProperties": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "physicalNodesSettings": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "ipv4Address": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "ipv4Address": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "ipv4Address"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "sbeFamily": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "sbeManifestCreationDate": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "sbeManifestSource": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "sbePublisher": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "sbeVersion": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "securityLevel": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "Recommended",
+                    "Customized"
+                  ],
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "smbClusterEncryption": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "smbSigningEnforced": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "softDeleteRetentionDays": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "startingIPAddress": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "storageAccountType": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "Standard_LRS"
+                  ],
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "storageConnectivitySwitchless": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "storageNetworkList": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "networkAdapterName": {
+                        "type": "string"
+                      },
+                      "storageAdapterIPInfo": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "ipv4Address": {
+                              "type": "string"
+                            },
+                            "physicalNode": {
+                              "type": "string"
+                            },
+                            "subnetMask": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "vlanId": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "networkAdapterName": {
+                        "type": "string"
+                      },
+                      "storageAdapterIPInfo": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "ipv4Address": {
+                              "type": "string"
+                            },
+                            "physicalNode": {
+                              "type": "string"
+                            },
+                            "subnetMask": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "physicalNode",
+                            "ipv4Address",
+                            "subnetMask"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "vlanId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "networkAdapterName",
+                      "vlanId"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "streamingDataClient": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "subnetMask": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "tenantId": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "useDhcp": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "wdacEnforced": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        },
+        "witnessType": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "allOf": [
+                {
+                  "enum": [
+                    "Cloud",
+                    "No Witness"
+                  ],
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "deploymentMode",
+        "keyVaultName",
+        "createNewKeyVault",
+        "softDeleteRetentionDays",
+        "diagnosticStorageAccountName",
+        "logsRetentionInDays",
+        "storageAccountType",
+        "clusterName",
+        "location",
+        "tenantId",
+        "witnessType",
+        "clusterWitnessStorageAccountName",
+        "localAdminUserName",
+        "localAdminPassword",
+        "AzureStackLCMAdminUsername",
+        "AzureStackLCMAdminPassword",
+        "hciResourceProviderObjectID",
+        "arcNodeResourceIds",
+        "domainFqdn",
+        "namingPrefix",
+        "adouPath",
+        "securityLevel",
+        "driftControlEnforced",
+        "credentialGuardEnforced",
+        "smbSigningEnforced",
+        "smbClusterEncryption",
+        "bitlockerBootVolume",
+        "bitlockerDataVolumes",
+        "wdacEnforced",
+        "streamingDataClient",
+        "euLocation",
+        "episodicDataUpload",
+        "configurationMode",
+        "subnetMask",
+        "defaultGateway",
+        "startingIPAddress",
+        "endingIPAddress",
+        "dnsServers",
+        "useDhcp",
+        "physicalNodesSettings",
+        "networkingType",
+        "networkingPattern",
+        "intentList",
+        "storageNetworkList",
+        "storageConnectivitySwitchless",
+        "enableStorageAutoIp",
+        "customLocation",
+        "sbeVersion",
+        "sbeFamily",
+        "sbePublisher",
+        "sbeManifestSource",
+        "sbeManifestCreationDate",
+        "partnerProperties",
+        "partnerCredentiallist"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "$schema",
+    "contentVersion",
+    "parameters"
+  ],
+  "type": "object"
+}

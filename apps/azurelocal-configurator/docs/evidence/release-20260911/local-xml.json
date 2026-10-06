@@ -1,0 +1,27 @@
+[
+  {
+    "pages": 4,
+    "resolvedEdges": 9,
+    "package": "azurelocal-ansible-design"
+  },
+  {
+    "pages": 4,
+    "resolvedEdges": 0,
+    "package": "azurelocal-design"
+  },
+  {
+    "pages": 4,
+    "resolvedEdges": 16,
+    "package": "azurelocal-imported-design"
+  },
+  {
+    "pages": 4,
+    "resolvedEdges": 9,
+    "package": "azurelocal-terraform-design"
+  },
+  {
+    "pages": 4,
+    "resolvedEdges": 11,
+    "package": "azurelocal-toolkit-design"
+  }
+]

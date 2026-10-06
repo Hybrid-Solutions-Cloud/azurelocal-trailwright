@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "deploymentAuthorized": {
+      "const": false
+    },
+    "identity": {
+      "const": "ad"
+    },
+    "infrastructureSha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "kind": {
+      "const": "azurelocal-toolkit-arm-companion"
+    },
+    "projectId": {
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}$",
+      "type": "string"
+    },
+    "projectRevision": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "release": {
+      "const": "2604.0.0"
+    },
+    "runtimeQualified": {
+      "const": false
+    },
+    "scope": {
+      "additionalProperties": false,
+      "properties": {
+        "resourceGroup": {
+          "maxLength": 90,
+          "minLength": 1,
+          "pattern": "^[^/]+$",
+          "type": "string"
+        },
+        "subscription": {
+          "pattern": "^[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subscription",
+        "resourceGroup"
+      ],
+      "type": "object"
+    },
+    "secrets": {
+      "additionalProperties": false,
+      "properties": {
+        "AzureStackLCMAdminPassword": {
+          "additionalProperties": false,
+          "properties": {
+            "reference": {
+              "additionalProperties": false,
+              "properties": {
+                "keyVault": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "pattern": "^/[sS][uU][bB][sS][cC][rR][iI][pP][tT][iI][oO][nN][sS]/[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}/[rR][eE][sS][oO][uU][rR][cC][eE][gG][rR][oO][uU][pP][sS]/[^/]+/[pP][rR][oO][vV][iI][dD][eE][rR][sS]/[mM][iI][cC][rR][oO][sS][oO][fF][tT]\\.[kK][eE][yY][vV][aA][uU][lL][tT]/[vV][aA][uU][lL][tT][sS]/[a-zA-Z0-9-]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                "secretName": {
+                  "pattern": "^[a-zA-Z0-9-]{1,127}$",
+                  "type": "string"
+                },
+                "secretVersion": {
+                  "pattern": "^[a-fA-F0-9]{32}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyVault",
+                "secretName"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "reference"
+          ],
+          "type": "object"
+        },
+        "localAdminPassword": {
+          "additionalProperties": false,
+          "properties": {
+            "reference": {
+              "additionalProperties": false,
+              "properties": {
+                "keyVault": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "pattern": "^/[sS][uU][bB][sS][cC][rR][iI][pP][tT][iI][oO][nN][sS]/[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}/[rR][eE][sS][oO][uU][rR][cC][eE][gG][rR][oO][uU][pP][sS]/[^/]+/[pP][rR][oO][vV][iI][dD][eE][rR][sS]/[mM][iI][cC][rR][oO][sS][oO][fF][tT]\\.[kK][eE][yY][vV][aA][uU][lL][tT]/[vV][aA][uU][lL][tT][sS]/[a-zA-Z0-9-]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                "secretName": {
+                  "pattern": "^[a-zA-Z0-9-]{1,127}$",
+                  "type": "string"
+                },
+                "secretVersion": {
+                  "pattern": "^[a-fA-F0-9]{32}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyVault",
+                "secretName"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "reference"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "localAdminPassword",
+        "AzureStackLCMAdminPassword"
+      ],
+      "type": "object"
+    },
+    "supplements": {
+      "additionalProperties": false,
+      "properties": {
+        "clusterWitnessStorageAccountName": {
+          "allOf": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "configurationMode": {
+          "allOf": [
+            {
+              "enum": [
+                "Express",
+                "InfraOnly",
+                "KeepStorage"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "createNewKeyVault": {
+          "allOf": [
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "networkingPattern": {
+          "allOf": [
+            {
+              "enum": [
+                "hyperConverged",
+                "convergedManagementCompute",
+                "convergedComputeStorage",
+                "custom"
+              ],
+              "type": "string"
+            }
+          ]
+        },
+        "networkingType": {
+          "allOf": [
+            {
+              "enum": [
+                "switchedMultiServerDeployment",
+                "switchlessMultiServerDeployment",
+                "singleServerDeployment"
+              ],
+              "type": "string"
+            }
+          ]
+        },
+        "witnessType": {
+          "allOf": [
+            {
+              "enum": [
+                "Cloud",
+                "No Witness"
+              ],
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "createNewKeyVault",
+        "witnessType",
+        "clusterWitnessStorageAccountName",
+        "configurationMode",
+        "networkingType",
+        "networkingPattern"
+      ],
+      "type": "object"
+    },
+    "templateSha256": {
+      "const": "a95bf9a734cc7433f171a31685193ea053941b24f33111bddc9552ce20195f58"
+    },
+    "toolkitCommit": {
+      "const": "2af2f2a0698bb178e95c9fe5579d955770cb9d60"
+    },
+    "version": {
+      "const": "0.1.0"
+    }
+  },
+  "required": [
+    "kind",
+    "version",
+    "identity",
+    "release",
+    "toolkitCommit",
+    "templateSha256",
+    "infrastructureSha256",
+    "projectId",
+    "projectRevision",
+    "scope",
+    "supplements",
+    "secrets",
+    "deploymentAuthorized",
+    "runtimeQualified"
+  ],
+  "type": "object"
+}
