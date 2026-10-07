@@ -75,6 +75,7 @@ export function createExampleProject(): Project {
       hciResourceProviderObjectId: '00000000-0000-0000-0000-000000000000',
     },
     storage: {
+      driveLayout: { capacity: { media: 'nvme', count: 8, sizeTB: 3.84 }, cache: { media: 'nvme', count: 0, sizeTB: 0 } },
       volumes: [
         { name: 'infrastructure', sizeGiB: 256, resiliency: 'two-way' },
         { name: 'workloads', sizeGiB: 2048, resiliency: 'two-way' },

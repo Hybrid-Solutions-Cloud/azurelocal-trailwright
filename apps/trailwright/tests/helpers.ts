@@ -43,6 +43,7 @@ const compliant: DeepPartial<Project> = {
   security: { backupKeyVaultName: 'kv-backup-example' },
   hardware: { topology: 'standard', witness: 'cloud', nodes: makeNodes(2) },
   operations: { updateMethod: 'portal' },
+  storage: { driveLayout: { capacity: { media: 'nvme', count: 4, sizeTB: 3.84 }, cache: { media: 'nvme', count: 0, sizeTB: 0 } } },
   identity: { mode: 'active-directory', domain: 'example.com', ouPath: 'OU=azl01,DC=example,DC=com', lcmUsername: 'lcmuser01', localAdminUsername: 'azladmin' },
   networking: {
     storage: 'switched',

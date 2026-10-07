@@ -8,6 +8,7 @@ export type ImportPatch = {
   volumes: Project['storage']['volumes'];
   notes?: string;
   name?: string;
+  driveLayout?: Project['storage']['driveLayout'];
 };
 
 export type Conflict = { field: string; current: string; incoming: string };
@@ -90,7 +91,16 @@ export function parseSurveyorPlan(text: string): { ok: true; patch: ImportPatch 
   const appVersion = typeof parsed.appVersion === 'string' ? parsed.appVersion : typeof parsed.surveyorVersion === 'string' ? parsed.surveyorVersion : undefined;
   const summary = `Imported from Surveyor${planName ? ` plan "${planName}"` : ''}${appVersion ? ` (Surveyor ${appVersion})` : ''}${facts.length ? `: ${facts.join('; ')}.` : '.'}`;
   const notes = provenance ? `${provenance}\n${summary}` : summary;
-  return { ok: true, patch: { nodes, volumes, notes, ...(planName ? { name: planName } : {}) } };
+  // Surveyor plans the drives per node: carry them into the drive layout.
+  const media = (v: unknown): 'nvme' | 'ssd' | 'hdd' | undefined => (v === 'nvme' || v === 'ssd' || v === 'hdd' ? v : undefined);
+  const capMedia = media(hardware.capacityMediaType);
+  const driveLayout: ImportPatch['driveLayout'] = capMedia
+    ? {
+        capacity: { media: capMedia, count: Number(hardware.capacityDrivesPerNode) || 0, sizeTB: Number(hardware.capacityDriveSizeTB) || 0 },
+        cache: { media: media(hardware.cacheMediaType) ?? 'nvme', count: Number(hardware.cacheDrivesPerNode) || 0, sizeTB: Number(hardware.cacheDriveSizeTB) || 0 },
+      }
+    : undefined;
+  return { ok: true, patch: { nodes, volumes, notes, ...(planName ? { name: planName } : {}), ...(driveLayout ? { driveLayout } : {}) } };
 }
 // Differences that matter, listed only where the design already holds data, so an empty design previews no conflicts.
 export function previewConflicts(current: Project, patch: ImportPatch): Conflict[] {
@@ -118,7 +128,7 @@ export function applyPatch(current: Project, patch: ImportPatch): Project {
   return projectSchema.parse({
     ...current,
     hardware: { ...current.hardware, nodes: patch.nodes },
-    storage: { ...current.storage, volumes: patch.volumes },
+    storage: { ...current.storage, volumes: patch.volumes, ...(patch.driveLayout ? { driveLayout: patch.driveLayout } : {}) },
     project: { ...current.project, notes },
     // A design still carrying the default name takes the Surveyor plan's name.
     meta: { ...current.meta, name: patch.name && (!current.meta.name || current.meta.name === 'Untitled project') ? patch.name : current.meta.name },

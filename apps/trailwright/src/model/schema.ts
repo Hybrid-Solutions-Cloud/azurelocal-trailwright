@@ -146,6 +146,20 @@ const volumeSchema = z.object({
   resiliency: z.enum(['two-way', 'three-way', 'four-way', 'parity']),
 });
 
+// The drives in every node (the layout is symmetric): capacity drives and, optionally, a cache tier.
+const driveGroupSchema = z.object({
+  media: z.enum(['nvme', 'ssd', 'hdd']),
+  count: z.number().int().min(0).default(0),
+  sizeTB: z.number().min(0).default(0),
+});
+
+const driveLayoutSchema = z
+  .object({
+    capacity: driveGroupSchema.default({ media: 'nvme', count: 0, sizeTB: 0 }),
+    cache: driveGroupSchema.default({ media: 'nvme', count: 0, sizeTB: 0 }),
+  })
+  .default({});
+
 const sanLunSchema = z.object({
   name: z.string(),
   sizeGiB: z.number(),
@@ -156,6 +170,7 @@ const storageSchema = z.object({
   architecture: z.enum(['s2d', 'san', 'hybrid']).default('s2d'),
   volumes: z.array(volumeSchema),
   sanLuns: z.array(sanLunSchema).default([]),
+  driveLayout: driveLayoutSchema,
   // How the deployment creates volumes: Express (infrastructure and workload volumes), InfraOnly, or KeepStorage (existing data drives, single node).
   configurationMode: z.enum(['Express', 'InfraOnly', 'KeepStorage']).default('Express'),
 });
@@ -203,6 +218,13 @@ const provisioningSchema = z
     hardwareSku: z.enum(['', 'lenovo-mx650-v3', 'lenovo-mx650-v4', 'hpe-dl360-gen11', 'dell-ax-750', 'dell-ax-650', 'other']).default(''),
     timeZone: z.string().default(''),
     timeServer: z.string().default(''),
+    // Simplified machine provisioning: the site (created in the portal) and its configuration; the provisioning resource is East US only in the preview.
+    siteName: z.string().default(''),
+    siteResourceGroup: z.string().default(''),
+    proxyServer: z.string().default(''),
+    adminKeyVaultName: z.string().default(''),
+    // The operating system software version chosen for the machines when they are provisioned.
+    osVersion: z.string().default(''),
     // Step 6A (Azure portal) or 6B (ARM template).
     deployMethod: z.enum(['portal', 'arm']).default('portal'),
   })

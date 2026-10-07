@@ -97,6 +97,7 @@ describe('a real Surveyor 2.8.0 project file', () => {
       { name: 'Volume2', sizeGiB: Math.round(4.44 * 1024), resiliency: 'two-way' },
     ]);
     expect(result.patch.name).toBe('Azure Local plan');
+    expect(result.patch.driveLayout).toEqual({ capacity: { media: 'nvme', count: 4, sizeTB: 3.84 }, cache: { media: 'nvme', count: 0, sizeTB: 0 } });
     expect(result.patch.notes).toContain('Surveyor 2.8.0');
     expect(result.patch.notes).toContain('4 capacity drives per node of 3.84 TB (nvme)');
   });

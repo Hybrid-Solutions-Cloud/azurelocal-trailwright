@@ -67,4 +67,49 @@ export const provisioningRules: Rule[] = [
         : [{ id: 'PRV-007', severity: 'warning', field: 'storage.sanLuns', message: 'A disaggregated deployment needs a LUN of at least 250 GB for the infrastructure volume and a LUN of at least 20 GB for performance history.', learnUrl: DA_OS }];
     },
   },
-];
+  {
+    id: 'PRV-008',
+    learnUrl: SMP,
+    check: (p) =>
+      p.provisioning.osInstall === 'simplified' && (!p.provisioning.siteName.trim() || !p.provisioning.siteResourceGroup.trim())
+        ? [{ id: 'PRV-008', severity: 'warning', field: 'provisioning.siteName', message: 'Create the site in the portal first and note its resource group: the machines are provisioned into that resource group.', learnUrl: SMP }]
+        : [],
+  },
+  {
+    id: 'PRV-009',
+    learnUrl: SMP,
+    check: (p) =>
+      p.provisioning.osInstall === 'simplified'
+        ? p.hardware.nodes
+            .filter((n) => !(n.serial ?? '').trim())
+            .map((n) => ({ id: 'PRV-009', severity: 'error' as const, field: 'provisioning.machines', message: `${n.name || 'A machine'} needs its serial number: the ownership voucher is a .pem file named after it, and the Configurator app connects to <serial number>.local.`, learnUrl: SMP }))
+        : [],
+  },
+  {
+    id: 'PRV-010',
+    learnUrl: SMP,
+    check: (p) =>
+      p.provisioning.osInstall === 'simplified' && !p.provisioning.adminKeyVaultName.trim()
+        ? [{ id: 'PRV-010', severity: 'warning', field: 'provisioning.adminKeyVaultName', message: 'The site configuration includes a Key Vault for the administrator credentials.', learnUrl: SMP }]
+        : [],
+  },
+  {
+    id: 'PRV-011',
+    learnUrl: SMP,
+    check: (p) => {
+      const url = p.provisioning.proxyServer.trim().toLowerCase();
+      if (p.provisioning.osInstall !== 'simplified' || !url) return [];
+      const host = /\/\/([^:/]+)/.exec(url)?.[1] ?? url;
+      return url.endsWith('.pac') || host.endsWith('.local')
+        ? [{ id: 'PRV-011', severity: 'error', field: 'provisioning.proxyServer', message: 'Only non-authenticated proxies are supported; PAC files and proxy addresses on a .local domain are not.', learnUrl: SMP }]
+        : [];
+    },
+  },
+  {
+    id: 'PRV-012',
+    learnUrl: SMP,
+    check: (p) =>
+      p.provisioning.osInstall === 'simplified' && !p.provisioning.osVersion.trim()
+        ? [{ id: 'PRV-012', severity: 'warning', field: 'provisioning.osVersion', message: 'Choose the software version the machines are provisioned with.', learnUrl: SMP }]
+        : [],
+  },];
