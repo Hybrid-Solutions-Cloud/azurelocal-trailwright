@@ -42,8 +42,11 @@ describe('switch port plan', () => {
     expect(csv[0]).toBe('Switch,Node,Port,Role,Mode,VLANs,MTU,QoS,Note');
     expect(csv).toHaveLength(1 + 2 * 4);
   });
-  it('is empty without cards', () => {
-    expect(switchPortRows(project({}))).toEqual([]);
+  it('falls back to the intent adapters without a card inventory, and is empty without intents', () => {
+    const rows = switchPortRows(project({ hardware: { nodes: makeNodes(1) } }));
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.every((r) => r.role.startsWith('intent:'))).toBe(true);
+    expect(switchPortRows(project({ networking: { intents: [] } }))).toEqual([]);
   });
   it('uses access mode, the validated VLANs and MTU 9216 for disaggregated iSCSI', () => {
     const cards = presetCards(3, 2, 25, 'none');

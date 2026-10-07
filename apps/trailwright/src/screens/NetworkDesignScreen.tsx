@@ -8,6 +8,7 @@ import { FindingsPanel } from '../components/FindingsPanel';
 import { intentsFor, patternFor, portsRequired, storageSubnetsFor } from '../network/patterns';
 import { buildIntents, disaggregatedIntents, groupingLabels, groupingSupported, portChoices, standalonePorts, storageKind, disaggregatedPortsNeeded } from '../network/intents';
 import { usesS2d } from '../rules/types';
+import { TopologyDiagram } from '../components/TopologyDiagram';
 import { PortPlanner } from '../components/PortPlanner';
 
 const storageOptions = [
@@ -164,6 +165,10 @@ export const NetworkDesignScreen: FC = () => {
         </div>
       )}
       <PortPlanner />
+      <div>
+        <h2 className="mb-3 text-lg font-medium text-gray-800">Cabling diagram</h2>
+        <TopologyDiagram />
+      </div>
 
       {pattern && pattern.storageSubnets > 0 && (
         <div className="space-y-3">
