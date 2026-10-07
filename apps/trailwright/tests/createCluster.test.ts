@@ -9,7 +9,7 @@ import { makeIntent } from '../src/model/defaults';
 // The contract: Microsoft's own templates (tests/fixtures, from azure-quickstart-templates, MIT).
 type TemplateParam = { type: string; allowedValues?: unknown[]; defaultValue?: unknown; minLength?: number };
 const template = (name: TemplateName): Record<string, TemplateParam> => {
-  const file = { 'create-cluster': 'create-cluster.azuredeploy.json', 'create-adless-cluster': 'create-adless-cluster.azuredeploy.json', 'create-cluster-san': 'san-azuredeploy.json', 'create-cluster-adless-san': 'adless-san-azuredeploy.json', 'create-cluster-rac-enabled': 'rac-azuredeploy.json', 'create-rack-aware-adless-cluster-external-dns': 'rac-adless-azuredeploy.json', 'create-cluster-rac-enabled-disconnected': 'rac-disconnected-azuredeploy.json' }[name];
+  const file = { 'create-cluster': 'create-cluster.azuredeploy.json', 'create-adless-cluster': 'create-adless-cluster.azuredeploy.json', 'create-cluster-san': 'san-azuredeploy.json', 'create-cluster-adless-san': 'adless-san-azuredeploy.json', 'create-cluster-rac-enabled': 'rac-azuredeploy.json', 'create-rack-aware-adless-cluster-external-dns': 'rac-adless-azuredeploy.json', 'create-cluster-rac-enabled-disconnected': 'rac-disconnected-azuredeploy.json', 'create-cluster-for-usgov': 'usgov-azuredeploy.json' }[name];
   return (JSON.parse(readFileSync(resolve(__dirname, 'fixtures', file), 'utf8')) as { parameters: Record<string, TemplateParam> }).parameters;
 };
 
@@ -57,6 +57,12 @@ const sanLocalVariant = (): Project => {
   p.networking = { ...p.networking, clusterSubnets: ['10.10.100.0/24', '10.10.101.0/24'] };
   return p;
 };
+const usgovVariant = (): Project => {
+  const p = adVariant();
+  p.deployment = { ...p.deployment, cloud: 'government' };
+  p.landingZone = { ...p.landingZone, region: 'usgovvirginia' };
+  return p;
+};
 const racVariant = (): Project => withRacks(adVariant());
 const racLocalVariant = (): Project => withRacks(createExampleProject());
 const racDisconnectedVariant = (): Project => {
@@ -75,6 +81,7 @@ describe.each([
   ['rack-aware', racVariant, 'create-cluster-rac-enabled' as TemplateName],
   ['rack-aware with local identity', racLocalVariant, 'create-rack-aware-adless-cluster-external-dns' as TemplateName],
   ['rack-aware, disconnected', racDisconnectedVariant, 'create-cluster-rac-enabled-disconnected' as TemplateName],
+  ['US Government', usgovVariant, 'create-cluster-for-usgov' as TemplateName],
 ])('the ARM parameters export for %s matches the Microsoft template', (_label, make, name) => {
   const p = make();
   const params = buildCreateClusterParams(p);

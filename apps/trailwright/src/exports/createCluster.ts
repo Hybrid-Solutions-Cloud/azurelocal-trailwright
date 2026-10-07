@@ -15,7 +15,8 @@ export type TemplateName =
   | 'create-cluster-adless-san'
   | 'create-cluster-rac-enabled'
   | 'create-rack-aware-adless-cluster-external-dns'
-  | 'create-cluster-rac-enabled-disconnected';
+  | 'create-cluster-rac-enabled-disconnected'
+  | 'create-cluster-for-usgov';
 export type Params = Record<string, unknown>;
 
 export const SECURE_PARAMS = ['localAdminPassword', 'AzureStackLCMAdminPassword'] as const;
@@ -25,8 +26,12 @@ export function templateFor(p: Project): TemplateName {
   const local = p.identity.mode === 'local-identity-key-vault';
   if (p.deployment.architecture === 'disaggregated') return local ? 'create-cluster-adless-san' : 'create-cluster-san';
   if (p.hardware.topology === 'rack-aware') return p.deployment.mode === 'disconnected' ? 'create-cluster-rac-enabled-disconnected' : local ? 'create-rack-aware-adless-cluster-external-dns' : 'create-cluster-rac-enabled';
+  if (!local && p.deployment.cloud === 'government') return 'create-cluster-for-usgov';
   return local ? 'create-adless-cluster' : 'create-cluster';
 }
+
+// The name of the LCM password parameter: Microsoft's US Government template spells it with three s.
+export const lcmPasswordParam = (p: Project): string => (templateFor(p) === 'create-cluster-for-usgov' ? 'AzureStackLCMAdminPasssword' : 'AzureStackLCMAdminPassword');
 
 // Rack-aware: the machines of each rack. A machine without a zone goes to Zone1 in the first half and Zone2 in the second.
 export function zonesOf(p: Project): { localAvailabilityZoneName: string; nodes: string[] }[] {
@@ -225,7 +230,13 @@ export function buildCreateClusterParams(p: Project, mode: 'Validate' | 'Deploy'
     // The disconnected rack-aware template has no diagnostic storage or SBE parameters, and takes a file share witness.
     for (const k of ['diagnosticStorageAccountName', 'logsRetentionInDays', 'storageAccountType', 'clusterWitnessStorageAccountName', 'sbeVersion', 'sbeFamily', 'sbePublisher', 'sbeManifestSource', 'sbeManifestCreationDate', 'partnerProperties', 'partnerCredentiallist']) delete params[k];
     Object.assign(params, { witnessType: 'FileShare', witnessPath: p.hardware.witnessPath, keyVaultSuffix: `.vault.${p.disconnected.domainSuffix}`, edgeDevicesBatchSize: 8 });
-  }  return params;
+  }
+  if (templateFor(p) === 'create-cluster-for-usgov') {
+    // Microsoft's US Government template names the LCM password parameter with three s.
+    const { AzureStackLCMAdminPassword, ...rest } = params;
+    return { ...rest, AzureStackLCMAdminPasssword: AzureStackLCMAdminPassword ?? null };
+  }
+  return params;
 }
 
 // The ARM deployment parameters file: Microsoft's format, parameters wrapped in value.
@@ -248,7 +259,7 @@ function bicepValue(v: unknown, indent = 0): string {
   return String(v);
 }
 
-const ENV_VAR: Record<string, string> = { localAdminPassword: 'AZLOCAL_LOCAL_ADMIN_PASSWORD', AzureStackLCMAdminPassword: 'AZLOCAL_LCM_PASSWORD' };
+const ENV_VAR: Record<string, string> = { localAdminPassword: 'AZLOCAL_LOCAL_ADMIN_PASSWORD', AzureStackLCMAdminPassword: 'AZLOCAL_LCM_PASSWORD', AzureStackLCMAdminPasssword: 'AZLOCAL_LCM_PASSWORD' };
 
 // The same values as a .bicepparam file that uses the template next to it; secure values come from environment variables.
 export function buildBicepParamFile(p: Project, mode: 'Validate' | 'Deploy' = 'Validate'): string {

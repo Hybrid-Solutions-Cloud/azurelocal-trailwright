@@ -11,3 +11,4 @@ The ARM templates here are copied from the Azure quickstart templates repository
 | rac-azuredeploy.json | create-cluster-rac-enabled (rack-aware, Active Directory) |
 | rac-adless-azuredeploy.json | create-rack-aware-adless-cluster-external-dns (rack-aware, local identity) |
 | rac-disconnected-azuredeploy.json | create-cluster-rac-enabled-disconnected (rack-aware, disconnected operations) |
+| usgov-azuredeploy.json | create-cluster-for-usgov (US Government cloud; its LCM password parameter is spelled AzureStackLCMAdminPasssword) |
