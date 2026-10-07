@@ -64,7 +64,7 @@ export const ReviewScreen: FC = () => {
       <div className="space-y-3">
         <h2 className="text-lg font-medium text-gray-800">Export</h2>
         <div className="flex flex-wrap gap-2">
-          {exportKinds.map((kind) => (
+          {exportKinds.filter((kind) => kind.available?.(project) ?? true).map((kind) => (
             <button key={kind.id} type="button" className={button} onClick={() => runExport(kind)}>
               {kind.label}
             </button>

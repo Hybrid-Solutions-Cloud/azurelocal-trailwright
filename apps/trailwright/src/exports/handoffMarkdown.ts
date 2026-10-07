@@ -68,6 +68,11 @@ export function buildHandoffMarkdown(p: Project): string {
     out.push(...table(['Name', 'VLAN', 'Address prefix', 'Gateway', 'DNS servers', 'IP pool'], p.sdn.logicalNetworks.map((l) => [l.name, l.vlan, l.addressPrefix, l.gateway, l.dnsServers.join(', '), l.poolStart && l.poolEnd ? `${l.poolStart} - ${l.poolEnd}` : ''])));
   }
 
+  if (p.deployment.mode === 'disconnected') {
+    const dd = p.disconnected;
+    out.push('## Disconnected operations', '', `- Role: ${dd.role === 'management' ? 'management cluster (hosts the control plane)' : 'workload cluster'}`, `- External domain suffix: ${dd.domainSuffix} (portal at portal.${dd.domainSuffix})`, `- Ingress: ${dd.ingressIp}/${dd.ingressPrefixLength}, gateway ${dd.ingressGateway}, DNS ${dd.dnsServer}`, `- Management endpoint: ${dd.managementIp}/${dd.managementPrefixLength}`, `- Identity: AD FS ${dd.authority}, client ${dd.clientId}, root operator ${dd.rootOperatorUpn}, LDAP ${dd.ldapServer}:${dd.ldaps ? 3269 : 3268}, sync group ${dd.syncGroupIdentifier}`, `- Operator subscription: ${dd.operatorSubscriptionName}; resource group ${dd.resourceGroup}`, '', 'The deployment script is exported as a PowerShell file; certificate and LDAP passwords are asked for when it runs.', '');
+  }
+
   out.push('## Outbound connectivity', '', `- Path: ${p.connectivity.path}`);
   if (p.connectivity.proxyUrl) out.push(`- Proxy: ${p.connectivity.proxyUrl}`);
   if (p.connectivity.arcGatewayName) out.push(`- Arc gateway: ${p.connectivity.arcGatewayName}`);

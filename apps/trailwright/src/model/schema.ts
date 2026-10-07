@@ -311,6 +311,31 @@ const sdnSchema = z
   })
   .default({});
 
+// Disconnected operations (air-gapped): the control plane appliance, its ingress and management endpoints, identity and certificates.
+const disconnectedSchema = z
+  .object({
+    role: z.enum(['management', 'workload']).default('management'),
+    basePath: z.string().default('C:\\AzureLocalDisconnectedOperations'),
+    domainSuffix: z.string().default(''),
+    ingressIp: z.string().default(''),
+    ingressGateway: z.string().default(''),
+    ingressPrefixLength: z.number().int().min(8).max(30).default(24),
+    dnsServer: z.string().default(''),
+    managementIp: z.string().default(''),
+    managementPrefixLength: z.number().int().min(8).max(30).default(24),
+    timeServers: z.string().default(''),
+    authority: z.string().default(''),
+    clientId: z.string().default(''),
+    rootOperatorUpn: z.string().default(''),
+    ldapServer: z.string().default(''),
+    ldaps: z.boolean().default(true),
+    syncGroupIdentifier: z.string().default(''),
+    operatorSubscriptionName: z.string().default('Operator subscription'),
+    resourceGroup: z.string().default('azurelocal-management-cluster'),
+    internalCa: z.boolean().default(false),
+  })
+  .default({});
+
 const findingSchema = z.object({
   id: z.string(),
   severity: z.enum(['error', 'warning', 'info']),
@@ -326,6 +351,7 @@ export const projectSchema = z.object({
   infrastructure: infrastructureSchema,
   security: securitySchema,
   sdn: sdnSchema,
+  disconnected: disconnectedSchema,
   provisioning: provisioningSchema,
   // Steps the person has confirmed (the steps that carry a confirm gate).
   confirmed: z.array(z.string()).default([]),

@@ -44,6 +44,7 @@ export const steps: Step[] = [
   { path: 'infrastructure', title: 'Management network', group: 'Network', visible: always, fields: ['infrastructure', 'hardware.nodes'], gate: true },
   { path: 'sdn', title: 'Software defined networking', group: 'Network', visible: always, fields: ['sdn'] },
   { path: 'connectivity', title: 'Outbound connectivity', group: 'Connectivity', visible: always, fields: ['connectivity'] },
+  { path: 'disconnected', title: 'Disconnected operations', group: 'Connectivity', visible: (p) => p.deployment.mode === 'disconnected', hiddenBecause: 'Disconnected operations apply only when the connectivity mode is disconnected.', fields: ['disconnected'] },
   { path: 'identity', title: 'Identity', group: 'Identity', visible: always, fields: ['identity'] },
   { path: 'security', title: 'Security', group: 'Deployment', visible: always, fields: ['security'] },
   { path: 'provisioning', title: 'Provisioning and deployment method', group: 'Deployment', visible: always, fields: ['provisioning'] },

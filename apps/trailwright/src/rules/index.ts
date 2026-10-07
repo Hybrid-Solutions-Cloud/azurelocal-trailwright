@@ -16,6 +16,7 @@ import { s2dRules } from './s2d';
 import { portRules } from './ports';
 import { disaggregatedRules } from './disaggregated';
 import { sdnRules } from './sdn';
+import { disconnectedRules } from './disconnected';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -34,6 +35,7 @@ export const rules: Rule[] = [
   ...portRules,
   ...disaggregatedRules,
   ...sdnRules,
+  ...disconnectedRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.
