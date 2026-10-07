@@ -58,6 +58,14 @@ const ipPlanSchema = z.object({
 
 const networkingSchema = z.object({
   storage: z.enum(['switched', 'switchless']),
+  // Top-of-rack switches for north-south traffic, how storage shares the ports, and links between switchless nodes.
+  torSwitches: z.union([z.literal(1), z.literal(2)]).default(2),
+  storageLayout: z.enum(['dedicated', 'converged']).default('dedicated'),
+  switchlessLinks: z.enum(['single', 'dual']).default('dual'),
+  // Physical network ports per node, and whether Network ATC assigns the storage IP addresses.
+  portsPerNode: z.number().int().min(1).max(16).default(4),
+  storageAutoIp: z.boolean().default(true),
+  storageSubnets: z.array(z.string()).default([]),
   vlans: z.array(vlanSchema),
   intents: z.array(intentSchema),
   ipPlan: z.array(ipPlanSchema),

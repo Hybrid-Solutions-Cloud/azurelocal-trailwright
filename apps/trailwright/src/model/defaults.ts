@@ -10,7 +10,7 @@ export function createEmptyProject(name: string): Project {
     project: { customer: '', owner: '', notes: '' },
     hardware: { topology: 'standard', nodes: [], witness: 'none' },
     identity: { mode: 'local-identity-key-vault' },
-    networking: { storage: 'switched', vlans: [], intents: [], ipPlan: [] },
+    networking: { storage: 'switched', torSwitches: 2, storageLayout: 'dedicated', switchlessLinks: 'dual', portsPerNode: 4, storageAutoIp: true, storageSubnets: [], vlans: [], intents: [], ipPlan: [] },
     connectivity: { path: 'direct', arcGatewayName: '', privatePath: { transport: '', virtualNetwork: '', workloadSubnet: '', firewallSubnet: '', firewallPrivateIp: '', firewallPort: '', arcPrivateLinkScopeOnNetwork: false, proxyBypass: '' } },
     landingZone: { subscriptionName: '', resourceGroup: '', keyVaultName: '', region: 'eastus' },
     storage: { architecture: 's2d', volumes: [], sanLuns: [] },

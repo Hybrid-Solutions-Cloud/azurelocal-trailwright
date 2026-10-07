@@ -32,9 +32,7 @@ test('a SAN design drops the drive and storage-network questions', async ({ page
   await step(page, 'Hardware and topology').click();
   await expect(page.getByLabel('Node 1 drives')).toHaveCount(0);
 
-  await step(page, 'Networking').click();
-  await expect(page.getByText('Storage runs on the SAN')).toBeVisible();
-  await expect(page.getByRole('radio', { name: 'Switchless' })).toHaveCount(0);
+  await expect(step(page, 'Network design')).toHaveCount(0);
 });
 
 test('the region list offers only Azure Local regions', async ({ page }) => {

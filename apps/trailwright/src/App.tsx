@@ -12,6 +12,7 @@ import { DeploymentScreen } from './screens/DeploymentScreen';
 import { HardwareScreen } from './screens/HardwareScreen';
 import { IdentityScreen } from './screens/IdentityScreen';
 import { NetworkingScreen } from './screens/NetworkingScreen';
+import { NetworkDesignScreen } from './screens/NetworkDesignScreen';
 import { ConnectivityScreen } from './screens/ConnectivityScreen';
 import { LandingZoneScreen } from './screens/LandingZoneScreen';
 import { StorageScreen } from './screens/StorageScreen';
@@ -24,6 +25,7 @@ const built: Record<string, JSX.Element> = {
   hardware: <HardwareScreen />,
   identity: <IdentityScreen />,
   networking: <NetworkingScreen />,
+  'network-design': <NetworkDesignScreen />,
   connectivity: <ConnectivityScreen />,
   'landing-zone': <LandingZoneScreen />,
   storage: <StorageScreen />,

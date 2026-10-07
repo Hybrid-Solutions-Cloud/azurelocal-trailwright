@@ -1,6 +1,6 @@
 import { projectSchema, type Project } from '../model/schema';
 
-// The bundled example: a two-node cluster with Local Identity and Key Vault, three Network ATC intents,
+// The bundled example: a two-node cluster with Local Identity and Key Vault, the two-node switched non-converged reference pattern (two intents),
 // a cloud witness and direct egress without an Arc gateway. Every name is a neutral placeholder.
 export function createExampleProject(): Project {
   return projectSchema.parse({
@@ -22,15 +22,20 @@ export function createExampleProject(): Project {
     identity: { mode: 'local-identity-key-vault', keyVaultName: 'kv-example-azl-001' },
     networking: {
       storage: 'switched',
+      torSwitches: 2,
+      storageLayout: 'dedicated',
+      switchlessLinks: 'dual',
+      portsPerNode: 4,
+      storageAutoIp: true,
+      storageSubnets: [],
       vlans: [
         { name: 'Management', id: 100 },
         { name: 'Storage 1', id: 711 },
         { name: 'Storage 2', id: 712 },
       ],
       intents: [
-        { name: 'Management', traffic: ['management'], adapters: ['mgmt1', 'mgmt2'] },
-        { name: 'Compute', traffic: ['compute'], adapters: ['cmp1', 'cmp2'] },
-        { name: 'Storage', traffic: ['storage'], adapters: ['stor1', 'stor2'] },
+        { name: 'Management_Compute', traffic: ['management', 'compute'], adapters: ['pNIC01', 'pNIC02'] },
+        { name: 'Storage', traffic: ['storage'], adapters: ['pNIC03', 'pNIC04'] },
       ],
       ipPlan: [
         { name: 'Management', cidr: '192.0.2.0/24' },

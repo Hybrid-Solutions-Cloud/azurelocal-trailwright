@@ -3,13 +3,8 @@ import { useProjectStore } from '../model/store';
 import type { Networking } from '../model/schema';
 import { FindingsPanel } from '../components/FindingsPanel';
 import { NumberInput, TextInput } from '../components/Field';
-import { ChoiceCards } from '../components/ChoiceCards';
 import { usesS2d } from '../rules/types';
 
-const storageOptions = [
-  { value: 'switched', label: 'Switched', description: 'Storage traffic goes through the top-of-rack switches.' },
-  { value: 'switchless', label: 'Switchless', description: 'Nodes connect directly for storage. 2, 3 or 4 nodes only.' },
-];
 
 const trafficTypes = ['management', 'compute', 'storage'] as const;
 type Traffic = (typeof trafficTypes)[number];
@@ -43,11 +38,6 @@ export const NetworkingScreen: FC = () => {
     <section className="panel space-y-8">
       <h1 className="text-2xl font-semibold text-gray-900">Networking</h1>
 
-      {usesS2d(project) ? (
-        <ChoiceCards name="storage-connectivity" legend="Storage connectivity" value={net.storage} onChange={(v) => update({ storage: v as Networking['storage'] })} choices={storageOptions} />
-      ) : (
-        <p className="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">Storage runs on the SAN (Fibre Channel), so there is no storage network or storage intent to design.</p>
-      )}
 
       <div>
         <h2 className="mb-3 text-lg font-medium text-gray-800">VLANs</h2>
@@ -130,7 +120,7 @@ export const NetworkingScreen: FC = () => {
         </button>
       </div>
 
-      <FindingsPanel prefixes={['networking']} />
+      <FindingsPanel prefixes={['networking.intents', 'networking.vlans', 'networking.ipPlan']} />
     </section>
   );
 };
