@@ -30,12 +30,12 @@ export const ReviewScreen: FC = () => {
     }
   };
 
-  const button = 'rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100';
+  const button = 'action-secondary';
 
   return (
-    <section className="space-y-8 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Review and export</h1>
-      <p role="status" className="text-sm text-slate-700">
+    <section className="panel space-y-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Review and export</h1>
+      <p role="status" className="text-sm text-gray-700">
         {count('error')} errors, {count('warning')} warnings, {count('info')} information
       </p>
 
@@ -45,10 +45,10 @@ export const ReviewScreen: FC = () => {
           if (list.length === 0) return null;
           return (
             <div key={severity}>
-              <h2 className="mb-2 text-lg font-medium text-slate-800">{title}</h2>
+              <h2 className="mb-2 text-lg font-medium text-gray-800">{title}</h2>
               <ul className="space-y-2">
                 {list.map((f) => (
-                  <li key={`${f.id}-${f.field}`} className="text-sm text-slate-800">
+                  <li key={`${f.id}-${f.field}`} className="text-sm text-gray-800">
                     <code className="text-xs">{f.field}</code> {f.message}{' '}
                     <a href={f.learnUrl} target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">
                       Microsoft Learn
@@ -62,7 +62,7 @@ export const ReviewScreen: FC = () => {
       </div>
 
       <div className="space-y-3">
-        <h2 className="text-lg font-medium text-slate-800">Export</h2>
+        <h2 className="text-lg font-medium text-gray-800">Export</h2>
         <div className="flex flex-wrap gap-2">
           {exportKinds.map((kind) => (
             <button key={kind.id} type="button" className={button} onClick={() => runExport(kind)}>
@@ -74,7 +74,7 @@ export const ReviewScreen: FC = () => {
       </div>
 
       <div className="space-y-3">
-        <h2 className="text-lg font-medium text-slate-800">Import</h2>
+        <h2 className="text-lg font-medium text-gray-800">Import</h2>
         <ImportPanel />
       </div>
     </section>

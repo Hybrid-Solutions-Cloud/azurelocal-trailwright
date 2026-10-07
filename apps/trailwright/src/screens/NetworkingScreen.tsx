@@ -14,7 +14,7 @@ const storageOptions = [
 const trafficTypes = ['management', 'compute', 'storage'] as const;
 type Traffic = (typeof trafficTypes)[number];
 
-const buttonClass = 'mt-3 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700';
+const buttonClass = 'action mt-3';
 const removeClass = 'text-sm font-medium text-red-700 hover:underline';
 
 export const NetworkingScreen: FC = () => {
@@ -40,17 +40,17 @@ export const NetworkingScreen: FC = () => {
   const removeRange = (i: number) => update({ ipPlan: net.ipPlan.filter((_, k) => k !== i) });
 
   return (
-    <section className="space-y-8 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Networking</h1>
+    <section className="panel space-y-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Networking</h1>
 
       {usesS2d(project) ? (
         <ChoiceCards name="storage-connectivity" legend="Storage connectivity" value={net.storage} onChange={(v) => update({ storage: v as Networking['storage'] })} choices={storageOptions} />
       ) : (
-        <p className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">Storage runs on the SAN (Fibre Channel), so there is no storage network or storage intent to design.</p>
+        <p className="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">Storage runs on the SAN (Fibre Channel), so there is no storage network or storage intent to design.</p>
       )}
 
       <div>
-        <h2 className="mb-3 text-lg font-medium text-slate-800">VLANs</h2>
+        <h2 className="mb-3 text-lg font-medium text-gray-800">VLANs</h2>
         <ul className="space-y-3">
           {net.vlans.map((vlan, i) => (
             <li key={i} className="flex flex-wrap items-end gap-4">
@@ -68,10 +68,10 @@ export const NetworkingScreen: FC = () => {
       </div>
 
       <div>
-        <h2 className="mb-3 text-lg font-medium text-slate-800">Network ATC intents</h2>
+        <h2 className="mb-3 text-lg font-medium text-gray-800">Network ATC intents</h2>
         <ul className="space-y-4">
           {net.intents.map((intent, i) => (
-            <li key={i} className="rounded-md border border-slate-200 p-4">
+            <li key={i} className="rounded-md border border-gray-200 p-4">
               <div className="mb-3 flex flex-wrap items-end gap-4">
                 <TextInput id={`intent-${i}-name`} label={`Intent ${i + 1} name`} value={intent.name} onChange={(name) => updateIntent(i, { name })} />
                 <TextInput
@@ -86,7 +86,7 @@ export const NetworkingScreen: FC = () => {
                 </button>
               </div>
               <fieldset>
-                <legend className="mb-2 text-sm font-medium text-slate-700">Traffic types of intent {i + 1}</legend>
+                <legend className="mb-2 text-sm font-medium text-gray-700">Traffic types of intent {i + 1}</legend>
                 <div className="flex gap-6">
                   {trafficTypes.filter((type) => type !== 'storage' || usesS2d(project)).map((type) => (
                     <div key={type} className="flex items-center gap-2">
@@ -95,9 +95,9 @@ export const NetworkingScreen: FC = () => {
                         type="checkbox"
                         checked={intent.traffic.includes(type)}
                         onChange={() => toggleTraffic(i, type)}
-                        className="h-4 w-4 rounded border-slate-300"
+                        className="h-4 w-4 rounded border-gray-300"
                       />
-                      <label htmlFor={`intent-${i}-traffic-${type}`} className="text-sm capitalize text-slate-700">
+                      <label htmlFor={`intent-${i}-traffic-${type}`} className="text-sm capitalize text-gray-700">
                         {type}
                       </label>
                     </div>
@@ -113,7 +113,7 @@ export const NetworkingScreen: FC = () => {
       </div>
 
       <div>
-        <h2 className="mb-3 text-lg font-medium text-slate-800">IP plan</h2>
+        <h2 className="mb-3 text-lg font-medium text-gray-800">IP plan</h2>
         <ul className="space-y-3">
           {net.ipPlan.map((range, i) => (
             <li key={i} className="flex flex-wrap items-end gap-4">

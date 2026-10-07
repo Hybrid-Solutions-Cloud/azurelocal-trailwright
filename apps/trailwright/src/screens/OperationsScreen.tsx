@@ -17,13 +17,13 @@ export const OperationsScreen: FC = () => {
   const ops = project.operations;
 
   return (
-    <section className="space-y-6 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Operations</h1>
+    <section className="panel space-y-6">
+      <h1 className="text-2xl font-semibold text-gray-900">Operations</h1>
       <ul className="space-y-3">
         {items.map(({ key, label }) => (
           <li key={key} className="flex items-center gap-3">
             <input id={`ops-${key}`} type="checkbox" checked={ops[key]} onChange={(e) => setSection('operations', { ...ops, [key]: e.target.checked })} />
-            <label htmlFor={`ops-${key}`} className="text-sm font-medium text-slate-700">
+            <label htmlFor={`ops-${key}`} className="text-sm font-medium text-gray-700">
               {label}
             </label>
           </li>

@@ -7,7 +7,7 @@ import { applyPatch, parseSurveyorPlan, previewConflicts, type ImportPatch } fro
 
 type Pending = { mode: 'project'; project: Project } | { mode: 'surveyor'; patch: ImportPatch };
 
-const button = 'rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100';
+const button = 'action-secondary';
 
 // Open a Surveyor plan or a saved Trailwright project. Nothing is applied until the person confirms.
 export const ImportPanel: FC = () => {
@@ -37,13 +37,13 @@ export const ImportPanel: FC = () => {
 
   return (
     <div className="space-y-3">
-      <label htmlFor="import-file" className="block text-sm font-medium text-slate-700">
+      <label htmlFor="import-file" className="block text-sm font-medium text-gray-700">
         Open a Surveyor plan or a Trailwright project (JSON)
       </label>
       <input id="import-file" type="file" accept=".json,application/json" onChange={(e) => void onFile(e)} />
 
       {pending?.mode === 'project' && (
-        <div className="space-y-2 rounded-md border border-slate-200 p-4">
+        <div className="space-y-2 rounded-md border border-gray-200 p-4">
           <p className="text-sm">Replace the current design with &ldquo;{pending.project.meta.name}&rdquo;?</p>
           <div className="flex gap-2">
             <button type="button" className={button} onClick={() => { replaceProject(pending.project); setPending(null); }}>
@@ -57,7 +57,7 @@ export const ImportPanel: FC = () => {
       )}
 
       {pending?.mode === 'surveyor' && (
-        <div className="space-y-2 rounded-md border border-slate-200 p-4">
+        <div className="space-y-2 rounded-md border border-gray-200 p-4">
           {conflicts.length === 0 ? (
             <p className="text-sm">No conflicts</p>
           ) : (

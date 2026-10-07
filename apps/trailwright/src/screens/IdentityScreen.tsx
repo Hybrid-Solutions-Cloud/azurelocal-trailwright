@@ -15,8 +15,8 @@ export const IdentityScreen: FC = () => {
   const identity = project.identity;
 
   return (
-    <section className="space-y-6 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Identity</h1>
+    <section className="panel space-y-6">
+      <h1 className="text-2xl font-semibold text-gray-900">Identity</h1>
       <ChoiceCards name="identity-mode" legend="Identity mode" value={identity.mode} onChange={(mode) => setSection('identity', { ...identity, mode: mode as Project['identity']['mode'] })} choices={modeOptions} />
       {identity.mode === 'active-directory' && (
         <TextInput id="domain" label="Domain" value={identity.domain ?? ''} onChange={(domain) => setSection('identity', { ...identity, domain })} />

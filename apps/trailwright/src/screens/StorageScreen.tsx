@@ -23,7 +23,7 @@ const resiliencyOptions = [
   { value: 'parity', label: 'Parity' },
 ];
 
-const addClass = 'rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700';
+const addClass = 'action';
 const removeClass = 'text-sm font-medium text-red-700 hover:underline';
 
 export const StorageScreen: FC = () => {
@@ -34,17 +34,17 @@ export const StorageScreen: FC = () => {
   const updateLun = (index: number, patch: Partial<Lun>) => save({ sanLuns: sanLuns.map((l, i) => (i === index ? { ...l, ...patch } : l)) });
 
   return (
-    <section className="space-y-8 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Storage</h1>
+    <section className="panel space-y-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Storage</h1>
 
       <ChoiceCards name="storage-architecture" legend="Storage architecture" value={architecture} onChange={(v) => save({ architecture: v as Architecture })} choices={architectureOptions} />
 
       {usesS2d(project) && (
         <div className="space-y-3">
-          <h2 className="text-lg font-medium text-slate-800">Storage Spaces Direct volumes</h2>
+          <h2 className="text-lg font-medium text-gray-800">Storage Spaces Direct volumes</h2>
           <ul className="space-y-3">
             {volumes.map((volume, index) => (
-              <li key={index} className="flex flex-wrap items-end gap-4 rounded-md border border-slate-200 p-3">
+              <li key={index} className="flex flex-wrap items-end gap-4 rounded-md border border-gray-200 p-3">
                 <TextInput id={`volume-${index}-name`} label={`Volume ${index + 1} name`} value={volume.name} onChange={(name) => updateVolume(index, { name })} />
                 <NumberInput id={`volume-${index}-size`} label={`Volume ${index + 1} size (GiB)`} value={volume.sizeGiB} onChange={(sizeGiB) => updateVolume(index, { sizeGiB })} />
                 <SelectInput
@@ -68,10 +68,10 @@ export const StorageScreen: FC = () => {
 
       {usesSan(project) && (
         <div className="space-y-3">
-          <h2 className="text-lg font-medium text-slate-800">SAN LUNs</h2>
+          <h2 className="text-lg font-medium text-gray-800">SAN LUNs</h2>
           <ul className="space-y-3">
             {sanLuns.map((lun, index) => (
-              <li key={index} className="flex flex-wrap items-end gap-4 rounded-md border border-slate-200 p-3">
+              <li key={index} className="flex flex-wrap items-end gap-4 rounded-md border border-gray-200 p-3">
                 <TextInput id={`lun-${index}-name`} label={`LUN ${index + 1} name`} value={lun.name} onChange={(name) => updateLun(index, { name })} />
                 <NumberInput id={`lun-${index}-size`} label={`LUN ${index + 1} size (GiB)`} value={lun.sizeGiB} onChange={(sizeGiB) => updateLun(index, { sizeGiB })} />
                 <button type="button" onClick={() => save({ sanLuns: sanLuns.filter((_, i) => i !== index) })} className={removeClass}>

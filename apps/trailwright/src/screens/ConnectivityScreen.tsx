@@ -21,8 +21,8 @@ export const ConnectivityScreen: FC = () => {
   const usesProxy = connectivity.path === 'proxy' || connectivity.path === 'proxy-arc-gateway';
 
   return (
-    <section className="space-y-6 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Connectivity</h1>
+    <section className="panel space-y-6">
+      <h1 className="text-2xl font-semibold text-gray-900">Connectivity</h1>
       <div className="space-y-6">
         <ChoiceCards name="connectivity-path" legend="Outbound path" value={connectivity.path} onChange={(v) => setSection('connectivity', { ...connectivity, path: v as Path })} choices={pathOptions} />
         {usesProxy && (

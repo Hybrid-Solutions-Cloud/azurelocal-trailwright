@@ -18,8 +18,8 @@ export const FindingsPanel: FC<{ prefixes: string[] }> = ({ prefixes }) => {
 
   if (findings.length === 0) {
     return (
-      <aside aria-label="Findings" className="rounded-md border border-slate-200 p-4">
-        <p className="text-sm text-slate-600">No findings for this screen.</p>
+      <aside aria-label="Findings" className="rounded-md border border-gray-200 p-4">
+        <p className="text-sm text-gray-600">No findings for this screen.</p>
       </aside>
     );
   }
@@ -31,11 +31,11 @@ export const FindingsPanel: FC<{ prefixes: string[] }> = ({ prefixes }) => {
         if (group.length === 0) return null;
         return (
           <div key={severity} className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{severity}</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">{severity}</h3>
             <ul className="space-y-2">
               {group.map((finding) => (
                 <li key={finding.id} className={`rounded-r-md border-l-4 p-3 text-sm ${severityStyles[severity]}`}>
-                  <p className="font-medium text-slate-800">{finding.message}</p>
+                  <p className="font-medium text-gray-800">{finding.message}</p>
                   <a href={finding.learnUrl} target="_blank" rel="noopener noreferrer" className="inline-block pt-1 text-blue-700 hover:underline">
                     Microsoft Learn
                   </a>

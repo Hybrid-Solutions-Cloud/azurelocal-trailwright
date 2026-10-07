@@ -10,8 +10,8 @@ export const LandingZoneScreen: FC = () => {
   const set = (patch: Partial<typeof lz>) => setSection('landingZone', { ...lz, ...patch });
 
   return (
-    <section className="space-y-6 p-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Azure landing zone</h1>
+    <section className="panel space-y-6">
+      <h1 className="text-2xl font-semibold text-gray-900">Azure landing zone</h1>
       <div className="grid gap-6 md:grid-cols-2">
         <SelectInput id="lz-region" label="Azure region" value={lz.region} hint="Only regions where Azure Local is supported." options={azureLocalRegions.map((x) => ({ value: x.value, label: x.cloud === 'government' ? `${x.label} (Azure Government)` : x.label }))} onChange={(region) => set({ region: region as typeof lz.region })} />
         <TextInput id="lz-subscription" label="Subscription name" value={lz.subscriptionName} onChange={(subscriptionName) => set({ subscriptionName })} />

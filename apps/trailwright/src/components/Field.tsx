@@ -1,17 +1,16 @@
 import type { FC, ReactNode } from 'react';
 
-const inputClass =
-  'rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500';
+const inputClass = 'input';
 
 type FieldProps = { label: string; htmlFor: string; hint?: string; children: ReactNode };
 
 export const Field: FC<FieldProps> = ({ label, htmlFor, hint, children }) => (
   <div className="flex flex-col gap-1">
-    <label htmlFor={htmlFor} className="text-sm font-medium text-slate-700">
+    <label htmlFor={htmlFor} className="text-sm font-medium text-gray-700">
       {label}
     </label>
     {children}
-    {hint && <p className="text-xs text-slate-500">{hint}</p>}
+    {hint && <p className="text-xs text-gray-500">{hint}</p>}
   </div>
 );
 
@@ -51,7 +50,7 @@ type SelectInputProps = {
 
 export const SelectInput: FC<SelectInputProps> = ({ id, label, value, onChange, options, hint }) => (
   <Field label={label} htmlFor={id} hint={hint}>
-    <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className={`${inputClass} bg-white`}>
+    <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className={inputClass}>
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
           {opt.label}
