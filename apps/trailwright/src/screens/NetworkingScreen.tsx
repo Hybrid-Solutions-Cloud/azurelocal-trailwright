@@ -4,6 +4,7 @@ import type { Networking } from '../model/schema';
 import { FindingsPanel } from '../components/FindingsPanel';
 import { NumberInput, TextInput } from '../components/Field';
 import { usesS2d } from '../rules/types';
+import { makeIntent } from '../model/defaults';
 
 
 const trafficTypes = ['management', 'compute', 'storage'] as const;
@@ -22,7 +23,7 @@ export const NetworkingScreen: FC = () => {
   const updateVlan = (i: number, patch: Partial<Networking['vlans'][number]>) => update({ vlans: net.vlans.map((v, k) => (k === i ? { ...v, ...patch } : v)) });
   const removeVlan = (i: number) => update({ vlans: net.vlans.filter((_, k) => k !== i) });
 
-  const addIntent = () => update({ intents: [...net.intents, { name: `intent${net.intents.length + 1}`, traffic: [], adapters: [] }] });
+  const addIntent = () => update({ intents: [...net.intents, makeIntent({ name: `intent${net.intents.length + 1}`, traffic: [], adapters: [] })] });
   const updateIntent = (i: number, patch: Partial<Networking['intents'][number]>) => update({ intents: net.intents.map((x, k) => (k === i ? { ...x, ...patch } : x)) });
   const removeIntent = (i: number) => update({ intents: net.intents.filter((_, k) => k !== i) });
   const toggleTraffic = (i: number, type: Traffic) =>

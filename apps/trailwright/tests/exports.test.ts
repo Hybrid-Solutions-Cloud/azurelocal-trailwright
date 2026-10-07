@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import * as XLSX from 'xlsx';
 import { parse } from 'yaml';
-import { exportKinds, buildArmParameters, buildBicepParam, buildInfrastructureYml, buildSchedulesCsv, buildSchedulesXlsx, buildTopologyDrawio, buildHandoffMarkdown, buildProjectJson } from '../src/exports';
+import { exportKinds, buildArmParametersFile, buildBicepParamFile, buildInfrastructureYml, buildSchedulesCsv, buildSchedulesXlsx, buildTopologyDrawio, buildHandoffMarkdown, buildProjectJson } from '../src/exports';
 import { projectSchema } from '../src/model/schema';
 import { makeNodes, project } from './helpers';
 
@@ -35,9 +35,9 @@ describe('no secrets and no executable content', () => {
   const p = hostile();
   const machine = {
     'infrastructure.yml': buildInfrastructureYml(p),
-    'ARM (Active Directory)': buildArmParameters(p, 'active-directory'),
-    'ARM (Local Identity)': buildArmParameters(p, 'local-identity'),
-    bicepparam: buildBicepParam(p),
+    'ARM validate': buildArmParametersFile(p, 'Validate'),
+    'ARM deploy': buildArmParametersFile(p, 'Deploy'),
+    bicepparam: buildBicepParamFile(p),
     'nodes csv': buildSchedulesCsv(p, 'nodes'),
     'vlans csv': buildSchedulesCsv(p, 'vlans'),
     'ip plan csv': buildSchedulesCsv(p, 'ip-plan'),
@@ -51,19 +51,19 @@ describe('no secrets and no executable content', () => {
     });
   }
 
-  it('ARM files hold secure parameters only as Key Vault references', () => {
-    for (const template of ['active-directory', 'local-identity'] as const) {
-      const doc = JSON.parse(buildArmParameters(p, template)) as { parameters: Record<string, { value?: unknown; reference?: { secretName: string } }> };
-      expect(doc.parameters.localAdminPassword.value).toBeUndefined();
-      expect(doc.parameters.localAdminPassword.reference?.secretName).toBe('local-admin-password');
-      expect(doc.parameters.AzureStackLCMAdminPassword.reference?.secretName).toBe('lcm-password');
+  it('ARM files hold no secret value: secure parameters are null, to be supplied at deployment', () => {
+    for (const mode of ['Validate', 'Deploy'] as const) {
+      const doc = JSON.parse(buildArmParametersFile(p, mode)) as { parameters: Record<string, { value?: unknown }> };
+      expect(doc.parameters.localAdminPassword.value).toBeNull();
+      expect(doc.parameters.deploymentMode.value).toBe(mode);
     }
   });
 
-  it('Bicep parameters carry no password value', () => {
-    expect(buildBicepParam(p)).not.toMatch(/param\s+\w*password\w*\s*=/i);
+  it('Bicep parameters read secrets from environment variables, never from a value', () => {
+    const bicep = buildBicepParamFile(p);
+    expect(bicep).toContain("param localAdminPassword = readEnvironmentVariable('AZLOCAL_LOCAL_ADMIN_PASSWORD')");
+    expect(bicep).not.toMatch(/param\s+\w*password\w*\s*=\s*'/i);
   });
-
   it('infrastructure.yml references secrets as keyvault:// paths', () => {
     const doc = parse(buildInfrastructureYml(p)) as { identity: { secrets: { name: string; value: string }[] } };
     for (const s of doc.identity.secrets) expect(s.value).toBe(`keyvault://kv-example/${s.name}`);
@@ -100,8 +100,8 @@ describe('no secrets and no executable content', () => {
 
 describe('derived values', () => {
   it('a two-node cluster gets the Cloud witness type whatever the project says', () => {
-    const p = project({ hardware: { nodes: makeNodes(2), witness: 'file-share' } });
-    expect((JSON.parse(buildArmParameters(p, 'active-directory')) as { parameters: { witnessType: { value: string } } }).parameters.witnessType.value).toBe('Cloud');
+    const p = project({ hardware: { nodes: makeNodes(2), witness: 'none' } });
+    expect((JSON.parse(buildArmParametersFile(p)) as { parameters: { witnessType: { value: string } } }).parameters.witnessType.value).toBe('Cloud');
   });
 
   it('infrastructure.yml parses back with the registry schema version', () => {

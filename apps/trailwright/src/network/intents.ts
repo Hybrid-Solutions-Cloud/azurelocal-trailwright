@@ -1,4 +1,5 @@
 import type { Project } from '../model/schema';
+import { makeIntent, type Intent } from '../model/defaults';
 
 // Network ATC intent groupings and port layouts, from decisions 6 and 7 of the Microsoft network design framework
 // (Learn, "Network considerations for cloud deployment for Azure Local", view azloc-2609).
@@ -50,12 +51,18 @@ export function portsForGrouping(grouping: Grouping, hasSeparateCompute = false)
   }
 }
 
-type Spec = { name: string; traffic: Traffic[]; adapters: string[] };
+type Spec = Intent;
+type SpecInput = { name: string; traffic: Traffic[]; adapters: string[] };
+const full = (specs: SpecInput[]): Spec[] => specs.map((s) => makeIntent(s));
 
 const adapters = (from: number, count: number): string[] => Array.from({ length: count }, (_, i) => `pNIC${String(from + i).padStart(2, '0')}`);
 
 // The intents a grouping gives, with adapters named in order. Extra ports go to the storage intent.
 export function buildIntents(grouping: Grouping, ports: number): Spec[] {
+  return full(rawIntents(grouping, ports));
+}
+
+function rawIntents(grouping: Grouping, ports: number): SpecInput[] {
   switch (grouping) {
     case 'all':
       return [{ name: 'Management_Compute_Storage', traffic: ['management', 'compute', 'storage'], adapters: adapters(1, Math.max(2, ports)) }];
@@ -80,7 +87,11 @@ export function buildIntents(grouping: Grouping, ports: number): Spec[] {
 
 // The intents a disaggregated cluster has: management and compute through Network ATC, plus an optional guest backup compute intent.
 export function disaggregatedIntents(p: Project): Spec[] {
-  const intents: Spec[] = [{ name: 'Management_Compute', traffic: ['management', 'compute'], adapters: adapters(1, 2) }];
+  return full(rawDisaggregated(p));
+}
+
+function rawDisaggregated(p: Project): SpecInput[] {
+  const intents: SpecInput[] = [{ name: 'Management_Compute', traffic: ['management', 'compute'], adapters: adapters(1, 2) }];
   if (p.networking.backupNetwork) intents.push({ name: 'Guest_Backup', traffic: ['compute'], adapters: adapters(5, 2) });
   return intents;
 }

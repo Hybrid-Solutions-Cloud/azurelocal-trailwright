@@ -1,11 +1,15 @@
+import { z } from 'zod';
 import { projectSchema, type Project } from './schema';
 import { CURRENT_RELEASE } from './release';
 
 export function createEmptyProject(name: string): Project {
-  const project: Project = {
+  // Schema defaults fill everything not listed (identifiers, security, infrastructure network and so on).
+  const project: z.input<typeof projectSchema> = {
     meta: { schema: 1, name, createdAt: new Date().toISOString() },
     release: { version: CURRENT_RELEASE },
     deployment: { mode: 'connected', architecture: 'hyperconverged', sanType: 'fibre-channel', cloud: 'public' },
+    infrastructure: { useDhcp: false, subnetMask: '', gateway: '', startIp: '', endIp: '', dnsServers: [], managementVlan: 0 },
+    security: { level: 'Recommended', driftControl: true, credentialGuard: true, smbSigning: true, smbClusterEncryption: false, bitlockerBootVolume: true, bitlockerDataVolumes: true, wdac: true, backupKeyVaultName: '', streamingData: true, euLocation: false, episodicData: true },
     provisioning: { osInstall: 'iso', hardwareSku: '', timeZone: '', timeServer: '', deployMethod: 'portal' },
     confirmed: [],
     project: { customer: '', owner: '', notes: '' },
@@ -20,4 +24,21 @@ export function createEmptyProject(name: string): Project {
   };
 
   return projectSchema.parse(project);
+}
+
+export type Intent = Project['networking']['intents'][number];
+
+// An intent with Network ATC's own defaults for everything the person has not overridden.
+export function makeIntent(partial: Pick<Intent, 'name' | 'traffic' | 'adapters'> & Partial<Intent>): Intent {
+  return {
+    overrideQos: false,
+    qosClusterPriority: '7',
+    qosSmbPriority: '3',
+    qosSmbBandwidth: '50',
+    overrideAdapter: false,
+    jumboPacket: '9014',
+    networkDirect: 'Enabled',
+    networkDirectTechnology: 'RoCEv2',
+    ...partial,
+  };
 }

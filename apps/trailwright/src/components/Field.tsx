@@ -59,3 +59,22 @@ export const SelectInput: FC<SelectInputProps> = ({ id, label, value, onChange, 
     </select>
   </Field>
 );
+
+type CheckInputProps = { id: string; label: string; checked: boolean; onChange: (value: boolean) => void; hint?: string };
+
+export const CheckInput: FC<CheckInputProps> = ({ id, label, checked, onChange, hint }) => (
+  <div className="flex items-start gap-3">
+    <input id={id} type="checkbox" className="mt-1 h-4 w-4 accent-brand-600" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+    <label htmlFor={id} className="text-sm font-medium text-gray-800">
+      {label}
+      {hint && <span className="block text-xs font-normal text-gray-500">{hint}</span>}
+    </label>
+  </div>
+);
+
+type ListInputProps = { id: string; label: string; value: string[]; onChange: (value: string[]) => void; hint?: string };
+
+// A comma-separated list as one text field (DNS servers, forwarders).
+export const ListInput: FC<ListInputProps> = ({ id, label, value, onChange, hint }) => (
+  <TextInput id={id} label={label} value={value.join(', ')} hint={hint ?? 'Comma-separated.'} onChange={(v) => onChange(v.split(',').map((s) => s.trim()).filter(Boolean))} />
+);

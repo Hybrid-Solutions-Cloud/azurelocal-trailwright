@@ -17,11 +17,19 @@ export function createExampleProject(): Project {
       racks: 1,
       witness: 'cloud',
       nodes: [
-        { name: 'node1', serial: 'EXAMPLE-0001', cores: 32, memoryGiB: 512, drives: 8 },
-        { name: 'node2', serial: 'EXAMPLE-0002', cores: 32, memoryGiB: 512, drives: 8 },
+        { name: 'node1', ip: '192.0.2.11', serial: 'EXAMPLE-0001', cores: 32, memoryGiB: 512, drives: 8 },
+        { name: 'node2', ip: '192.0.2.12', serial: 'EXAMPLE-0002', cores: 32, memoryGiB: 512, drives: 8 },
       ],
     },
-    identity: { mode: 'local-identity-key-vault', keyVaultName: 'kv-example-azl-001' },
+    identity: {
+      mode: 'local-identity-key-vault',
+      keyVaultName: 'kv-example-azl-001',
+      localAdminUsername: 'azladmin',
+      dnsServerConfig: 'UseDnsServer',
+      dnsZoneName: 'lab.example.com',
+      dnsForwarders: [],
+    },
+    infrastructure: { useDhcp: false, subnetMask: '255.255.255.0', gateway: '192.0.2.1', startIp: '192.0.2.21', endIp: '192.0.2.27', dnsServers: ['192.0.2.10'], managementVlan: 0 },
     networking: {
       storage: 'switched',
       torSwitches: 2,
@@ -41,6 +49,7 @@ export function createExampleProject(): Project {
         { name: 'Management_Compute', traffic: ['management', 'compute'], adapters: ['pNIC01', 'pNIC02'] },
         { name: 'Storage', traffic: ['storage'], adapters: ['pNIC03', 'pNIC04'] },
       ],
+      storageVlans: [711, 712],
       ipPlan: [
         { name: 'Management', cidr: '192.0.2.0/24' },
         { name: 'Storage 1', cidr: '198.51.100.0/24' },
@@ -54,6 +63,15 @@ export function createExampleProject(): Project {
       keyVaultName: 'kv-example-azl-001',
       witnessStorageAccount: 'stexamplewitness001',
       customLocation: 'cl-example-azl-001',
+      region: 'eastus',
+      subscriptionId: '00000000-0000-0000-0000-000000000000',
+      tenantId: '00000000-0000-0000-0000-000000000000',
+      instanceName: 'example-azl-01',
+      namingPrefix: 'EXAMPLE',
+      keyVaultRetentionDays: 30,
+      diagnosticStorageAccountName: 'stexamplekvaudit001',
+      logsRetentionDays: 30,
+      hciResourceProviderObjectId: '00000000-0000-0000-0000-000000000000',
     },
     storage: {
       volumes: [

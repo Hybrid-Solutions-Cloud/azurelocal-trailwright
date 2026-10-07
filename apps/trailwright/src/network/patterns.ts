@@ -1,4 +1,5 @@
 import type { Project } from '../model/schema';
+import { makeIntent, type Intent } from '../model/defaults';
 
 // Azure Local network reference patterns, from the "Azure Local network deployment patterns" articles on Microsoft Learn
 // (view azloc-2609). Each pattern lists what the article states: ports, top-of-rack (TOR) switches, Network ATC intents and constraints.
@@ -191,13 +192,15 @@ export const patternFor = (p: Project): Pattern | undefined => matchPattern(choi
 export const portsRequired = (pattern: Pattern): number => pattern.ports.management + pattern.ports.storage;
 
 // Adapter names for a pattern, in the order of its intents: pNIC01, pNIC02, ...
-export function intentsFor(pattern: Pattern): { name: string; traffic: IntentSpec['traffic']; adapters: string[] }[] {
+export function intentsFor(pattern: Pattern): Intent[] {
   let next = 1;
-  return pattern.intents.map((i) => ({
-    name: i.name,
-    traffic: [...i.traffic],
-    adapters: Array.from({ length: i.ports }, () => `pNIC${String(next++).padStart(2, '0')}`),
-  }));
+  return pattern.intents.map((i) =>
+    makeIntent({
+      name: i.name,
+      traffic: [...i.traffic],
+      adapters: Array.from({ length: i.ports }, () => `pNIC${String(next++).padStart(2, '0')}`),
+    }),
+  );
 }
 
 // Default storage subnets for the switchless patterns that need them (examples in the articles use 10.0.n.0/24).

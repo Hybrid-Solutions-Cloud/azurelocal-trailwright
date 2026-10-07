@@ -35,7 +35,7 @@ export const HardwareScreen: FC = () => {
   const updateNode = (index: number, patch: Partial<Node>) => update({ nodes: hardware.nodes.map((n, i) => (i === index ? { ...n, ...patch } : n)) });
   const removeNode = (index: number) => update({ nodes: hardware.nodes.filter((_, i) => i !== index) });
   const addNode = () =>
-    update({ nodes: [...hardware.nodes, { name: `node${hardware.nodes.length + 1}`, serial: '', cores: 32, memoryGiB: 256, drives: 8 }] });
+    update({ nodes: [...hardware.nodes, { name: `node${hardware.nodes.length + 1}`, ip: '', serial: '', cores: 32, memoryGiB: 256, drives: 8 }] });
 
   return (
     <section className="panel space-y-6">

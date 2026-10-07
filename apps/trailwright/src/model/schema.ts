@@ -22,6 +22,8 @@ const projectDetailsSchema = z.object({
 
 const nodeSchema = z.object({
   name: z.string(),
+  // Management IP of the node (static assignment); the template calls it ipv4Address.
+  ip: z.string().default(''),
   serial: z.string().optional(),
   cores: z.number(),
   memoryGiB: z.number(),
@@ -42,6 +44,15 @@ const identitySchema = z.object({
   mode: z.enum(['active-directory', 'local-identity-key-vault']),
   domain: z.string().optional(),
   keyVaultName: z.string().optional(),
+  // Active Directory: the dedicated OU (distinguished name) and the LCM deployment user (name only, no domain).
+  ouPath: z.string().default(''),
+  lcmUsername: z.string().default(''),
+  // Local administrator user name for the machines (the password is a secret, never stored here).
+  localAdminUsername: z.string().default(''),
+  // Local identity: how DNS is configured and the DNS zone.
+  dnsServerConfig: z.enum(['UseDnsServer', 'UseForwarder']).default('UseDnsServer'),
+  dnsZoneName: z.string().default(''),
+  dnsForwarders: z.array(z.string()).default([]),
 });
 
 const vlanSchema = z.object({
@@ -53,6 +64,15 @@ const intentSchema = z.object({
   name: z.string(),
   traffic: z.array(z.enum(['management', 'compute', 'storage'])),
   adapters: z.array(z.string()),
+  // Network ATC overrides (defaults are Network ATC's own; only set them when you override).
+  overrideQos: z.boolean().default(false),
+  qosClusterPriority: z.string().default('7'),
+  qosSmbPriority: z.string().default('3'),
+  qosSmbBandwidth: z.string().default('50'),
+  overrideAdapter: z.boolean().default(false),
+  jumboPacket: z.enum(['1514', '4088', '9014']).default('9014'),
+  networkDirect: z.enum(['Enabled', 'Disabled']).default('Enabled'),
+  networkDirectTechnology: z.enum(['iWARP', 'RoCE', 'RoCEv2']).default('RoCEv2'),
 });
 
 const ipPlanSchema = z.object({
@@ -74,6 +94,8 @@ const networkingSchema = z.object({
   backupNetwork: z.boolean().default(false),
   storageAutoIp: z.boolean().default(true),
   storageSubnets: z.array(z.string()).default([]),
+  // Storage VLAN per storage network (Network ATC defaults are 711 and 712, and 713 for a third).
+  storageVlans: z.array(z.number().int().min(1).max(4094)).default([711, 712]),
   vlans: z.array(vlanSchema),
   intents: z.array(intentSchema),
   ipPlan: z.array(ipPlanSchema),
@@ -107,6 +129,15 @@ const landingZoneSchema = z.object({
   witnessStorageAccount: z.string().optional(),
   customLocation: z.string().optional(),
   region: z.enum(regionValues).default('eastus'),
+  // Identifiers the deployment template needs.
+  subscriptionId: z.string().default(''),
+  tenantId: z.string().default(''),
+  instanceName: z.string().default(''),
+  namingPrefix: z.string().default(''),
+  keyVaultRetentionDays: z.number().int().default(30),
+  diagnosticStorageAccountName: z.string().default(''),
+  logsRetentionDays: z.number().int().default(30),
+  hciResourceProviderObjectId: z.string().default(''),
 });
 
 const volumeSchema = z.object({
@@ -125,6 +156,8 @@ const storageSchema = z.object({
   architecture: z.enum(['s2d', 'san', 'hybrid']).default('s2d'),
   volumes: z.array(volumeSchema),
   sanLuns: z.array(sanLunSchema).default([]),
+  // How the deployment creates volumes: Express (infrastructure and workload volumes), InfraOnly, or KeepStorage (existing data drives, single node).
+  configurationMode: z.enum(['Express', 'InfraOnly', 'KeepStorage']).default('Express'),
 });
 
 const operationsSchema = z.object({
@@ -165,6 +198,38 @@ const provisioningSchema = z
   })
   .default({});
 
+// Decision 8 of the network design framework: the management IP pool and the infrastructure network.
+const infrastructureSchema = z
+  .object({
+    useDhcp: z.boolean().default(false),
+    subnetMask: z.string().default(''),
+    gateway: z.string().default(''),
+    startIp: z.string().default(''),
+    endIp: z.string().default(''),
+    dnsServers: z.array(z.string()).default([]),
+    // 0 means the default (untagged) VLAN; it cannot be changed after deployment.
+    managementVlan: z.number().int().min(0).max(4094).default(0),
+  })
+  .default({});
+
+// The security level and settings of the deployment, and the telemetry choices.
+const securitySchema = z
+  .object({
+    level: z.enum(['Recommended', 'Customized']).default('Recommended'),
+    driftControl: z.boolean().default(true),
+    credentialGuard: z.boolean().default(true),
+    smbSigning: z.boolean().default(true),
+    smbClusterEncryption: z.boolean().default(false),
+    bitlockerBootVolume: z.boolean().default(true),
+    bitlockerDataVolumes: z.boolean().default(true),
+    wdac: z.boolean().default(true),
+    backupKeyVaultName: z.string().default(''),
+    streamingData: z.boolean().default(true),
+    euLocation: z.boolean().default(false),
+    episodicData: z.boolean().default(true),
+  })
+  .default({});
+
 const findingSchema = z.object({
   id: z.string(),
   severity: z.enum(['error', 'warning', 'info']),
@@ -177,6 +242,8 @@ export const projectSchema = z.object({
   meta: metaSchema,
   release: releaseSchema,
   deployment: deploymentSchema,
+  infrastructure: infrastructureSchema,
+  security: securitySchema,
   provisioning: provisioningSchema,
   // Steps the person has confirmed (the steps that carry a confirm gate).
   confirmed: z.array(z.string()).default([]),

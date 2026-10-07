@@ -7,6 +7,7 @@ export type ImportPatch = {
   nodes: Project['hardware']['nodes'];
   volumes: Project['storage']['volumes'];
   notes?: string;
+  name?: string;
 };
 
 export type Conflict = { field: string; current: string; incoming: string };
@@ -37,9 +38,16 @@ export function parseSurveyorPlan(text: string): { ok: true; patch: ImportPatch 
   }
   if (!isRecord(parsed)) return { ok: false, error: 'Invalid JSON: expected an object' };
 
+  // Two files come out of Surveyor: a saved project (kind azurelocal-surveyor-project, numeric schemaVersion 1)
+  // and a plan manifest (string schemaVersion 1.x). Both carry the same inputs.
   const schemaVersion = parsed.schemaVersion;
-  if (typeof schemaVersion !== 'string' || !schemaVersion.startsWith('1.')) {
-    return { ok: false, error: `Unsupported schemaVersion: ${String(schemaVersion)}. Only 1.x manifests are supported.` };
+  const isProject = parsed.kind === 'azurelocal-surveyor-project' && schemaVersion === 1;
+  const isManifest = typeof schemaVersion === 'string' && schemaVersion.startsWith('1.');
+  if (!isProject && !isManifest) {
+    return {
+      ok: false,
+      error: `Not a Surveyor file: expected a saved project (kind azurelocal-surveyor-project, schemaVersion 1) or a plan manifest (schemaVersion 1.x); got schemaVersion ${JSON.stringify(schemaVersion)}.`,
+    };
   }
   if (!isRecord(parsed.inputs)) return { ok: false, error: 'Missing inputs' };
   const hardware = parsed.inputs.hardware;
@@ -52,6 +60,7 @@ export function parseSurveyorPlan(text: string): { ok: true; patch: ImportPatch 
   const drives = (Number(hardware.capacityDrivesPerNode) || 0) + (Number(hardware.cacheDrivesPerNode) || 0);
   const nodes: ImportPatch['nodes'] = Array.from({ length: nodeCount }, (_, i) => ({
     name: `node${i + 1}`,
+    ip: '',
     cores: Number(hardware.coresPerNode) || 0,
     memoryGiB: Number(hardware.memoryPerNodeGB) || 0,
     drives,
@@ -67,10 +76,22 @@ export function parseSurveyorPlan(text: string): { ok: true; patch: ImportPatch 
     }
   }
 
-  const notes = isRecord(parsed.provenance) && typeof parsed.provenance.notes === 'string' ? parsed.provenance.notes : undefined;
-  return { ok: true, patch: notes === undefined ? { nodes, volumes } : { nodes, volumes, notes } };
+  // What Surveyor planned that this design has no field for goes into the notes, so nothing is lost.
+  const planName = typeof parsed.name === 'string' ? parsed.name : typeof parsed.inputs.planName === 'string' ? parsed.inputs.planName : undefined;
+  const facts: string[] = [];
+  const capSize = Number(hardware.capacityDriveSizeTB);
+  if (Number(hardware.capacityDrivesPerNode) > 0 && capSize > 0) {
+    const media = typeof hardware.capacityMediaType === 'string' ? ` (${hardware.capacityMediaType})` : '';
+    facts.push(`${String(hardware.capacityDrivesPerNode)} capacity drives per node of ${capSize} TB${media}`);
+  }
+  if (Number(hardware.cacheDrivesPerNode) > 0) facts.push(`${String(hardware.cacheDrivesPerNode)} cache drives per node of ${String(hardware.cacheDriveSizeTB)} TB`);
+  if (isRecord(parsed.inputs.advanced) && Number(parsed.inputs.advanced.infraVolumeSizeTB) > 0) facts.push(`infrastructure volume ${String(parsed.inputs.advanced.infraVolumeSizeTB)} TB`);
+  const provenance = isRecord(parsed.provenance) && typeof parsed.provenance.notes === 'string' ? parsed.provenance.notes : undefined;
+  const appVersion = typeof parsed.appVersion === 'string' ? parsed.appVersion : typeof parsed.surveyorVersion === 'string' ? parsed.surveyorVersion : undefined;
+  const summary = `Imported from Surveyor${planName ? ` plan "${planName}"` : ''}${appVersion ? ` (Surveyor ${appVersion})` : ''}${facts.length ? `: ${facts.join('; ')}.` : '.'}`;
+  const notes = provenance ? `${provenance}\n${summary}` : summary;
+  return { ok: true, patch: { nodes, volumes, notes, ...(planName ? { name: planName } : {}) } };
 }
-
 // Differences that matter, listed only where the design already holds data, so an empty design previews no conflicts.
 export function previewConflicts(current: Project, patch: ImportPatch): Conflict[] {
   const conflicts: Conflict[] = [];
@@ -99,5 +120,7 @@ export function applyPatch(current: Project, patch: ImportPatch): Project {
     hardware: { ...current.hardware, nodes: patch.nodes },
     storage: { ...current.storage, volumes: patch.volumes },
     project: { ...current.project, notes },
+    // A design still carrying the default name takes the Surveyor plan's name.
+    meta: { ...current.meta, name: patch.name && (!current.meta.name || current.meta.name === 'Untitled project') ? patch.name : current.meta.name },
   });
 }

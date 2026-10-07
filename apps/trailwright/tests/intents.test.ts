@@ -16,8 +16,8 @@ describe('Network ATC intent groupings (framework decision 7)', () => {
   });
 
   it('builds intents with adapters named in order and extra ports on storage', () => {
-    expect(buildIntents('all', 2)).toEqual([{ name: 'Management_Compute_Storage', traffic: ['management', 'compute', 'storage'], adapters: ['pNIC01', 'pNIC02'] }]);
-    expect(buildIntents('mgmt-compute', 4)).toEqual([
+    expect(buildIntents('all', 2)).toMatchObject([{ name: 'Management_Compute_Storage', traffic: ['management', 'compute', 'storage'], adapters: ['pNIC01', 'pNIC02'] }]);
+    expect(buildIntents('mgmt-compute', 4)).toMatchObject([
       { name: 'Management_Compute', traffic: ['management', 'compute'], adapters: ['pNIC01', 'pNIC02'] },
       { name: 'Storage', traffic: ['storage'], adapters: ['pNIC03', 'pNIC04'] },
     ]);

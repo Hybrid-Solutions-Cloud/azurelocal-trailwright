@@ -48,7 +48,7 @@ describe('network reference patterns (Microsoft Learn, 2609)', () => {
 
   it('names the adapters in order across the intents', () => {
     const intents = intentsFor(patterns.find((p) => p.id === 'two-node-switched-non-converged')!);
-    expect(intents).toEqual([
+    expect(intents).toMatchObject([
       { name: 'Management_Compute', traffic: ['management', 'compute'], adapters: ['pNIC01', 'pNIC02'] },
       { name: 'Storage', traffic: ['storage'], adapters: ['pNIC03', 'pNIC04'] },
     ]);
