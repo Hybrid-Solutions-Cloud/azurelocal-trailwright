@@ -8,7 +8,7 @@ export function createEmptyProject(name: string): Project {
     hardware: { topology: 'standard', nodes: [], witness: 'none' },
     identity: { mode: 'local-identity-key-vault' },
     networking: { storage: 'switched', vlans: [], intents: [], ipPlan: [] },
-    connectivity: { path: 'direct' },
+    connectivity: { path: 'direct', arcGatewayName: '', privatePath: { transport: '', virtualNetwork: '', workloadSubnet: '', firewallSubnet: '', firewallPrivateIp: '', firewallPort: '', arcPrivateLinkScopeOnNetwork: false, proxyBypass: '' } },
     landingZone: { subscriptionName: '', resourceGroup: '', keyVaultName: '', region: 'eastus' },
     storage: { architecture: 's2d', volumes: [], sanLuns: [] },
     operations: { monitoring: false, updateManager: false, backup: false, disasterRecovery: false },

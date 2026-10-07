@@ -62,9 +62,25 @@ const networkingSchema = z.object({
   ipPlan: z.array(ipPlanSchema),
 });
 
+const privatePathSchema = z
+  .object({
+    transport: z.enum(['', 'expressroute', 'site-to-site-vpn']).default(''),
+    virtualNetwork: z.string().default(''),
+    workloadSubnet: z.string().default(''),
+    firewallSubnet: z.string().default(''),
+    firewallPrivateIp: z.string().default(''),
+    firewallPort: z.string().default(''),
+    arcPrivateLinkScopeOnNetwork: z.boolean().default(false),
+    proxyBypass: z.string().default(''),
+  })
+  .default({});
+
 const connectivitySchema = z.object({
   path: z.enum(['direct', 'proxy', 'arc-gateway', 'proxy-arc-gateway', 'private-path']),
   proxyUrl: z.string().optional(),
+  // Needed by every path that uses Arc gateway: the gateway resource, in the same subscription as the machines.
+  arcGatewayName: z.string().default(''),
+  privatePath: privatePathSchema,
 });
 
 const landingZoneSchema = z.object({

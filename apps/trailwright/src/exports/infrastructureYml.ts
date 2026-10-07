@@ -23,6 +23,24 @@ export function buildInfrastructureYml(p: Project): string {
       subscriptions: { sub_azure_local_name: p.landingZone.subscriptionName },
       resource_groups: { rg_azurelocal_cluster: p.landingZone.resourceGroup },
     },
+    connectivity: {
+      outbound_path: p.connectivity.path,
+      proxy_url: p.connectivity.proxyUrl ?? '',
+      arc_gateway_name: p.connectivity.arcGatewayName,
+      ...(p.connectivity.path === 'private-path'
+        ? {
+            private_path: {
+              transport: p.connectivity.privatePath.transport,
+              virtual_network: p.connectivity.privatePath.virtualNetwork,
+              workload_subnet: p.connectivity.privatePath.workloadSubnet,
+              firewall_subnet: p.connectivity.privatePath.firewallSubnet,
+              firewall_private_ip: p.connectivity.privatePath.firewallPrivateIp,
+              firewall_port: p.connectivity.privatePath.firewallPort,
+              proxy_bypass: p.connectivity.privatePath.proxyBypass,
+            },
+          }
+        : {}),
+    },
     identity,
     networking: {
       storage_mode: p.storage.architecture === 'san' ? 'san' : p.networking.storage,

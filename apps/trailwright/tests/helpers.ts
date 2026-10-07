@@ -21,7 +21,12 @@ function merge(base: Record<string, unknown>, overrides: Record<string, unknown>
 
 // A project that satisfies every rule; tests change one thing at a time.
 const compliant: DeepPartial<Project> = {
-  connectivity: { path: 'private-path', proxyUrl: '' },
+  connectivity: {
+    path: 'private-path',
+    proxyUrl: '',
+    arcGatewayName: 'arcgw-example-001',
+    privatePath: { transport: 'expressroute', virtualNetwork: 'vnet-example', workloadSubnet: 'snet-workload', firewallSubnet: 'AzureFirewallSubnet', firewallPrivateIp: '192.0.2.4', firewallPort: '8443', arcPrivateLinkScopeOnNetwork: false, proxyBypass: 'localhost,127.0.0.1' },
+  },
   landingZone: { subscriptionName: 'sub-example', resourceGroup: 'rg-example', keyVaultName: '', witnessStorageAccount: 'stwitness01' },
   hardware: { topology: 'standard', witness: 'cloud', nodes: makeNodes(2) },
   identity: { mode: 'active-directory', domain: 'example.com' },
