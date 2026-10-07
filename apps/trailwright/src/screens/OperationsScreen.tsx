@@ -52,11 +52,26 @@ export const OperationsScreen: FC = () => {
         <ChoiceCards name="update-method" legend="How updates are applied" value={ops.updateMethod} onChange={(v) => set({ updateMethod: v as Operations['updateMethod'] })} choices={updateOptions} />
         <p className="text-xs text-gray-500">Not supported for installing updates: SConfig, Windows Admin Center, Azure Update Manager from the Machines pane, the Updates pane of the Machine - Azure Arc resource, manual Cluster-Aware Updating, and third-party tools.</p>
       </div>
-      <div className="space-y-3">
+      <div className="space-y-4">
         <h2 className="text-lg font-medium text-gray-800">Monitoring</h2>
-        <Check id="ops-monitoring" label="Use Azure Monitor and Insights" hint="Health, performance and alerts for the cluster, hosts and VMs." checked={ops.monitoring} onChange={(monitoring) => set({ monitoring })} />
+        <Check id="ops-monitoring" label="Use Insights (Azure Monitor)" hint="Installs the Azure Monitor Agent on every node and a data collection rule that sends health, performance and event data to a Log Analytics workspace." checked={ops.monitoring} onChange={(monitoring) => set({ monitoring })} />
+        {ops.monitoring && (
+          <div className="space-y-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <TextInput id="mon-workspace" label="Log Analytics workspace" value={ops.workspaceName} hint="Where the data is stored." onChange={(workspaceName) => set({ workspaceName })} />
+              <TextInput id="mon-workspace-rg" label="Workspace resource group" value={ops.workspaceResourceGroup} onChange={(workspaceResourceGroup) => set({ workspaceResourceGroup })} />
+            </div>
+            <Check id="mon-own-dcr" label="Use my own data collection rule" hint="Not recommended: the rule Insights creates includes a special data stream it needs. Rules the agent setup creates are prefixed AzureStackHCI-." checked={ops.useExistingDcr} onChange={(useExistingDcr) => set({ useExistingDcr })} />
+            {ops.useExistingDcr && <TextInput id="mon-dcr" label="Data collection rule name" value={ops.dcrName} onChange={(dcrName) => set({ dcrName })} />}
+            <Check id="mon-private-links" label="The Azure Monitor Agent uses private links" hint="Then a data collection endpoint is required." checked={ops.agentPrivateLinks} onChange={(agentPrivateLinks) => set({ agentPrivateLinks })} />
+            {ops.agentPrivateLinks && <TextInput id="mon-dce" label="Data collection endpoint name" value={ops.dceName} onChange={(dceName) => set({ dceName })} />}
+            <Check id="mon-refs" label="Monitor ReFS deduplication and compression" hint="Adds the counters and event logs for the feature to the data collection rule. Data starts to appear 20 to 30 minutes after enabling." checked={ops.refsDedupMonitoring} onChange={(refsDedupMonitoring) => set({ refsDedupMonitoring })} />
+            <Check id="mon-alerts" label="Health alerts" hint="An alert is raised when the storage pool reaches 70% consumption." checked={ops.healthAlerts} onChange={(healthAlerts) => set({ healthAlerts })} />
+            {ops.healthAlerts && <TextInput id="mon-email" label="Alert notification address" value={ops.alertEmail} hint="Where alerts are sent." onChange={(alertEmail) => set({ alertEmail })} />}
+            <p className="text-xs text-gray-600">Insights collects five performance counters (available memory, network bytes per second, processor time, RDMA inbound and outbound bytes per second) and two event channels (health and SDDC management). The Azure Monitor extension must be installed on the Arc machines.</p>
+          </div>
+        )}
       </div>
-
       <div className="space-y-4">
         <h2 className="text-lg font-medium text-gray-800">Backup</h2>
         <Check id="ops-backup" label="Back up VMs" hint="Point-in-time recovery. Restores can take hours; keep offsite copies." checked={ops.backup} onChange={(backup) => set({ backup })} />

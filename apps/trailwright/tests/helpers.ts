@@ -4,7 +4,7 @@ import type { Project } from '../src/model/schema';
 export type DeepPartial<T> = T extends (infer U)[] ? DeepPartial<U>[] : T extends object ? { [P in keyof T]?: DeepPartial<T[P]> } : T;
 
 export function makeNodes(count: number) {
-  return Array.from({ length: count }, (_, i) => ({ name: `n${i + 1}`, cores: 16, memoryGiB: 256, drives: 4 }));
+  return Array.from({ length: count }, (_, i) => ({ name: `n${i + 1}`, ip: `192.0.2.${11 + i}`, cores: 16, memoryGiB: 256, drives: 4 }));
 }
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
@@ -27,10 +27,23 @@ const compliant: DeepPartial<Project> = {
     arcGatewayName: 'arcgw-example-001',
     privatePath: { transport: 'expressroute', virtualNetwork: 'vnet-example', workloadSubnet: 'snet-workload', firewallSubnet: 'AzureFirewallSubnet', firewallPrivateIp: '192.0.2.4', firewallPort: '8443', arcPrivateLinkScopeOnNetwork: false, proxyBypass: 'localhost,127.0.0.1' },
   },
-  landingZone: { subscriptionName: 'sub-example', resourceGroup: 'rg-example', keyVaultName: '', witnessStorageAccount: 'stwitness01' },
+  landingZone: {
+    subscriptionName: 'sub-example',
+    resourceGroup: 'rg-example',
+    keyVaultName: '',
+    witnessStorageAccount: 'stwitness01',
+    subscriptionId: '00000000-0000-0000-0000-000000000000',
+    tenantId: '00000000-0000-0000-0000-000000000000',
+    hciResourceProviderObjectId: '00000000-0000-0000-0000-000000000000',
+    instanceName: 'example-cluster',
+    diagnosticStorageAccountName: 'stexamplekvaudit001',
+    keyVaultRetentionDays: 30,
+  },
+  infrastructure: { useDhcp: false, subnetMask: '255.255.255.0', gateway: '192.0.2.1', startIp: '192.0.2.21', endIp: '192.0.2.27', dnsServers: ['192.0.2.10'], managementVlan: 0 },
+  security: { backupKeyVaultName: 'kv-backup-example' },
   hardware: { topology: 'standard', witness: 'cloud', nodes: makeNodes(2) },
   operations: { updateMethod: 'portal' },
-  identity: { mode: 'active-directory', domain: 'example.com' },
+  identity: { mode: 'active-directory', domain: 'example.com', ouPath: 'OU=azl01,DC=example,DC=com', lcmUsername: 'lcmuser01', localAdminUsername: 'azladmin' },
   networking: {
     storage: 'switched',
     vlans: [{ name: 'Storage 1', id: 711 }, { name: 'Storage 2', id: 712 }],

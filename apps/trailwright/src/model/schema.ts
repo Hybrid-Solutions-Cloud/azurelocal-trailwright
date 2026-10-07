@@ -172,6 +172,16 @@ const operationsSchema = z.object({
   backupSolution: z.string().default(''),
   // Disaster recovery follow-up: how VMs are replicated.
   drMethod: z.enum(['none', 'asr', 'hyperv-replica']).default('none'),
+  // Insights (Azure Monitor): where the data goes and what is enabled. Asked only when monitoring is on.
+  workspaceName: z.string().default(''),
+  workspaceResourceGroup: z.string().default(''),
+  useExistingDcr: z.boolean().default(false),
+  dcrName: z.string().default(''),
+  agentPrivateLinks: z.boolean().default(false),
+  dceName: z.string().default(''),
+  refsDedupMonitoring: z.boolean().default(false),
+  healthAlerts: z.boolean().default(true),
+  alertEmail: z.string().default(''),
 });
 
 const deploymentSchema = z

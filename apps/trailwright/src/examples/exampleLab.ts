@@ -29,6 +29,7 @@ export function createExampleProject(): Project {
       dnsZoneName: 'lab.example.com',
       dnsForwarders: [],
     },
+    security: { backupKeyVaultName: 'kv-backup-example-001' },
     infrastructure: { useDhcp: false, subnetMask: '255.255.255.0', gateway: '192.0.2.1', startIp: '192.0.2.21', endIp: '192.0.2.27', dnsServers: ['192.0.2.10'], managementVlan: 0 },
     networking: {
       storage: 'switched',
@@ -79,7 +80,7 @@ export function createExampleProject(): Project {
         { name: 'workloads', sizeGiB: 2048, resiliency: 'two-way' },
       ],
     },
-    operations: { monitoring: true, updateManager: true, updateMethod: 'portal', backup: true, disasterRecovery: false, backupApproach: 'both', backupSolution: 'Customer-selected backup solution', drMethod: 'none' },
+    operations: { monitoring: true, workspaceName: 'law-example-azl-001', workspaceResourceGroup: 'rg-example-azl-001', healthAlerts: true, alertEmail: 'ops@example.com', updateManager: true, updateMethod: 'portal', backup: true, disasterRecovery: false, backupApproach: 'both', backupSolution: 'Customer-selected backup solution', drMethod: 'none' },
     findings: [],
   });
 }

@@ -19,7 +19,7 @@ export function createEmptyProject(name: string): Project {
     connectivity: { path: 'direct', arcGatewayName: '', privatePath: { transport: '', virtualNetwork: '', workloadSubnet: '', firewallSubnet: '', firewallPrivateIp: '', firewallPort: '', arcPrivateLinkScopeOnNetwork: false, proxyBypass: '' } },
     landingZone: { subscriptionName: '', resourceGroup: '', keyVaultName: '', region: 'eastus' },
     storage: { architecture: 's2d', volumes: [], sanLuns: [] },
-    operations: { monitoring: false, updateManager: true, updateMethod: 'portal', backup: false, disasterRecovery: false, backupApproach: 'both', backupSolution: '', drMethod: 'none' },
+    operations: { monitoring: false, updateManager: true, updateMethod: 'portal', backup: false, disasterRecovery: false, backupApproach: 'both', backupSolution: '', workspaceName: '', workspaceResourceGroup: '', useExistingDcr: false, dcrName: '', agentPrivateLinks: false, dceName: '', refsDedupMonitoring: false, healthAlerts: true, alertEmail: '', drMethod: 'none' },
     findings: [],
   };
 
