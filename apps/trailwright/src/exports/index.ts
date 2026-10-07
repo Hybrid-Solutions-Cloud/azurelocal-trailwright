@@ -8,6 +8,7 @@ import { buildSchedulesCsv, buildSchedulesXlsx } from './schedules';
 import { buildTopologyDrawio } from './topologyDrawio';
 import { buildProjectJson } from './projectJson';
 import { buildProvisioningManifest } from './provisioning';
+import { buildSwitchPortsCsv } from './switchPorts';
 
 export type { ExportKind } from './types';
 export { slug } from './types';
@@ -24,6 +25,7 @@ export const exportKinds: ExportKind[] = [
   { id: 'arm-deploy', label: 'ARM parameters, deploy', filename: named('-deploy.parameters.json'), mime: 'application/json', build: (p) => buildArmParametersFile(p, 'Deploy') },
   { id: 'bicepparam', label: 'Bicep parameters', filename: named('.bicepparam'), mime: 'text/plain', build: (p) => buildBicepParamFile(p, 'Validate') },
   { id: 'provisioning', label: 'Machine provisioning manifest (JSON)', filename: named('-provisioning.json'), mime: 'application/json', build: buildProvisioningManifest },
+  { id: 'switch-ports-csv', label: 'Switch port plan (CSV)', filename: named('-switch-ports.csv'), mime: 'text/csv', build: buildSwitchPortsCsv },
   { id: 'nodes-csv', label: 'Nodes schedule (CSV)', filename: named('-nodes.csv'), mime: 'text/csv', build: (p) => buildSchedulesCsv(p, 'nodes') },
   { id: 'vlans-csv', label: 'VLAN schedule (CSV)', filename: named('-vlans.csv'), mime: 'text/csv', build: (p) => buildSchedulesCsv(p, 'vlans') },
   { id: 'ip-plan-csv', label: 'IP plan schedule (CSV)', filename: named('-ip-plan.csv'), mime: 'text/csv', build: (p) => buildSchedulesCsv(p, 'ip-plan') },

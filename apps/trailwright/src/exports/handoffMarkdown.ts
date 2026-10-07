@@ -3,6 +3,7 @@ import type { Project } from '../model/schema';
 import { patternFor } from '../network/patterns';
 import { templateFor, witnessTypeFor } from './createCluster';
 import { slug } from './types';
+import { switchPortRows } from './switchPorts';
 
 const cell = (value: string | number | boolean | undefined): string => String(value ?? '').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
 
@@ -47,6 +48,11 @@ export function buildHandoffMarkdown(p: Project): string {
   out.push(...table(['Name', 'Traffic', 'Adapters', 'QoS override', 'Adapter override'], p.networking.intents.map((i) => [i.name, i.traffic.join(', '), i.adapters.join(', '), i.overrideQos ? `cluster ${i.qosClusterPriority}, SMB ${i.qosSmbPriority}, ${i.qosSmbBandwidth}%` : 'defaults', i.overrideAdapter ? `jumbo ${i.jumboPacket}, ${i.networkDirect === 'Enabled' ? i.networkDirectTechnology : 'RDMA off'}` : 'defaults'])));
   out.push('### VLANs', '');
   out.push(...table(['Name', 'ID'], p.networking.vlans.map((v) => [v.name, v.id])));
+  const swRows = switchPortRows(p).filter((r) => r.node === p.hardware.nodes[0]?.name);
+  if (swRows.length) {
+    out.push('### Switch port plan', '', `Every node is cabled the same way; this is . The CSV export lists every node.`, '');
+    out.push(...table(['Switch', 'Port', 'Role', 'Mode', 'VLANs', 'MTU', 'QoS'], swRows.map((r) => [r.switch, r.port, r.role, r.mode, r.vlans, r.mtu, r.qos])));
+  }
   out.push('### IP plan', '');
   out.push(...table(['Name', 'CIDR'], p.networking.ipPlan.map((r) => [r.name, r.cidr])));
 

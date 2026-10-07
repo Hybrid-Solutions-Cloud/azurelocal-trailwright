@@ -60,6 +60,7 @@ Each export has its own button on the Review step.
 | ARM parameters, deploy | The same file with `deploymentMode` set to `Deploy`. |
 | Bicep parameters | A `.bicepparam` file; secrets are read from environment variables. |
 | Machine provisioning manifest | The values for simplified machine provisioning. |
+| Switch port plan | CSV: for each node port, the switch (ToR1 and ToR2, or Leaf A and Leaf B for disaggregated), port mode, VLANs, MTU and QoS, for the network team. |
 | Nodes, VLAN and IP plan schedules | CSV files, and one Excel workbook. |
 | Topology | A draw.io diagram. |
 | Project | The Trailwright project as JSON, to reopen later. |
