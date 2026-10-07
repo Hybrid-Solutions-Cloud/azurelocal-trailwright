@@ -72,7 +72,7 @@ export const StorageScreen: FC = () => {
                 <li>Available for volumes: {summary.availableTB.toFixed(1)} TB of pool footprint.</li>
                 {allowedResiliency(nodeCount).map((r) => (
                   <li key={r}>
-                    Usable as {resiliencyLabels[r].toLowerCase()}: about {(summary.availableTB * efficiency(r, nodeCount)).toFixed(1)} TB ({Math.round(efficiency(r, nodeCount) * 1000) / 10}% efficiency).
+                    Usable as {resiliencyLabels[r].toLowerCase()}: about {(summary.availableTB * efficiency(r, nodeCount, driveLayout.capacity.media === 'hdd')).toFixed(1)} TB ({Math.round(efficiency(r, nodeCount, driveLayout.capacity.media === 'hdd') * 1000) / 10}% efficiency).
                   </li>
                 ))}
                 {volumes.length > 0 && <li>Planned volumes use {summary.footprintTB.toFixed(1)} TB of footprint; {summary.freeTB >= 0 ? `${summary.freeTB.toFixed(1)} TB remains.` : `${Math.abs(summary.freeTB).toFixed(1)} TB too much.`}</li>}

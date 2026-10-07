@@ -89,7 +89,7 @@ export const s2dRules: Rule[] = [
     check: (p) => {
       const s = capacitySummary(p);
       return s.rawPerNodeTB > 400
-        ? [f('S2D-006', 'warning', 'storage.driveLayout.capacity', `Microsoft recommends limiting capacity to about 400 TB per server; this design has ${s.rawPerNodeTB.toFixed(1)} TB. More capacity per server means longer resync after downtime or updates.`, CHOOSE)]
+        ? [f('S2D-006', 'warning', 'storage.driveLayout.capacity', `Microsoft recommends limiting total capacity to approximately 400 TB per server; this design has ${s.rawPerNodeTB.toFixed(1)} TB. More capacity per server means longer resync after downtime or updates.`, CHOOSE)]
         : [];
     },
   },
