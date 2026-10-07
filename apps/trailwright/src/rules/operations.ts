@@ -2,7 +2,7 @@ import type { Rule } from './types';
 
 const VM_RESILIENCY_URL = 'https://learn.microsoft.com/azure/azure-local/manage/disaster-recovery-vm-resiliency?view=azloc-2609';
 const ASR_URL = 'https://learn.microsoft.com/azure/azure-local/manage/azure-site-recovery?view=azloc-2609';
-const UPDATE_URL = 'https://learn.microsoft.com/azure/azure-local/update/azure-update-manager-23h2?view=azloc-2609';
+const LIMITED_URL = 'https://learn.microsoft.com/azure/azure-local/update/import-discover-updates-offline-23h2?view=azloc-2609';
 
 export const operationsRules: Rule[] = [
   {
@@ -30,11 +30,11 @@ export const operationsRules: Rule[] = [
         : [],
   },
   {
-    id: 'OPS-004',
-    learnUrl: UPDATE_URL,
+    id: 'OPS-005',
+    learnUrl: LIMITED_URL,
     check: (p) =>
-      !p.operations.updateManager
-        ? [{ id: 'OPS-004', severity: 'info', field: 'operations.updateManager', message: 'Azure Update Manager is the Azure service for applying, viewing and managing updates on Azure Local; a plan for how updates are applied is still needed.', learnUrl: UPDATE_URL }]
+      p.operations.updateMethod === 'powershell-limited'
+        ? [{ id: 'OPS-005', severity: 'info', field: 'operations.updateMethod', message: 'With limited connectivity you download the solution update bundle (and any Solution Builder Extension files from the hardware vendor), check its SHA256 hash, import it to the infrastructure volume with Add-SolutionUpdate, then start the update from PowerShell.', learnUrl: LIMITED_URL }]
         : [],
   },
 ];

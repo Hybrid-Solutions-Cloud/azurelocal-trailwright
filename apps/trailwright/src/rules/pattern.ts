@@ -11,19 +11,18 @@ export const patternRules: Rule[] = [
     id: 'PAT-001',
     learnUrl: CATALOGUE_URL,
     check: (p) => {
-      if (!usesS2d(p) || p.hardware.nodes.length === 0 || patternFor(p)) return [];
-      return [
-        {
-          id: 'PAT-001',
-          severity: 'warning',
-          field: 'networking.storage',
-          message: `The Microsoft network reference patterns do not describe ${p.hardware.nodes.length} node(s) with ${p.networking.storage} storage and ${p.networking.torSwitches} TOR switch(es). Documented patterns: ${patterns.map((x) => x.title).join('; ')}.`,
-          learnUrl: CATALOGUE_URL,
-        },
-      ];
+      if (!usesS2d(p) || p.hardware.nodes.length < 2 || patternFor(p)) return [];
+      const n = p.hardware.nodes.length;
+      const net = p.networking;
+      // Switched storage beyond two nodes follows the framework (any node count up to 16); the shape is a pair of ToR switches.
+      if (net.storage === 'switched' && n > 2 && net.torSwitches === 2) return [];
+      const why =
+        net.storage === 'switched'
+          ? 'The standard shape is a pair of top-of-rack switches in a multi-chassis link aggregation (MLAG) configuration.'
+          : `Documented switchless patterns: ${patterns.filter((x) => x.storage === 'switchless').map((x) => x.title).join('; ')}.`;
+      return [{ id: 'PAT-001', severity: 'warning', field: 'networking.storage', message: `No Microsoft reference pattern describes ${n} nodes with ${net.storage} storage and ${net.torSwitches} TOR switch(es). ${why}`, learnUrl: CATALOGUE_URL }];
     },
-  },
-  {
+  },  {
     id: 'PAT-002',
     learnUrl: CATALOGUE_URL,
     check: (p) => {

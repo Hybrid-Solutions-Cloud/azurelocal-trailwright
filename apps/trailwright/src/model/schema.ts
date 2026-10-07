@@ -68,6 +68,10 @@ const networkingSchema = z.object({
   switchlessLinks: z.enum(['single', 'dual']).default('dual'),
   // Physical network ports per node, and whether Network ATC assigns the storage IP addresses.
   portsPerNode: z.number().int().min(1).max(16).default(4),
+  // Decision 7: how traffic is grouped into Network ATC intents.
+  intentGrouping: z.enum(['all', 'mgmt-compute', 'compute-storage', 'custom']).default('mgmt-compute'),
+  // Decision 9: a dedicated network for guest (VM) backup traffic.
+  backupNetwork: z.boolean().default(false),
   storageAutoIp: z.boolean().default(true),
   storageSubnets: z.array(z.string()).default([]),
   vlans: z.array(vlanSchema),
@@ -125,7 +129,9 @@ const storageSchema = z.object({
 
 const operationsSchema = z.object({
   monitoring: z.boolean(),
-  updateManager: z.boolean(),
+  // Updates are not optional. This is how they are applied: one of the two supported interfaces.
+  updateManager: z.boolean().default(true),
+  updateMethod: z.enum(['portal', 'powershell', 'powershell-limited']).default('portal'),
   backup: z.boolean(),
   disasterRecovery: z.boolean(),
   // Backup follow-ups: which approach, and the customer's chosen supported solution (named by the customer, not by this tool).

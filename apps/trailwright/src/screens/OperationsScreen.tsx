@@ -13,6 +13,12 @@ const approachOptions = [
   { value: 'both', label: 'Both', description: 'Host-level for full-VM recovery, guest-level for critical applications.' },
 ];
 
+const updateOptions = [
+  { value: 'portal', label: 'Azure portal', description: 'Azure Update Manager (Resources, Azure Local) or the Azure Local resource page. The system must be connected to Azure.' },
+  { value: 'powershell', label: 'PowerShell', description: 'Get-SolutionUpdate and Start-SolutionUpdate on a node, signed in with the deployment user.' },
+  { value: 'powershell-limited', label: 'PowerShell, limited connectivity', description: 'Download the solution update bundle, import it to the infrastructure volume, then update from PowerShell.' },
+];
+
 const drOptions = [
   { value: 'none', label: 'No replication', description: 'Recovery is from backup only.' },
   { value: 'asr', label: 'Azure Site Recovery', description: 'Replicate VMs to Azure. Needs a Recovery Services vault.' },
@@ -38,11 +44,14 @@ export const OperationsScreen: FC = () => {
     <section className="panel space-y-8">
       <h1 className="text-2xl font-semibold text-gray-900">Operations</h1>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         <h2 className="text-lg font-medium text-gray-800">Updates</h2>
-        <Check id="ops-updateManager" label="Use Azure Update Manager" hint="The Azure service for applying, viewing and managing updates on Azure Local. This is patching, not backup." checked={ops.updateManager} onChange={(updateManager) => set({ updateManager })} />
+        <p className="text-sm text-gray-600">
+          Every Azure Local release is supported for six months, so updates are part of operating the cluster. Choose how they will be applied; Microsoft supports only these two interfaces.
+        </p>
+        <ChoiceCards name="update-method" legend="How updates are applied" value={ops.updateMethod} onChange={(v) => set({ updateMethod: v as Operations['updateMethod'] })} choices={updateOptions} />
+        <p className="text-xs text-gray-500">Not supported for installing updates: SConfig, Windows Admin Center, Azure Update Manager from the Machines pane, the Updates pane of the Machine - Azure Arc resource, manual Cluster-Aware Updating, and third-party tools.</p>
       </div>
-
       <div className="space-y-3">
         <h2 className="text-lg font-medium text-gray-800">Monitoring</h2>
         <Check id="ops-monitoring" label="Use Azure Monitor and Insights" hint="Health, performance and alerts for the cluster, hosts and VMs." checked={ops.monitoring} onChange={(monitoring) => set({ monitoring })} />

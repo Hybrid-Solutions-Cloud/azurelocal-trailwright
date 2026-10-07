@@ -38,7 +38,7 @@ test('a disaggregated design drops the drive and storage-network questions', asy
   await step(page, 'Hardware and topology').click();
   await expect(page.getByLabel('Node 1 drives')).toHaveCount(0);
   await expect(page.getByLabel('Racks (1 to 8)')).toBeVisible();
-  await expect(step(page, 'Network design')).toHaveCount(0);
+  await expect(step(page, 'Network design')).toHaveCount(1);
 });
 test('the region list offers only Azure Local regions', async ({ page }) => {
   await page.goto('/');

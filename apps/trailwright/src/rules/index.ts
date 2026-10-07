@@ -9,6 +9,7 @@ import { storageRules } from './storage';
 import { operationsRules } from './operations';
 import { patternRules } from './pattern';
 import { architectureRules } from './architecture';
+import { intentRules } from './intents';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -20,6 +21,7 @@ export const rules: Rule[] = [
   ...operationsRules,
   ...patternRules,
   ...architectureRules,
+  ...intentRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.
