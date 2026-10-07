@@ -8,6 +8,7 @@ import { networkingRules } from './networking';
 import { storageRules } from './storage';
 import { operationsRules } from './operations';
 import { patternRules } from './pattern';
+import { architectureRules } from './architecture';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -18,6 +19,7 @@ export const rules: Rule[] = [
   ...storageRules,
   ...operationsRules,
   ...patternRules,
+  ...architectureRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.

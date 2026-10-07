@@ -22,7 +22,7 @@ const always = () => true;
 // The order of the guided flow. Add a step here and give it a route in App.
 export const steps: Step[] = [
   { path: 'project', title: 'Project', group: 'Foundation', visible: always, fields: [] },
-  { path: 'deployment', title: 'Deployment type and region', group: 'Foundation', visible: always, fields: ['deployment', 'landingZone.region'] },
+  { path: 'deployment', title: 'Connectivity mode and architecture', group: 'Foundation', visible: always, fields: ['deployment', 'landingZone.region'] },
   { path: 'hardware', title: 'Hardware and topology', group: 'Hardware', visible: always, fields: ['hardware'] },
   { path: 'storage', title: 'Storage', group: 'Hardware', visible: always, fields: ['storage'] },
   {

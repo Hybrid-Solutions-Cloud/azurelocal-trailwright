@@ -16,7 +16,7 @@ export const hardwareRules: Rule[] = [
     release: RELEASES,
     learnUrl: RACK_DEPLOY_URL,
     check: (p) =>
-      p.hardware.topology === 'rack-aware' && p.deployment.type !== 'disconnected' && p.hardware.witness !== 'cloud'
+      p.hardware.topology === 'rack-aware' && p.deployment.mode !== 'disconnected' && p.hardware.witness !== 'cloud'
         ? [{ id: 'HW-007', severity: 'error', field: 'hardware.witness', message: 'A rack-aware cluster requires a cloud witness.', learnUrl: RACK_DEPLOY_URL }]
         : [],
   },
@@ -25,7 +25,7 @@ export const hardwareRules: Rule[] = [
     release: RELEASES,
     learnUrl: DISCONNECTED_URL,
     check: (p) =>
-      p.hardware.topology === 'rack-aware' && p.deployment.type === 'disconnected' && p.hardware.witness !== 'file-share'
+      p.hardware.topology === 'rack-aware' && p.deployment.mode === 'disconnected' && p.hardware.witness !== 'file-share'
         ? [{ id: 'HW-008', severity: 'error', field: 'hardware.witness', message: 'A rack-aware cluster in Azure Local disconnected operations requires a file share witness.', learnUrl: DISCONNECTED_URL }]
         : [],
   },
@@ -43,7 +43,7 @@ export const hardwareRules: Rule[] = [
     release: RELEASES,
     learnUrl: ARM_URL,
     check: (p) =>
-      p.hardware.witness === 'file-share' && p.deployment.type !== 'disconnected'
+      p.hardware.witness === 'file-share' && p.deployment.mode !== 'disconnected'
         ? [{ id: 'HW-002', severity: 'error', field: 'hardware.witness', message: 'Connected Azure Local deployments use a cloud witness: the deployment offers only the Cloud witness type. A file share witness appears in the documentation only for disconnected operations.', learnUrl: ARM_URL }]
         : [],
   },

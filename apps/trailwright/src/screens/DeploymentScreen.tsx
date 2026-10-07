@@ -6,13 +6,25 @@ import { SelectInput } from '../components/Field';
 import { FindingsPanel } from '../components/FindingsPanel';
 import { regionsFor } from '../model/regions';
 
-type DeploymentType = Project['deployment']['type'];
+type Mode = Project['deployment']['mode'];
+type Architecture = Project['deployment']['architecture'];
+type SanType = Project['deployment']['sanType'];
 type Cloud = Project['deployment']['cloud'];
 
-const typeOptions = [
-  { value: 'connected', label: 'Hyperconverged, connected', description: 'Machines register with Azure and are managed from the Azure portal. Local drives pooled with Storage Spaces Direct.' },
-  { value: 'disconnected', label: 'Hyperconverged, disconnected operations', description: 'Azure Local without a constant Azure connection. Uses a file share witness.' },
-  { value: 'disaggregated', label: 'Disaggregated, external SAN', description: 'Compute separate from an external Fibre Channel SAN. Up to 64 machines across racks.' },
+const modeOptions = [
+  { value: 'connected', label: 'Connected', description: 'Nodes reach Azure for registration, billing and lifecycle management: over the internet (directly, through a proxy or the Arc gateway) or over a private path.' },
+  { value: 'disconnected', label: 'Disconnected (air-gapped)', description: 'Azure Local disconnected operations with a local Autonomous Cloud endpoint. Needs a dedicated three-node management cluster plus one or more workload clusters.' },
+];
+
+const architectureOptions = [
+  { value: 'hyperconverged', label: 'Hyperconverged', description: 'Local drives pooled with Storage Spaces Direct, storage over RDMA. 1 to 16 nodes, single rack or rack-aware.' },
+  { value: 'hybrid', label: 'Hyperconverged with an external SAN', description: 'Storage Spaces Direct plus an external SAN side by side, chosen per workload. The SAN is attached after deployment. Not supported with rack-aware.' },
+  { value: 'disaggregated', label: 'Disaggregated', description: 'An external SAN, no Storage Spaces Direct. Compute and storage scale separately: 1 to 8 racks, up to 16 nodes per rack, 64 per cluster.' },
+];
+
+const sanOptions = [
+  { value: 'fibre-channel', label: 'Fibre Channel SAN', description: 'Storage on a separate Fibre Channel fabric with dual-port HBAs. Four or six Ethernet ports per node.' },
+  { value: 'iscsi', label: 'IP-based SAN (iSCSI)', description: 'Storage over dedicated Ethernet ports. The validated layout is six ports per node.' },
 ];
 
 const cloudOptions = [
@@ -22,16 +34,20 @@ const cloudOptions = [
 
 export const DeploymentScreen: FC = () => {
   const { project, setSection } = useProjectStore();
-  const { deployment, landingZone, storage } = project;
+  const { deployment, landingZone, storage, hardware } = project;
   const regions = regionsFor(deployment.cloud);
 
-  const setType = (type: DeploymentType) => {
-    setSection('deployment', { ...deployment, type });
-    // A disaggregated deployment is SAN storage; leaving it returns to local storage.
-    if (type === 'disaggregated' && storage.architecture !== 'san') setSection('storage', { ...storage, architecture: 'san' });
-    if (type !== 'disaggregated' && storage.architecture === 'san') setSection('storage', { ...storage, architecture: 's2d' });
+  const setMode = (mode: Mode) => {
+    setSection('deployment', { ...deployment, mode });
     // A file share witness belongs to disconnected operations only.
-    if (type !== 'disconnected' && project.hardware.witness === 'file-share') setSection('hardware', { ...project.hardware, witness: 'cloud' });
+    if (mode !== 'disconnected' && hardware.witness === 'file-share') setSection('hardware', { ...hardware, witness: 'cloud' });
+  };
+
+  const setArchitecture = (architecture: Architecture) => {
+    setSection('deployment', { ...deployment, architecture });
+    setSection('storage', { ...storage, architecture: architecture === 'hyperconverged' ? 's2d' : architecture === 'hybrid' ? 'hybrid' : 'san' });
+    // Rack-aware is a hyperconverged layout without an external SAN.
+    if (architecture !== 'hyperconverged' && hardware.topology === 'rack-aware') setSection('hardware', { ...hardware, topology: 'standard' });
   };
 
   const setCloud = (cloud: Cloud) => {
@@ -41,9 +57,13 @@ export const DeploymentScreen: FC = () => {
   };
 
   return (
-    <section className="panel space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-900">Deployment type and region</h1>
-      <ChoiceCards name="deployment-type" legend="Deployment type" value={deployment.type} onChange={(v) => setType(v as DeploymentType)} choices={typeOptions} />
+    <section className="panel space-y-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Connectivity mode and architecture</h1>
+      <ChoiceCards name="connectivity-mode" legend="Connectivity mode" value={deployment.mode} onChange={(v) => setMode(v as Mode)} choices={modeOptions} />
+      <ChoiceCards name="architecture" legend="Architecture" value={deployment.architecture} onChange={(v) => setArchitecture(v as Architecture)} choices={architectureOptions} />
+      {deployment.architecture === 'disaggregated' && (
+        <ChoiceCards name="san-type" legend="External SAN" value={deployment.sanType} onChange={(v) => setSection('deployment', { ...deployment, sanType: v as SanType })} choices={sanOptions} />
+      )}
       <ChoiceCards name="cloud" legend="Azure cloud" value={deployment.cloud} onChange={(v) => setCloud(v as Cloud)} choices={cloudOptions} />
       <div className="max-w-md">
         <SelectInput

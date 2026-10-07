@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('private path asks for its own questions and flags what is missing', async ({ page }) => {
   await page.goto('/');
-  await step(page, 'Connectivity').click();
+  await step(page, 'Outbound connectivity').click();
 
   // Direct outbound: no gateway, no private path questions.
   await expect(page.getByLabel('Arc gateway resource name')).toHaveCount(0);

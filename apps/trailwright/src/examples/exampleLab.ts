@@ -13,6 +13,8 @@ export function createExampleProject(): Project {
     },
     hardware: {
       topology: 'standard',
+      rackAwareUplink: 'dedicated-storage',
+      racks: 1,
       witness: 'cloud',
       nodes: [
         { name: 'node1', serial: 'EXAMPLE-0001', cores: 32, memoryGiB: 512, drives: 8 },

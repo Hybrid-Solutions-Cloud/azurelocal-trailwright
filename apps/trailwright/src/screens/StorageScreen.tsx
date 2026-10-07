@@ -2,19 +2,12 @@ import type { FC } from 'react';
 import { useProjectStore } from '../model/store';
 import type { Project } from '../model/schema';
 import { FindingsPanel } from '../components/FindingsPanel';
-import { ChoiceCards } from '../components/ChoiceCards';
 import { NumberInput, SelectInput, TextInput } from '../components/Field';
 import { usesS2d, usesSan } from '../rules/types';
 
 type Volume = Project['storage']['volumes'][number];
 type Lun = Project['storage']['sanLuns'][number];
-type Architecture = Project['storage']['architecture'];
 
-const architectureOptions = [
-  { value: 's2d', label: 'Storage Spaces Direct', description: 'Local drives in every node, pooled by the cluster. Asks for drives and volume resiliency.' },
-  { value: 'san', label: 'SAN (disaggregated)', description: 'External Fibre Channel storage array. No local storage pool, no storage network.' },
-  { value: 'hybrid', label: 'Both: S2D and SAN', description: 'Local pooled storage plus an external array. Asks for both.' },
-];
 
 const resiliencyOptions = [
   { value: 'two-way', label: 'Two-way mirror' },
@@ -37,7 +30,7 @@ export const StorageScreen: FC = () => {
     <section className="panel space-y-8">
       <h1 className="text-2xl font-semibold text-gray-900">Storage</h1>
 
-      <ChoiceCards name="storage-architecture" legend="Storage architecture" value={architecture} onChange={(v) => save({ architecture: v as Architecture })} choices={architectureOptions} />
+      <p className="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">{architecture === 's2d' ? 'Storage Spaces Direct: local drives pooled by the cluster.' : architecture === 'san' ? 'External SAN (disaggregated): no local storage pool and no storage network to design.' : 'Storage Spaces Direct plus an external SAN, attached after the first deployment.'} Change this under Connectivity mode and architecture.</p>
 
       {usesS2d(project) && (
         <div className="space-y-3">

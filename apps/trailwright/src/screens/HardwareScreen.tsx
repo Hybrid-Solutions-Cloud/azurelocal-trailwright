@@ -7,8 +7,15 @@ import { NumberInput, TextInput } from '../components/Field';
 import { ChoiceCards } from '../components/ChoiceCards';
 
 const topologyOptions = [
-  { value: 'standard', label: 'Standard', description: 'One cluster in one location.' },
-  { value: 'rack-aware', label: 'Rack-aware', description: 'Two zones, 2, 4, 6 or 8 nodes, dedicated storage intent.' },
+  { value: 'standard', label: 'Single rack', description: 'All nodes and a pair of top-of-rack switches in one rack, up to 16 nodes.' },
+  { value: 'rack-aware', label: 'Rack-aware (two rooms)', description: 'An even number of nodes, up to 8, split across two rooms or zones with less than 1 ms between them.' },
+];
+
+const uplinkOptions = [
+  { value: 'dedicated-storage', label: 'Dedicated storage links', description: 'Two ToR switches per room (four in total). Storage links TOR1 to TOR3 on VLAN 711 and TOR2 to TOR4 on VLAN 712. Lowest latency.' },
+  { value: 'aggregated-storage', label: 'Aggregated storage links', description: 'Two ToR switches per room. Storage over LAG or vPC across rooms; possible extra hop and RDMA latency.' },
+  { value: 'per-room', label: 'Per-room node connectivity', description: 'One ToR switch per room, both storage networks on it, with a bundled link between rooms.' },
+  { value: 'cross-room', label: 'Cross-room node connectivity', description: 'One ToR switch per room, each node cabled to both rooms. Less ToR-to-ToR dependency, more cabling.' },
 ];
 
 const witnessOptions = [
@@ -34,8 +41,17 @@ export const HardwareScreen: FC = () => {
     <section className="panel space-y-6">
       <h1 className="text-2xl font-semibold text-gray-900">Hardware and topology</h1>
       <div className="space-y-6">
-        <ChoiceCards name="topology" legend="Topology" value={hardware.topology} onChange={(v) => update({ topology: v as Hardware['topology'] })} choices={topologyOptions} />
-        <ChoiceCards name="witness" legend="Witness" value={hardware.witness} onChange={(v) => update({ witness: v as Hardware['witness'] })} choices={project.deployment.type === 'disconnected' ? [...witnessOptions.slice(0, 1), fileShareOption, ...witnessOptions.slice(1)] : witnessOptions} />
+        {project.deployment.architecture === 'disaggregated' ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            <NumberInput id="racks" label="Racks (1 to 8)" value={hardware.racks} hint="Up to 16 nodes per rack and 64 per cluster. More than one rack uses a leaf-spine fabric." onChange={(racks) => update({ racks: Math.min(8, Math.max(1, racks)) })} />
+          </div>
+        ) : (
+          <ChoiceCards name="topology" legend="Cluster topology" value={hardware.topology} onChange={(v) => update({ topology: v as Hardware['topology'] })} choices={project.deployment.architecture === 'hybrid' ? topologyOptions.slice(0, 1) : topologyOptions} />
+        )}
+        {hardware.topology === 'rack-aware' && project.deployment.architecture === 'hyperconverged' && (
+          <ChoiceCards name="rack-uplink" legend="Rack-aware uplinks" value={hardware.rackAwareUplink} onChange={(v) => update({ rackAwareUplink: v as Hardware['rackAwareUplink'] })} choices={uplinkOptions} />
+        )}
+        <ChoiceCards name="witness" legend="Witness" value={hardware.witness} onChange={(v) => update({ witness: v as Hardware['witness'] })} choices={project.deployment.mode === 'disconnected' ? [...witnessOptions.slice(0, 1), fileShareOption, ...witnessOptions.slice(1)] : witnessOptions} />
       </div>
 
       <div>

@@ -30,6 +30,10 @@ const nodeSchema = z.object({
 
 const hardwareSchema = z.object({
   topology: z.enum(['standard', 'rack-aware']),
+  // Rack-aware only: how storage and nodes are cabled between the two rooms (four documented options).
+  rackAwareUplink: z.enum(['dedicated-storage', 'aggregated-storage', 'per-room', 'cross-room']).default('dedicated-storage'),
+  // Disaggregated only: racks (1 to 8) and the nodes in each (up to 16).
+  racks: z.number().int().min(1).max(8).default(1),
   nodes: z.array(nodeSchema),
   witness: z.enum(['cloud', 'file-share', 'none']),
 });
@@ -133,8 +137,11 @@ const operationsSchema = z.object({
 
 const deploymentSchema = z
   .object({
-    // connected: hyperconverged with Azure; disconnected: disconnected operations; disaggregated: external SAN, multi-rack
-    type: z.enum(['connected', 'disconnected', 'disaggregated']).default('connected'),
+    // Decision 1: how the instance reaches Azure. Decision 2: the architecture.
+    mode: z.enum(['connected', 'disconnected']).default('connected'),
+    architecture: z.enum(['hyperconverged', 'hybrid', 'disaggregated']).default('hyperconverged'),
+    // Disaggregated only: the type of external SAN.
+    sanType: z.enum(['fibre-channel', 'iscsi']).default('fibre-channel'),
     cloud: z.enum(['public', 'government']).default('public'),
   })
   .default({});
