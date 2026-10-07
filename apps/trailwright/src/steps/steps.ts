@@ -1,7 +1,7 @@
 import type { Project } from '../model/schema';
 import { usesS2d } from '../rules/types';
 
-export type StepGroup = 'Foundation' | 'Hardware' | 'Network' | 'Connectivity' | 'Identity' | 'Operations' | 'Output';
+export type StepGroup = 'Foundation' | 'Hardware' | 'Network' | 'Connectivity' | 'Identity' | 'Deployment' | 'Operations' | 'Output';
 
 export type Step = {
   path: string;
@@ -43,6 +43,7 @@ export const steps: Step[] = [
   },
   { path: 'connectivity', title: 'Outbound connectivity', group: 'Connectivity', visible: always, fields: ['connectivity'] },
   { path: 'identity', title: 'Identity', group: 'Identity', visible: always, fields: ['identity'] },
+  { path: 'provisioning', title: 'Provisioning and deployment method', group: 'Deployment', visible: always, fields: ['provisioning'] },
   { path: 'landing-zone', title: 'Azure landing zone', group: 'Identity', visible: always, fields: ['landingZone'] },
   { path: 'operations', title: 'Operations', group: 'Operations', visible: always, fields: ['operations'] },
   { path: 'review', title: 'Review and export', group: 'Output', visible: always, fields: [] },

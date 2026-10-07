@@ -16,6 +16,7 @@ import { NetworkDesignScreen } from './screens/NetworkDesignScreen';
 import { ConnectivityScreen } from './screens/ConnectivityScreen';
 import { LandingZoneScreen } from './screens/LandingZoneScreen';
 import { StorageScreen } from './screens/StorageScreen';
+import { ProvisioningScreen } from './screens/ProvisioningScreen';
 import { OperationsScreen } from './screens/OperationsScreen';
 import { ReviewScreen } from './screens/ReviewScreen';
 
@@ -29,6 +30,7 @@ const built: Record<string, JSX.Element> = {
   connectivity: <ConnectivityScreen />,
   'landing-zone': <LandingZoneScreen />,
   storage: <StorageScreen />,
+  provisioning: <ProvisioningScreen />,
   operations: <OperationsScreen />,
   review: <ReviewScreen />,
 };

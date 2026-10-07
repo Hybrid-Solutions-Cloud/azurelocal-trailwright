@@ -6,6 +6,7 @@ export function createEmptyProject(name: string): Project {
     meta: { schema: 1, name, createdAt: new Date().toISOString() },
     release: { version: CURRENT_RELEASE },
     deployment: { mode: 'connected', architecture: 'hyperconverged', sanType: 'fibre-channel', cloud: 'public' },
+    provisioning: { osInstall: 'iso', hardwareSku: '', timeZone: '', timeServer: '', deployMethod: 'portal' },
     confirmed: [],
     project: { customer: '', owner: '', notes: '' },
     hardware: { topology: 'standard', rackAwareUplink: 'dedicated-storage', racks: 1, nodes: [], witness: 'none' },

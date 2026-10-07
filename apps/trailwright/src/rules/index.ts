@@ -10,6 +10,7 @@ import { operationsRules } from './operations';
 import { patternRules } from './pattern';
 import { architectureRules } from './architecture';
 import { intentRules } from './intents';
+import { provisioningRules } from './provisioning';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -22,6 +23,7 @@ export const rules: Rule[] = [
   ...patternRules,
   ...architectureRules,
   ...intentRules,
+  ...provisioningRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.

@@ -152,6 +152,19 @@ const deploymentSchema = z
   })
   .default({});
 
+const provisioningSchema = z
+  .object({
+    // Step 3A (install the OS from an ISO) or 3B (simplified machine provisioning, preview) of the deployment sequence.
+    osInstall: z.enum(['iso', 'simplified']).default('iso'),
+    // Simplified provisioning: the validated hardware and the site-level configuration.
+    hardwareSku: z.enum(['', 'lenovo-mx650-v3', 'lenovo-mx650-v4', 'hpe-dl360-gen11', 'dell-ax-750', 'dell-ax-650', 'other']).default(''),
+    timeZone: z.string().default(''),
+    timeServer: z.string().default(''),
+    // Step 6A (Azure portal) or 6B (ARM template).
+    deployMethod: z.enum(['portal', 'arm']).default('portal'),
+  })
+  .default({});
+
 const findingSchema = z.object({
   id: z.string(),
   severity: z.enum(['error', 'warning', 'info']),
@@ -164,6 +177,7 @@ export const projectSchema = z.object({
   meta: metaSchema,
   release: releaseSchema,
   deployment: deploymentSchema,
+  provisioning: provisioningSchema,
   // Steps the person has confirmed (the steps that carry a confirm gate).
   confirmed: z.array(z.string()).default([]),
   project: projectDetailsSchema,
