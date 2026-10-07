@@ -52,7 +52,7 @@ export function createExampleProject(): Project {
         { name: 'workloads', sizeGiB: 2048, resiliency: 'two-way' },
       ],
     },
-    operations: { monitoring: true, updateManager: true, backup: true, disasterRecovery: false },
+    operations: { monitoring: true, updateManager: true, backup: true, disasterRecovery: false, backupApproach: 'both', backupSolution: 'Customer-selected backup solution', drMethod: 'none' },
     findings: [],
   });
 }

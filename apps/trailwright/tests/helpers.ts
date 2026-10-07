@@ -29,6 +29,7 @@ const compliant: DeepPartial<Project> = {
   },
   landingZone: { subscriptionName: 'sub-example', resourceGroup: 'rg-example', keyVaultName: '', witnessStorageAccount: 'stwitness01' },
   hardware: { topology: 'standard', witness: 'cloud', nodes: makeNodes(2) },
+  operations: { updateManager: true },
   identity: { mode: 'active-directory', domain: 'example.com' },
   networking: {
     storage: 'switched',

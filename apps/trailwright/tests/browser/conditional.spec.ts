@@ -1,8 +1,9 @@
+import { step } from './nav';
 import { expect, test } from '@playwright/test';
 
 test('the storage questions follow the storage architecture', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Storage', exact: false }).first().click();
+  await step(page, 'Storage').click();
 
   // Storage Spaces Direct only (the default): volumes, no LUNs.
   await expect(page.getByRole('heading', { name: 'Storage Spaces Direct volumes' })).toBeVisible();
@@ -21,28 +22,28 @@ test('the storage questions follow the storage architecture', async ({ page }) =
 
 test('a SAN design drops the drive and storage-network questions', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Hardware and topology' }).click();
+  await step(page, 'Hardware and topology').click();
   await page.getByRole('button', { name: 'Add node' }).click();
   await expect(page.getByLabel('Node 1 drives')).toBeVisible();
 
-  await page.getByRole('link', { name: 'Storage' }).click();
+  await step(page, 'Storage').click();
   await page.getByRole('radio', { name: 'SAN (disaggregated)' }).check();
 
-  await page.getByRole('link', { name: 'Hardware and topology' }).click();
+  await step(page, 'Hardware and topology').click();
   await expect(page.getByLabel('Node 1 drives')).toHaveCount(0);
 
-  await page.getByRole('link', { name: 'Networking' }).click();
+  await step(page, 'Networking').click();
   await expect(page.getByText('Storage runs on the SAN')).toBeVisible();
   await expect(page.getByRole('radio', { name: 'Switchless' })).toHaveCount(0);
 });
 
 test('the region list offers only Azure Local regions', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Azure landing zone' }).click();
+  await step(page, 'Deployment type and region').click();
   const options = await page.getByLabel('Azure region').locator('option').allTextContents();
-  expect(options).toEqual([
-    'East US', 'West Europe', 'Australia East', 'Southeast Asia', 'India Central', 'Canada Central', 'Japan East', 'South Central US', 'US Gov Virginia (Azure Government)',
-  ]);
+  expect(options).toEqual(['East US', 'West Europe', 'Australia East', 'Southeast Asia', 'India Central', 'Canada Central', 'Japan East', 'South Central US']);
+  await page.getByRole('radio', { name: 'Azure Government' }).check();
+  expect(await page.getByLabel('Azure region').locator('option').allTextContents()).toEqual(['US Gov Virginia']);
 });
 
 test('a design can start clean or from the bundled example', async ({ page }) => {

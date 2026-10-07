@@ -16,6 +16,8 @@ const witnessOptions = [
   { value: 'none', label: 'No witness', description: 'Not needed from five nodes. Required for two nodes, strongly recommended for three and four.' },
 ];
 
+const fileShareOption = { value: 'file-share', label: 'File share witness', description: 'An SMB share on a server outside the cluster. Required for rack-aware disconnected operations.' };
+
 type Node = Hardware['nodes'][number];
 
 export const HardwareScreen: FC = () => {
@@ -33,7 +35,7 @@ export const HardwareScreen: FC = () => {
       <h1 className="text-2xl font-semibold text-gray-900">Hardware and topology</h1>
       <div className="space-y-6">
         <ChoiceCards name="topology" legend="Topology" value={hardware.topology} onChange={(v) => update({ topology: v as Hardware['topology'] })} choices={topologyOptions} />
-        <ChoiceCards name="witness" legend="Witness" value={hardware.witness} onChange={(v) => update({ witness: v as Hardware['witness'] })} choices={witnessOptions} />
+        <ChoiceCards name="witness" legend="Witness" value={hardware.witness} onChange={(v) => update({ witness: v as Hardware['witness'] })} choices={project.deployment.type === 'disconnected' ? [...witnessOptions.slice(0, 1), fileShareOption, ...witnessOptions.slice(1)] : witnessOptions} />
       </div>
 
       <div>

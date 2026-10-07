@@ -11,4 +11,6 @@ export const azureLocalRegions = [
   { value: 'usgovvirginia', label: 'US Gov Virginia', cloud: 'government' },
 ] as const;
 
+export const regionsFor = (cloud: 'public' | 'government') => azureLocalRegions.filter((r) => r.cloud === cloud);
+
 export const regionValues = azureLocalRegions.map((r) => r.value) as [string, ...string[]];

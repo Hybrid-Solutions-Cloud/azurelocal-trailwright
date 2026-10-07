@@ -1,8 +1,9 @@
+import { step } from './nav';
 import { expect, test } from '@playwright/test';
 
 test('private path asks for its own questions and flags what is missing', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Connectivity' }).click();
+  await step(page, 'Connectivity').click();
 
   // Direct outbound: no gateway, no private path questions.
   await expect(page.getByLabel('Arc gateway resource name')).toHaveCount(0);

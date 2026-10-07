@@ -5,6 +5,8 @@ export function createEmptyProject(name: string): Project {
   const project: Project = {
     meta: { schema: 1, name, createdAt: new Date().toISOString() },
     release: { version: CURRENT_RELEASE },
+    deployment: { type: 'connected', cloud: 'public' },
+    confirmed: [],
     project: { customer: '', owner: '', notes: '' },
     hardware: { topology: 'standard', nodes: [], witness: 'none' },
     identity: { mode: 'local-identity-key-vault' },
@@ -12,7 +14,7 @@ export function createEmptyProject(name: string): Project {
     connectivity: { path: 'direct', arcGatewayName: '', privatePath: { transport: '', virtualNetwork: '', workloadSubnet: '', firewallSubnet: '', firewallPrivateIp: '', firewallPort: '', arcPrivateLinkScopeOnNetwork: false, proxyBypass: '' } },
     landingZone: { subscriptionName: '', resourceGroup: '', keyVaultName: '', region: 'eastus' },
     storage: { architecture: 's2d', volumes: [], sanLuns: [] },
-    operations: { monitoring: false, updateManager: false, backup: false, disasterRecovery: false },
+    operations: { monitoring: false, updateManager: false, backup: false, disasterRecovery: false, backupApproach: 'both', backupSolution: '', drMethod: 'none' },
     findings: [],
   };
 

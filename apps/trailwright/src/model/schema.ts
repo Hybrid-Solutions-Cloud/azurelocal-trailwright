@@ -116,7 +116,20 @@ const operationsSchema = z.object({
   updateManager: z.boolean(),
   backup: z.boolean(),
   disasterRecovery: z.boolean(),
+  // Backup follow-ups: which approach, and the customer's chosen supported solution (named by the customer, not by this tool).
+  backupApproach: z.enum(['host', 'guest', 'both']).default('both'),
+  backupSolution: z.string().default(''),
+  // Disaster recovery follow-up: how VMs are replicated.
+  drMethod: z.enum(['none', 'asr', 'hyperv-replica']).default('none'),
 });
+
+const deploymentSchema = z
+  .object({
+    // connected: hyperconverged with Azure; disconnected: disconnected operations; disaggregated: external SAN, multi-rack
+    type: z.enum(['connected', 'disconnected', 'disaggregated']).default('connected'),
+    cloud: z.enum(['public', 'government']).default('public'),
+  })
+  .default({});
 
 const findingSchema = z.object({
   id: z.string(),
@@ -129,6 +142,9 @@ const findingSchema = z.object({
 export const projectSchema = z.object({
   meta: metaSchema,
   release: releaseSchema,
+  deployment: deploymentSchema,
+  // Steps the person has confirmed (the steps that carry a confirm gate).
+  confirmed: z.array(z.string()).default([]),
   project: projectDetailsSchema,
   hardware: hardwareSchema,
   identity: identitySchema,

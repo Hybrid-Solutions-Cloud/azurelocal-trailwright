@@ -1,3 +1,4 @@
+import { step } from './nav';
 import { expect, test } from '@playwright/test';
 
 test('the bundled example loads after confirmation and has no errors on the review screen', async ({ page }) => {
@@ -6,6 +7,6 @@ test('the bundled example loads after confirmation and has no errors on the revi
   await page.getByRole('button', { name: 'Replace my design with the example' }).click();
   await expect(page.getByLabel('Project name')).toHaveValue('Example lab');
 
-  await page.getByRole('link', { name: 'Review and export' }).click();
+  await step(page, 'Review and export').click();
   await expect(page.getByRole('status')).toContainText('0 errors, 0 warnings');
 });

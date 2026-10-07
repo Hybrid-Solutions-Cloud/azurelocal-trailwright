@@ -7,7 +7,7 @@ const ARM_URL = 'https://learn.microsoft.com/azure/azure-local/deploy/deployment
 const RACK_URL = 'https://learn.microsoft.com/azure/azure-local/concepts/rack-aware-cluster-requirements?view=azloc-2609#supported-node-configurations';
 const SYSREQ_URL = 'https://learn.microsoft.com/azure/azure-local/concepts/system-requirements-23h2?view=azloc-2609';
 
-const WITNESS_URL = 'https://learn.microsoft.com/azure/azure-local/manage/witness?view=azloc-2609';
+const DISCONNECTED_URL = 'https://learn.microsoft.com/azure/azure-local/manage/disconnected-operations-deploy?view=azloc-2609#deploy-workload-clusters';
 const RACK_DEPLOY_URL = 'https://learn.microsoft.com/azure/azure-local/deploy/rack-aware-cluster-deployment-via-template?view=azloc-2609#step-2-deploy-using-arm-template';
 
 export const hardwareRules: Rule[] = [
@@ -16,8 +16,17 @@ export const hardwareRules: Rule[] = [
     release: RELEASES,
     learnUrl: RACK_DEPLOY_URL,
     check: (p) =>
-      p.hardware.topology === 'rack-aware' && p.hardware.witness === 'none'
+      p.hardware.topology === 'rack-aware' && p.deployment.type !== 'disconnected' && p.hardware.witness !== 'cloud'
         ? [{ id: 'HW-007', severity: 'error', field: 'hardware.witness', message: 'A rack-aware cluster requires a cloud witness.', learnUrl: RACK_DEPLOY_URL }]
+        : [],
+  },
+  {
+    id: 'HW-008',
+    release: RELEASES,
+    learnUrl: DISCONNECTED_URL,
+    check: (p) =>
+      p.hardware.topology === 'rack-aware' && p.deployment.type === 'disconnected' && p.hardware.witness !== 'file-share'
+        ? [{ id: 'HW-008', severity: 'error', field: 'hardware.witness', message: 'A rack-aware cluster in Azure Local disconnected operations requires a file share witness.', learnUrl: DISCONNECTED_URL }]
         : [],
   },
   {
@@ -34,7 +43,7 @@ export const hardwareRules: Rule[] = [
     release: RELEASES,
     learnUrl: ARM_URL,
     check: (p) =>
-      p.hardware.witness === 'file-share'
+      p.hardware.witness === 'file-share' && p.deployment.type !== 'disconnected'
         ? [{ id: 'HW-002', severity: 'error', field: 'hardware.witness', message: 'Connected Azure Local deployments use a cloud witness: the deployment offers only the Cloud witness type. A file share witness appears in the documentation only for disconnected operations.', learnUrl: ARM_URL }]
         : [],
   },

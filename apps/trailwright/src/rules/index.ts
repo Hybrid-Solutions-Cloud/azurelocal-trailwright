@@ -6,6 +6,7 @@ import { identityRules } from './identity';
 import { landingZoneRules } from './landingZone';
 import { networkingRules } from './networking';
 import { storageRules } from './storage';
+import { operationsRules } from './operations';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -14,6 +15,7 @@ export const rules: Rule[] = [
   ...connectivityRules,
   ...landingZoneRules,
   ...storageRules,
+  ...operationsRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.
