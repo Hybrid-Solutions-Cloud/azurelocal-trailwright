@@ -13,6 +13,7 @@ import { intentRules } from './intents';
 import { provisioningRules } from './provisioning';
 import { inputRules } from './inputs';
 import { s2dRules } from './s2d';
+import { portRules } from './ports';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -28,6 +29,7 @@ export const rules: Rule[] = [
   ...provisioningRules,
   ...inputRules,
   ...s2dRules,
+  ...portRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.

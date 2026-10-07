@@ -15,7 +15,7 @@ export function createEmptyProject(name: string): Project {
     project: { customer: '', owner: '', notes: '' },
     hardware: { topology: 'standard', rackAwareUplink: 'dedicated-storage', racks: 1, nodes: [], witness: 'none' },
     identity: { mode: 'local-identity-key-vault' },
-    networking: { storage: 'switched', torSwitches: 2, storageLayout: 'dedicated', switchlessLinks: 'dual', portsPerNode: 4, intentGrouping: 'mgmt-compute', backupNetwork: false, storageAutoIp: true, storageSubnets: [], vlans: [], intents: [], ipPlan: [] },
+    networking: { storage: 'switched', torSwitches: 2, storageLayout: 'dedicated', switchlessLinks: 'dual', portsPerNode: 4, intentGrouping: 'mgmt-compute', backupNetwork: false, cards: [], fcHbaPorts: 2, storageAutoIp: true, storageSubnets: [], vlans: [], intents: [], ipPlan: [] },
     connectivity: { path: 'direct', arcGatewayName: '', privatePath: { transport: '', virtualNetwork: '', workloadSubnet: '', firewallSubnet: '', firewallPrivateIp: '', firewallPort: '', arcPrivateLinkScopeOnNetwork: false, proxyBypass: '' } },
     landingZone: { subscriptionName: '', resourceGroup: '', keyVaultName: '', region: 'eastus' },
     storage: { architecture: 's2d', volumes: [], sanLuns: [], driveLayout: { capacity: { media: 'nvme', count: 0, sizeTB: 0 }, cache: { media: 'nvme', count: 0, sizeTB: 0 } } },

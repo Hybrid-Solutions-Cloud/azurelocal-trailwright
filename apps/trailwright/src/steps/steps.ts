@@ -30,7 +30,7 @@ export const steps: Step[] = [
     title: 'Network design',
     group: 'Network',
     visible: always,
-    fields: ['networking.storage', 'networking.portsPerNode', 'networking.storageAutoIp', 'networking.storageSubnets', 'networking.torSwitches'],
+    fields: ['networking.storage', 'networking.portsPerNode', 'networking.storageAutoIp', 'networking.storageSubnets', 'networking.torSwitches', 'networking.cards', 'networking.fcHbaPorts', 'networking.intentGrouping'],
     gate: true,
   },
   {

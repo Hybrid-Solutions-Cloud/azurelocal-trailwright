@@ -8,6 +8,7 @@ import { FindingsPanel } from '../components/FindingsPanel';
 import { intentsFor, patternFor, portsRequired, storageSubnetsFor } from '../network/patterns';
 import { buildIntents, disaggregatedIntents, groupingLabels, groupingSupported, portChoices, standalonePorts, storageKind, disaggregatedPortsNeeded } from '../network/intents';
 import { usesS2d } from '../rules/types';
+import { PortPlanner } from '../components/PortPlanner';
 
 const storageOptions = [
   { value: 'switched', label: 'Storage switched', description: 'Storage traffic goes through the top-of-rack switches. Nodes can be added later.' },
@@ -162,6 +163,8 @@ export const NetworkDesignScreen: FC = () => {
           </button>
         </div>
       )}
+      <PortPlanner />
+
       {pattern && pattern.storageSubnets > 0 && (
         <div className="space-y-3">
           <h2 className="text-lg font-medium text-gray-800">Storage IP addressing</h2>
@@ -176,7 +179,7 @@ export const NetworkDesignScreen: FC = () => {
         </div>
       )}
 
-      <FindingsPanel prefixes={['networking.storage', 'networking.portsPerNode', 'networking.storageAutoIp', 'networking.storageSubnets', 'networking.torSwitches']} />
+      <FindingsPanel prefixes={['networking.storage', 'networking.portsPerNode', 'networking.storageAutoIp', 'networking.storageSubnets', 'networking.torSwitches', 'networking.cards', 'networking.fcHbaPorts', 'networking.intentGrouping']} />
     </section>
   );
 };

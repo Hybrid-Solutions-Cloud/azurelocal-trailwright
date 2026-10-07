@@ -80,6 +80,22 @@ const ipPlanSchema = z.object({
   cidr: z.string(),
 });
 
+// The physical network cards in every node (the layout is symmetric across nodes) and what each port is used for.
+// A port's role is one of: unused, intent:<intent name>, cluster:1, cluster:2, iscsi:a, iscsi:b.
+const portSchema = z.object({
+  osName: z.string().default(''),
+  speedGbps: z.number().default(25),
+  rdma: z.enum(['none', 'iWARP', 'RoCE', 'RoCEv2']).default('none'),
+  role: z.string().default('unused'),
+});
+
+const cardSchema = z.object({
+  label: z.string().default(''),
+  make: z.string().default(''),
+  model: z.string().default(''),
+  ports: z.array(portSchema).default([]),
+});
+
 const networkingSchema = z.object({
   storage: z.enum(['switched', 'switchless']),
   // Top-of-rack switches for north-south traffic, how storage shares the ports, and links between switchless nodes.
@@ -92,6 +108,9 @@ const networkingSchema = z.object({
   intentGrouping: z.enum(['all', 'mgmt-compute', 'compute-storage', 'custom']).default('mgmt-compute'),
   // Decision 9: a dedicated network for guest (VM) backup traffic.
   backupNetwork: z.boolean().default(false),
+  cards: z.array(cardSchema).default([]),
+  // Disaggregated Fibre Channel: host bus adapter ports to the SAN fabrics (A and B).
+  fcHbaPorts: z.number().int().default(2),
   storageAutoIp: z.boolean().default(true),
   storageSubnets: z.array(z.string()).default([]),
   // Storage VLAN per storage network (Network ATC defaults are 711 and 712, and 713 for a third).
