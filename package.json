@@ -1,20 +1,15 @@
 {
   "name": "azurelocal-trailwright",
-  "version": "0.1.0",
   "private": true,
-  "description": "Azure Local Trailwright",
+  "version": "1.0.0",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace apps/azurelocal-configurator",
-    "check": "npm run check --workspace apps/azurelocal-configurator",
-    "test": "npm run test --workspace apps/azurelocal-configurator",
-    "build": "npm run build --workspace apps/azurelocal-configurator",
-    "test:browser": "npm run test:browser --workspace apps/azurelocal-configurator"
-  },
-  "devDependencies": {
-    "@types/node": "^26.6.4"
+    "dev": "npm run dev --workspace apps/trailwright",
+    "build": "npm run build --workspace apps/trailwright",
+    "test": "npm run test --workspace apps/trailwright",
+    "test:browser": "npm run test:browser --workspace apps/trailwright",
+    "check": "npm run check --workspace apps/trailwright"
   }
 }
