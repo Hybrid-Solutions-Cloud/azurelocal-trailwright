@@ -1,41 +1,56 @@
-name: Deploy Trailwright to GitHub Pages
+# Tests the application on every push and pull request; deploys it to GitHub Pages only from main.
+# Actions are pinned to full commit SHAs (the comment names the release).
+name: Test and deploy Trailwright
+
 on:
   push:
-    branches: [main]
+    branches: [main, rebuild]
+  pull_request:
   workflow_dispatch:
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
 concurrency:
-  group: pages
+  group: trailwright-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - run: npm ci
+      - run: npm run check
       - run: npm test
+      - run: npx playwright install --with-deps chromium
+        working-directory: apps/trailwright
+      - run: npm run test:browser
       - run: npm run build
         env:
-          CI_COMMIT_SHA: ${{ github.sha }}
-      - uses: actions/upload-pages-artifact@v4
+          SITE_BASE: /${{ github.event.repository.name }}/
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        if: github.ref == 'refs/heads/main'
         with:
-          path: ./apps/azurelocal-configurator/dist
+          path: ./apps/trailwright/dist
+
   deploy:
-    needs: build
+    if: github.ref == 'refs/heads/main'
+    needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
         id: deployment
