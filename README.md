@@ -2,7 +2,6 @@
 
 Design Azure Local deployments, validate architecture choices and export reports for automation. Surveyor answers "does it fit"; Trailwright answers "how is it built". Neither tool deploys anything.
 
-**Status: rebuild in progress** on the `rebuild` branch (owner decision D-032, 6 Oct 2026). The plan is in [docs/REBUILD.md](docs/REBUILD.md); how to use the tool is in the [user guide](docs/USER-GUIDE.md). The previous application is kept in [archive/](archive/) until cutover and is what `main` still deploys.
 
 ```powershell
 npm install

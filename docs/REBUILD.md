@@ -42,7 +42,6 @@ The stack is the same as Surveyor 2.8.0, so the azurelocal.cloud tools feel like
 │       │   ├── imports/      Surveyor and project import
 │       │   └── exports/      handoff, infrastructure.yml, parameters, schedules, topology
 │       └── tests/            unit tests and browser journeys
-├── archive/                  the old application, until cutover
 ├── docs/
 └── .github/workflows/
 ```
@@ -105,7 +104,6 @@ GitHub Actions runs type check, unit tests, build and the browser journeys, and 
 
 ## Cutover
 
-Keep the old application in `archive/` and in the history. Switch the Pages deployment to the new build only when the unit and browser tests are green and the live page has been verified.
 
 ## Open questions
 
