@@ -15,7 +15,7 @@ export function switchPortRows(p: Project): SwitchPortRow[] {
   const assigned = allPorts(p).filter((x) => x.ref.role !== 'unused');
   // Without a card inventory the intents' adapters stand in for the ports.
   const fromIntents = p.networking.intents.flatMap((i) => i.adapters.map((a) => ({ name: a, intent: i })));
-  const ports = assigned.length ? assigned : fromIntents.map((x, k) => ({ card: 0, port: k, cardRef: { label: '', make: '', model: '', ports: [] }, ref: { osName: x.name, speedGbps: 25, rdma: x.intent.traffic.includes('storage') && x.intent.networkDirect === 'Enabled' ? x.intent.networkDirectTechnology : ('none' as const), role: `intent:${x.intent.name}` } }));
+  const ports = assigned.length ? assigned : fromIntents.map((x, k) => ({ card: 0, port: k, cardRef: { label: '', make: '', model: '', ports: [] }, ref: { osName: x.name, speedGbps: 25, rdma: x.intent.traffic.includes('storage') && x.intent.networkDirect === 'Enabled' ? (x.intent.networkDirectTechnology === 'Auto' ? ('RoCE' as const) : x.intent.networkDirectTechnology) : ('none' as const), role: `intent:${x.intent.name}` } }));
   if (ports.length === 0) return [];
   const da = p.deployment.architecture === 'disaggregated';
   const names = da ? ['Leaf A', 'Leaf B'] : ['ToR1', 'ToR2'];

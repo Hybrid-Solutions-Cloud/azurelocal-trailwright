@@ -132,7 +132,7 @@ export const NetworkingScreen: FC = () => {
                         <SelectInput id={`intent-${i}-jumbo`} label="Jumbo packet" value={intent.jumboPacket} onChange={(jumboPacket) => updateIntent(i, { jumboPacket: jumboPacket as typeof intent.jumboPacket })} options={[{ value: '1514', label: '1514 (standard)' }, { value: '4088', label: '4088' }, { value: '9014', label: '9014 (jumbo)' }]} />
                         <SelectInput id={`intent-${i}-nd`} label="NetworkDirect (RDMA)" value={intent.networkDirect} onChange={(networkDirect) => updateIntent(i, { networkDirect: networkDirect as typeof intent.networkDirect })} options={[{ value: 'Enabled', label: 'Enabled' }, { value: 'Disabled', label: 'Disabled' }]} />
                         {intent.networkDirect === 'Enabled' && (
-                          <SelectInput id={`intent-${i}-ndt`} label="RDMA technology" value={intent.networkDirectTechnology} onChange={(networkDirectTechnology) => updateIntent(i, { networkDirectTechnology: networkDirectTechnology as typeof intent.networkDirectTechnology })} options={[{ value: 'iWARP', label: 'iWARP' }, { value: 'RoCE', label: 'RoCE' }, { value: 'RoCEv2', label: 'RoCEv2' }]} />
+                          <SelectInput id={`intent-${i}-ndt`} label="RDMA technology" value={intent.networkDirectTechnology} onChange={(networkDirectTechnology) => updateIntent(i, { networkDirectTechnology: networkDirectTechnology as typeof intent.networkDirectTechnology })} options={[{ value: 'Auto', label: 'Let Network ATC detect' }, { value: 'iWARP', label: 'iWARP' }, { value: 'RoCE', label: 'RoCE' }, { value: 'RoCEv2', label: 'RoCEv2' }]} />
                         )}
                       </div>
                     )}

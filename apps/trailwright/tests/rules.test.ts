@@ -74,6 +74,7 @@ const fires: Record<string, DeepPartial<Project>> = {
   'RAC-002': { hardware: { topology: 'rack-aware', nodes: makeNodes(4), witness: 'cloud' }, storage: { driveLayout: { capacity: { media: 'hdd', count: 4, sizeTB: 4 } } } },
   'RAC-003': { deployment: { mode: 'disconnected' }, hardware: { topology: 'rack-aware', nodes: makeNodes(4), witness: 'file-share', witnessPath: '' } },
   'RAC-004': { hardware: { topology: 'rack-aware', nodes: makeNodes(4), witness: 'cloud' } },
+  'SIP-001': { hardware: { nodes: makeNodes(2) }, networking: { storageAutoIp: false, storage: 'switched', storageSubnets: [] } },
   'DOP-001': { deployment: { mode: 'disconnected' }, hardware: { nodes: makeNodes(2), witness: 'cloud' } },
   'DOP-002': { deployment: { mode: 'disconnected' } },
   'DOP-003': { deployment: { mode: 'disconnected' } },

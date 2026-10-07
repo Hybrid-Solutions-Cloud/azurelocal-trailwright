@@ -93,17 +93,23 @@ export function switchlessStorageIps(nodeNames: string[], links: number, subnets
   return Array.from({ length: adapters }, (_, k) => perNode.map((node) => node[k]));
 }
 
+// The subnet mask of a CIDR such as 172.30.71.0/24.
+const maskOf = (cidr: string | undefined): string => (cidr ? parseCidr(cidr)?.mask ?? '' : '');
+
 export function storageNetworkList(p: Project): unknown[] {
   const storageAdapters = p.networking.intents.filter((i) => i.traffic.includes('storage')).flatMap((i) => i.adapters);
   const names = p.hardware.nodes.map((n) => n.name);
   const links = p.networking.switchlessLinks === 'single' ? 1 : 2;
-  const custom = !p.networking.storageAutoIp && p.networking.storage === 'switchless' && names.length >= 3;
-  const ips = custom ? switchlessStorageIps(names, links, p.networking.storageSubnets.length ? p.networking.storageSubnets : (patternFor(p) ? storageSubnetsFor(patternFor(p)!) : [])) : [];
+  const mesh = !p.networking.storageAutoIp && p.networking.storage === 'switchless' && names.length >= 3;
+  // Any other cluster with Storage Auto IP off declares each machine's address on each storage network (the template's custom storage IP form).
+  const perNode = !p.networking.storageAutoIp && !mesh;
+  const ips = mesh ? switchlessStorageIps(names, links, p.networking.storageSubnets.length ? p.networking.storageSubnets : (patternFor(p) ? storageSubnetsFor(patternFor(p)!) : [])) : [];
   return storageAdapters.map((adapter, k) => ({
     name: `StorageNetwork${k + 1}`,
     networkAdapterName: adapter,
     vlanId: String(p.networking.storageVlans[k] ?? p.networking.storageVlans[p.networking.storageVlans.length - 1] ?? 711),
-    ...(custom && ips[k] ? { storageAdapterIPInfo: ips[k] } : {}),
+    ...(mesh && ips[k] ? { storageAdapterIPInfo: ips[k] } : {}),
+    ...(perNode ? { storageAdapterIPInfo: p.hardware.nodes.map((n) => ({ physicalNode: n.name, ipv4Address: n.storageIps?.[k] ?? '', subnetMask: maskOf(p.networking.storageSubnets[k]) })) } : {}),
   }));
 }
 
@@ -136,7 +142,7 @@ export function intentList(p: Project): unknown[] {
     adapterPropertyOverrides: {
       jumboPacket: i.jumboPacket ?? '9014',
       networkDirect: i.networkDirect ?? 'Enabled',
-      networkDirectTechnology: i.networkDirect === 'Disabled' ? '' : (i.networkDirectTechnology ?? 'RoCEv2'),
+      networkDirectTechnology: i.networkDirect === 'Disabled' || i.networkDirectTechnology === 'Auto' ? '' : (i.networkDirectTechnology ?? 'RoCEv2'),
     },
   }));
 }

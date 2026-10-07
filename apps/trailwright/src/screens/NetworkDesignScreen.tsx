@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useProjectStore } from '../model/store';
 import type { Networking } from '../model/schema';
 import { ChoiceCards } from '../components/ChoiceCards';
-import { TextInput } from '../components/Field';
+import { CheckInput, TextInput } from '../components/Field';
 import { FindingsPanel } from '../components/FindingsPanel';
 import { intentsFor, patternFor, portsRequired, storageSubnetsFor } from '../network/patterns';
 import { buildIntents, disaggregatedIntents, groupingLabels, groupingSupported, portChoices, standalonePorts, storageKind, disaggregatedPortsNeeded } from '../network/intents';
@@ -185,6 +185,27 @@ export const NetworkDesignScreen: FC = () => {
             hint="Comma-separated CIDR ranges, for example 10.0.1.0/24, 10.0.2.0/24."
             onChange={(value) => update({ storageSubnets: value.split(',').map((s) => s.trim()).filter(Boolean), storageAutoIp: false })}
           />
+        </div>
+      )}
+
+      {usesS2d(project) && project.deployment.architecture !== 'disaggregated' && !(net.storage === 'switchless' && project.hardware.nodes.length >= 3) && (
+        <div className="space-y-3">
+          <h2 className="text-lg font-medium text-gray-800">Storage addresses</h2>
+          <CheckInput id="storage-auto-ip" label="Network ATC assigns the storage addresses (Storage Auto IP)" checked={net.storageAutoIp} onChange={(storageAutoIp) => update({ storageAutoIp })} hint="Leave it on unless you must choose the addresses. Choosing them needs the ARM template, not the portal." />
+          {!net.storageAutoIp && (
+            <div className="space-y-3">
+              {[0, 1].map((k) => (
+                <div key={k} className="space-y-2 rounded-md border border-gray-200 p-3">
+                  <TextInput id={`storage-net-${k}-subnet`} label={`Storage network ${k + 1} subnet (CIDR)`} value={net.storageSubnets[k] ?? ''} onChange={(v) => update({ storageSubnets: [0, 1].map((j) => (j === k ? v : net.storageSubnets[j] ?? '')) })} hint="For example 172.30.71.0/24; VLAN 711 by default." />
+                  <div className="flex flex-wrap gap-4">
+                    {project.hardware.nodes.map((node, i) => (
+                      <TextInput key={i} id={`storage-net-${k}-node-${i}`} label={`${node.name || `Node ${i + 1}`} address`} value={node.storageIps?.[k] ?? ''} onChange={(v) => setSection('hardware', { ...project.hardware, nodes: project.hardware.nodes.map((x, m) => (m === i ? { ...x, storageIps: [0, 1].map((j) => (j === k ? v : x.storageIps?.[j] ?? '')) } : x)) })} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

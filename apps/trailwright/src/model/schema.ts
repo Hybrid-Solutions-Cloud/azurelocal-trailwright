@@ -30,6 +30,8 @@ const nodeSchema = z.object({
   drives: z.number(),
   // Rack-aware: the local availability zone (rack) the machine is in. Empty means the first half of the machines are in Zone1 and the rest in Zone2.
   zone: z.string().optional(),
+  // Storage Auto IP off: this machine's address on each storage network, in storage-network order.
+  storageIps: z.array(z.string()).optional(),
 });
 
 const hardwareSchema = z.object({
@@ -76,7 +78,7 @@ const intentSchema = z.object({
   overrideAdapter: z.boolean().default(false),
   jumboPacket: z.enum(['1514', '4088', '9014']).default('9014'),
   networkDirect: z.enum(['Enabled', 'Disabled']).default('Enabled'),
-  networkDirectTechnology: z.enum(['iWARP', 'RoCE', 'RoCEv2']).default('RoCEv2'),
+  networkDirectTechnology: z.enum(['Auto', 'iWARP', 'RoCE', 'RoCEv2']).default('RoCEv2'),
   overrideVSwitch: z.boolean().default(false),
   enableIov: z.enum(['true', 'false']).default('true'),
   loadBalancingAlgorithm: z.enum(['Dynamic', 'HyperVPort']).default('Dynamic'),
