@@ -19,6 +19,7 @@ import { StorageScreen } from './screens/StorageScreen';
 import { ProvisioningScreen } from './screens/ProvisioningScreen';
 import { InfrastructureScreen } from './screens/InfrastructureScreen';
 import { SecurityScreen } from './screens/SecurityScreen';
+import { SdnScreen } from './screens/SdnScreen';
 import { OperationsScreen } from './screens/OperationsScreen';
 import { ReviewScreen } from './screens/ReviewScreen';
 
@@ -35,6 +36,7 @@ const built: Record<string, JSX.Element> = {
   provisioning: <ProvisioningScreen />,
   infrastructure: <InfrastructureScreen />,
   security: <SecurityScreen />,
+  sdn: <SdnScreen />,
   operations: <OperationsScreen />,
   review: <ReviewScreen />,
 };

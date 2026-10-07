@@ -76,6 +76,11 @@ export function buildInfrastructureYml(p: Project): string {
       configuration_mode: p.storage.configurationMode,
       volumes: p.storage.volumes.map((v) => ({ name: v.name, size_gib: v.sizeGiB, resiliency: v.resiliency })),
       san_luns: p.storage.sanLuns.map((l) => ({ name: l.name, size_gib: l.sizeGiB })),
+      ...(p.deployment.architecture === 'disaggregated' ? { infra_volume_lun_id: p.storage.infraVolLunId, infra_performance_lun_id: p.storage.infraPerfLunId } : {}),
+    },
+    sdn: {
+      enabled: p.sdn.enabled,
+      ...(p.sdn.enabled ? { prefix: p.sdn.prefix, dns_records: p.sdn.dnsRecords, default_access_policy: p.sdn.defaultAccessPolicy, logical_networks: p.sdn.logicalNetworks.map((l) => ({ name: l.name, vlan: l.vlan, address_prefix: l.addressPrefix, gateway: l.gateway, dns_servers: l.dnsServers, ip_pool: { start: l.poolStart, end: l.poolEnd } })) } : {}),
     },
     security: {
       level: p.security.level,

@@ -15,6 +15,7 @@ import { inputRules } from './inputs';
 import { s2dRules } from './s2d';
 import { portRules } from './ports';
 import { disaggregatedRules } from './disaggregated';
+import { sdnRules } from './sdn';
 
 export const rules: Rule[] = [
   ...hardwareRules,
@@ -32,6 +33,7 @@ export const rules: Rule[] = [
   ...s2dRules,
   ...portRules,
   ...disaggregatedRules,
+  ...sdnRules,
 ];
 
 // Every rule follows the current release (see CURRENT_RELEASE), in id order.

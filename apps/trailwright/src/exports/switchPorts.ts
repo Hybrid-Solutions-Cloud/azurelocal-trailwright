@@ -46,7 +46,10 @@ export function switchPortRows(p: Project): SwitchPortRow[] {
     const traffic = intent?.traffic ?? [];
     const vlans: string[] = [];
     if (traffic.includes('management')) vlans.push(p.infrastructure.managementVlan > 0 ? String(p.infrastructure.managementVlan) : 'native (management, untagged)');
-    if (traffic.includes('compute')) for (const v of p.networking.vlans.filter((x2) => !p.networking.storageVlans.includes(x2.id))) vlans.push(String(v.id));
+    if (traffic.includes('compute')) {
+      const tenant = [...p.networking.vlans.map((v) => v.id), ...(p.sdn.enabled ? p.sdn.logicalNetworks.map((l) => l.vlan).filter((v) => v > 0) : [])];
+      for (const id of [...new Set(tenant)].filter((id2) => !p.networking.storageVlans.includes(id2))) vlans.push(String(id));
+    }
     let qos = 'none';
     let note = `Intent ${r.name}`;
     if (traffic.includes('storage') && !da) {

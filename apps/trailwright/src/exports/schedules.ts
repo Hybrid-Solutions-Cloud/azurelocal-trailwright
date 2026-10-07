@@ -22,6 +22,7 @@ export function vlanRows(p: Project): Cell[][] {
     if (p.deployment.sanType === 'iscsi') list.push({ name: 'iSCSI path A', id: 300, purpose: 'iSCSI' }, { name: 'iSCSI path B', id: 400, purpose: 'iSCSI' });
     if (p.networking.backupNetwork) list.push({ name: 'Backup', id: 800, purpose: 'in-guest backup (trunk on the management and compute intent)' });
   }
+  if (p.sdn.enabled) for (const l of p.sdn.logicalNetworks) if (l.vlan > 0) list.push({ name: l.name || 'Logical network', id: l.vlan, purpose: 'SDN logical network' });
   const seen = new Set<string>();
   const unique = list.filter((v) => (seen.has(`${v.name}|${v.id}`) ? false : (seen.add(`${v.name}|${v.id}`), true)));
   return [da ? ['Name', 'ID', 'Purpose', 'VNI'] : ['Name', 'ID', 'Purpose'], ...unique.map((v) => (da ? [v.name, v.id, v.purpose, 10000 + v.id] : [v.name, v.id, v.purpose]))];

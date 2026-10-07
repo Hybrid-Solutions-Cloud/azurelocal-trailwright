@@ -4,6 +4,7 @@ import { patternFor } from '../network/patterns';
 import { templateFor, witnessTypeFor } from './createCluster';
 import { slug } from './types';
 import { switchPortRows } from './switchPorts';
+import { ncAddress } from '../rules/sdn';
 
 const cell = (value: string | number | boolean | undefined): string => String(value ?? '').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
 
@@ -55,6 +56,17 @@ export function buildHandoffMarkdown(p: Project): string {
   }
   out.push('### IP plan', '');
   out.push(...table(['Name', 'CIDR'], p.networking.ipPlan.map((r) => [r.name, r.cidr])));
+
+  if (p.sdn.enabled) {
+    out.push('## Software defined networking', '');
+    if (p.deployment.architecture === 'disaggregated') out.push('- Logical networks are provisioned on the leaf-spine fabric (VXLAN EVPN overlay); the Microsoft SDN Network Controller is not used.');
+    else {
+      const nc = ncAddress(p.infrastructure.startIp);
+      out.push('- SDN enabled by Azure Arc: logical networks and network security groups only. It cannot be disabled once enabled; plan a maintenance window.', `- SDN prefix: ${p.sdn.prefix} (Network Controller REST name ${p.sdn.prefix}-NC)`, `- DNS records: ${p.sdn.dnsRecords === 'static' ? `static; create the A record ${p.sdn.prefix}-NC${nc ? ` pointing to ${nc}` : ''} first` : 'created by Active Directory integrated dynamic DNS'}`, `- Default network access policy for new VMs: ${yes(p.sdn.defaultAccessPolicy)}`, '', 'Enable it after deployment, from a node, as an Azure Stack HCI administrator (Azure Local 2506 or later):', '', '```powershell', `Add-EceFeature -Name NC -SDNPrefix ${p.sdn.prefix}`, '```');
+    }
+    out.push('', '### Logical networks', '');
+    out.push(...table(['Name', 'VLAN', 'Address prefix', 'Gateway', 'DNS servers', 'IP pool'], p.sdn.logicalNetworks.map((l) => [l.name, l.vlan, l.addressPrefix, l.gateway, l.dnsServers.join(', '), l.poolStart && l.poolEnd ? `${l.poolStart} - ${l.poolEnd}` : ''])));
+  }
 
   out.push('## Outbound connectivity', '', `- Path: ${p.connectivity.path}`);
   if (p.connectivity.proxyUrl) out.push(`- Proxy: ${p.connectivity.proxyUrl}`);

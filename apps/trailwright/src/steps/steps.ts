@@ -42,6 +42,7 @@ export const steps: Step[] = [
     gate: true,
   },
   { path: 'infrastructure', title: 'Management network', group: 'Network', visible: always, fields: ['infrastructure', 'hardware.nodes'], gate: true },
+  { path: 'sdn', title: 'Software defined networking', group: 'Network', visible: always, fields: ['sdn'] },
   { path: 'connectivity', title: 'Outbound connectivity', group: 'Connectivity', visible: always, fields: ['connectivity'] },
   { path: 'identity', title: 'Identity', group: 'Identity', visible: always, fields: ['identity'] },
   { path: 'security', title: 'Security', group: 'Deployment', visible: always, fields: ['security'] },

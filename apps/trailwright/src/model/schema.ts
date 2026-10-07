@@ -289,6 +289,28 @@ const securitySchema = z
   })
   .default({});
 
+// Decision 11: software defined networking. Hyperconverged: SDN enabled by Azure Arc (logical networks and network security groups only).
+// Disaggregated: logical networks on the external fabric (VXLAN EVPN), no Network Controller.
+const logicalNetworkSchema = z.object({
+  name: z.string().default(''),
+  vlan: z.number().int().min(0).max(4094).default(0),
+  addressPrefix: z.string().default(''),
+  gateway: z.string().default(''),
+  dnsServers: z.array(z.string()).default([]),
+  poolStart: z.string().default(''),
+  poolEnd: z.string().default(''),
+});
+
+const sdnSchema = z
+  .object({
+    enabled: z.boolean().default(false),
+    prefix: z.string().default(''),
+    dnsRecords: z.enum(['dynamic', 'static']).default('dynamic'),
+    defaultAccessPolicy: z.boolean().default(false),
+    logicalNetworks: z.array(logicalNetworkSchema).default([]),
+  })
+  .default({});
+
 const findingSchema = z.object({
   id: z.string(),
   severity: z.enum(['error', 'warning', 'info']),
@@ -303,6 +325,7 @@ export const projectSchema = z.object({
   deployment: deploymentSchema,
   infrastructure: infrastructureSchema,
   security: securitySchema,
+  sdn: sdnSchema,
   provisioning: provisioningSchema,
   // Steps the person has confirmed (the steps that carry a confirm gate).
   confirmed: z.array(z.string()).default([]),
