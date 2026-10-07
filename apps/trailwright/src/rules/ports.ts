@@ -54,7 +54,7 @@ export const portRules: Rule[] = [
         byRole.set(key, [...(byRole.get(key) ?? []), x.card]);
       }
       for (const [key, cards] of byRole) if (cards.length >= 2 && new Set(cards).size === 1 && p.networking.cards.length > 1)
-        out.push(f('PORT-003', 'warning', 'networking.cards', `${key.replace('intent:', '')}: all ports are on one card, so a card failure takes the whole team or pair down. The reference patterns connect each card of a pair to a different ToR switch; spread the ports across cards.`, PATTERNS));
+        out.push(f('PORT-003', 'info', 'networking.cards', `${key.replace('intent:', '')}: all ports are on one card. Microsoft leaves the distribution of ports across adapters to the hardware vendor, but a card failure takes the whole team or pair down; spreading the ports across cards avoids that single point of failure.`, PATTERNS));
       return out;
     },
   },
@@ -120,7 +120,7 @@ export const portRules: Rule[] = [
       const a = allPorts(p).find((x) => x.ref.role === 'iscsi:a');
       const b = allPorts(p).find((x) => x.ref.role === 'iscsi:b');
       return a && b && a.card === b.card && p.networking.cards.length > 1
-        ? [f('PORT-008', 'warning', 'networking.cards', 'iSCSI paths A and B are on the same card. The validated pattern puts them on two ports connected to different leaf switches; separate cards also survive a card failure.', ISCSI)]
+        ? [f('PORT-008', 'info', 'networking.cards', 'iSCSI paths A and B are on the same card. The validated pattern uses one dual-port card for them, with each port on a different leaf switch (path A to leaf A, path B to leaf B); separate cards would also survive a card failure.', ISCSI)]
         : [];
     },
   },
