@@ -114,3 +114,5 @@ export const projectSchema = z.object({
 });
 
 export type Project = z.infer<typeof projectSchema>;
+export type Hardware = Project['hardware'];
+export type Networking = Project['networking'];

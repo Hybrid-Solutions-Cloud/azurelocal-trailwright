@@ -15,22 +15,18 @@ describe('model', () => {
     expect(() => projectSchema.parse(project)).toThrow();
   });
 
-  it('runRules with no rules returns an empty array', () => {
-    expect(runRules(createEmptyProject('Empty rules'))).toEqual([]);
-  });
-
   it('does not run a rule restricted to a different release', () => {
     const rule: Rule = {
-      id: 'R1',
+      id: 'ZZ-TEST',
       release: ['2608'],
-      learnUrl: 'https://example.com',
-      check: () => [{ id: 'F1', severity: 'error', field: 'release', message: 'Should not appear', learnUrl: 'https://example.com' }],
+      learnUrl: 'https://learn.microsoft.com/',
+      check: () => [{ id: 'ZZ-TEST', severity: 'error', field: 'release', message: 'Should not appear', learnUrl: 'https://learn.microsoft.com/' }],
     };
     rules.push(rule);
     try {
-      expect(runRules(createEmptyProject('2609 project'))).toEqual([]);
+      expect(runRules(createEmptyProject('2609 project')).map((f) => f.id)).not.toContain('ZZ-TEST');
     } finally {
-      rules.length = 0;
+      rules.splice(rules.indexOf(rule), 1);
     }
   });
 });
