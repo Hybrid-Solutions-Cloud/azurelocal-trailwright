@@ -140,6 +140,12 @@ export const StorageScreen: FC = () => {
           <button type="button" onClick={() => save({ sanLuns: [...sanLuns, { name: `lun${sanLuns.length + 1}`, sizeGiB: 1024 }] })} className={addClass}>
             Add LUN
           </button>
+          {project.deployment.architecture === 'disaggregated' && (
+            <div className="flex flex-wrap gap-4">
+              <TextInput id="infra-vol-lun" label="Infrastructure volume LUN ID" value={project.storage.infraVolLunId} onChange={(infraVolLunId) => save({ infraVolLunId })} hint="The LUN serial number or unique ID from the array (250 GB minimum)." />
+              <TextInput id="infra-perf-lun" label="Performance history volume LUN ID" value={project.storage.infraPerfLunId} onChange={(infraPerfLunId) => save({ infraPerfLunId })} hint="The LUN serial number or unique ID from the array (20 GB minimum)." />
+            </div>
+          )}
         </div>
       )}
 

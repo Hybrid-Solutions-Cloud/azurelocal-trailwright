@@ -65,7 +65,7 @@ Each export has its own button on the Review step.
 | Topology | A draw.io diagram. |
 | Project | The Trailwright project as JSON, to reopen later. |
 
-The ARM parameter files carry every parameter of the Microsoft templates `create-cluster` (Active Directory) and `create-adless-cluster-external-dns-public-preview` (local identity). Secret values are `null` in the JSON file and environment variable reads in the Bicep file; Trailwright never writes a secret.
+The ARM parameter files carry every parameter of the Microsoft templates `create-cluster` (Active Directory), `create-adless-cluster-external-dns-public-preview` (local identity) and, for disaggregated designs, `create-cluster-san` (Active Directory only; it adds the infrastructure LUN IDs and the cluster networks). Secret values are `null` in the JSON file and environment variable reads in the Bicep file; Trailwright never writes a secret.
 
 ## Saving and reopening
 

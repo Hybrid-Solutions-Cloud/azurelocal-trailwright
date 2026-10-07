@@ -103,6 +103,8 @@ const networkingSchema = z.object({
   storage: z.enum(['switched', 'switchless']),
   // Top-of-rack switches for north-south traffic, how storage shares the ports, and links between switchless nodes.
   torSwitches: z.union([z.literal(1), z.literal(2)]).default(2),
+  // Disaggregated deployments: the subnet of each cluster network (CIDR), one per standalone cluster port.
+  clusterSubnets: z.array(z.string()).default([]),
   storageLayout: z.enum(['dedicated', 'converged']).default('dedicated'),
   switchlessLinks: z.enum(['single', 'dual']).default('dual'),
   // Physical network ports per node, and whether Network ATC assigns the storage IP addresses.
@@ -192,6 +194,9 @@ const storageSchema = z.object({
   architecture: z.enum(['s2d', 'san', 'hybrid']).default('s2d'),
   volumes: z.array(volumeSchema),
   sanLuns: z.array(sanLunSchema).default([]),
+  // Disaggregated deployments: the LUN identifiers of the infrastructure volume (250 GB minimum) and the performance history volume (20 GB minimum).
+  infraVolLunId: z.string().default(''),
+  infraPerfLunId: z.string().default(''),
   driveLayout: driveLayoutSchema,
   // How the deployment creates volumes: Express (infrastructure and workload volumes), InfraOnly, or KeepStorage (existing data drives, single node).
   configurationMode: z.enum(['Express', 'InfraOnly', 'KeepStorage']).default('Express'),

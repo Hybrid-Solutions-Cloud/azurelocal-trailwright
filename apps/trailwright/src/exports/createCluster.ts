@@ -1,18 +1,20 @@
 import type { Project } from '../model/schema';
 import { slug } from './types';
 import { storageSubnetsFor, patternFor } from '../network/patterns';
+import { allPorts, roleOf } from '../network/ports';
 
 // The parameters of Microsoft's Azure Local deployment templates (azure-quickstart-templates, microsoft.azurestackhci):
 //   create-cluster (Active Directory) and create-adless-cluster-external-dns-public-preview (local identity with Key Vault).
 // Every template parameter is produced from the design. Secure values are never stored: they are null in the JSON file
 // (as in Microsoft's sample) and read from environment variables in the Bicep parameter file.
 
-export type TemplateName = 'create-cluster' | 'create-adless-cluster';
+export type TemplateName = 'create-cluster' | 'create-adless-cluster' | 'create-cluster-san';
 export type Params = Record<string, unknown>;
 
 export const SECURE_PARAMS = ['localAdminPassword', 'AzureStackLCMAdminPassword'] as const;
 
-export const templateFor = (p: Project): TemplateName => (p.identity.mode === 'local-identity-key-vault' ? 'create-adless-cluster' : 'create-cluster');
+export const templateFor = (p: Project): TemplateName =>
+  p.deployment.architecture === 'disaggregated' ? 'create-cluster-san' : p.identity.mode === 'local-identity-key-vault' ? 'create-adless-cluster' : 'create-cluster';
 
 export function witnessTypeFor(p: Project): 'Cloud' | 'No Witness' {
   if (p.hardware.nodes.length === 2) return 'Cloud';
@@ -73,6 +75,18 @@ export function storageNetworkList(p: Project): unknown[] {
     vlanId: String(p.networking.storageVlans[k] ?? p.networking.storageVlans[p.networking.storageVlans.length - 1] ?? 711),
     ...(custom && ips[k] ? { storageAdapterIPInfo: ips[k] } : {}),
   }));
+}
+
+// Disaggregated: the cluster networks run on standalone ports, described here instead of storage networks.
+export function sanNetworkList(p: Project): Record<string, unknown> {
+  const vlans = [1711, 1712];
+  const adapters = allPorts(p).filter((x) => roleOf(x.ref).kind === 'cluster').sort((a, b) => a.ref.role.localeCompare(b.ref.role)).map((x) => x.ref.osName);
+  return {
+    clusterNetworkConfig: {
+      adapterProperties: { bandwidthPercentageSmb: 50, jumboPacket: 9014, priorityValue8021ActionCluster: 7, priorityValue8021ActionSmb: 3 },
+      adapterIPConfig: ['A', 'B'].map((x, k) => ({ name: `clusterNetwork-${x}`, networkAdapterName: adapters[k] ?? '', vlanId: vlans[k], addressPrefix: p.networking.clusterSubnets[k] ?? '' })),
+    },
+  };
 }
 
 export function intentList(p: Project): unknown[] {
@@ -164,6 +178,25 @@ export function buildCreateClusterParams(p: Project, mode: 'Validate' | 'Deploy'
     partnerProperties: [],
     partnerCredentiallist: [],
   };
+  if (p.deployment.architecture === 'disaggregated') {
+    // create-cluster-san: Active Directory only, infrastructure volumes on the SAN, cluster networks instead of storage networks.
+    delete params.storageNetworkList;
+    delete params.enableStorageAutoIp;
+    for (const k of ['identityProvider', 'dnsServerConfig', 'dnsZones']) delete params[k];
+    Object.assign(params, {
+      domainFqdn: p.identity.domain ?? '',
+      adouPath: p.identity.ouPath ?? '',
+      AzureStackLCMAdminUsername: p.identity.lcmUsername ?? '',
+      AzureStackLCMAdminPassword: null,
+      configurationMode: 'InfraOnly',
+      infraVolLunId: p.storage.infraVolLunId,
+      infraPerfLunId: p.storage.infraPerfLunId,
+      sanNetworkList: sanNetworkList(p),
+      networkingType: 'switchedMultiServerDeployment',
+      networkingPattern: p.networking.intents.length > 1 ? 'custom' : 'convergedManagementCompute',
+      storageConnectivitySwitchless: false,
+    });
+  }
   return params;
 }
 

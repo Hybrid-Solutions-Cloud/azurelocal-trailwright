@@ -9,7 +9,7 @@ import { makeIntent } from '../src/model/defaults';
 // The contract: Microsoft's own templates (tests/fixtures, from azure-quickstart-templates, MIT).
 type TemplateParam = { type: string; allowedValues?: unknown[]; defaultValue?: unknown; minLength?: number };
 const template = (name: TemplateName): Record<string, TemplateParam> => {
-  const file = name === 'create-cluster' ? 'create-cluster.azuredeploy.json' : 'create-adless-cluster.azuredeploy.json';
+  const file = { 'create-cluster': 'create-cluster.azuredeploy.json', 'create-adless-cluster': 'create-adless-cluster.azuredeploy.json', 'create-cluster-san': 'san-azuredeploy.json' }[name];
   return (JSON.parse(readFileSync(resolve(__dirname, 'fixtures', file), 'utf8')) as { parameters: Record<string, TemplateParam> }).parameters;
 };
 
@@ -38,9 +38,18 @@ const adVariant = (): Project => {
   return p;
 };
 
+const sanVariant = (): Project => {
+  const p = adVariant();
+  p.deployment = { ...p.deployment, architecture: 'disaggregated', sanType: 'iscsi' };
+  p.storage = { ...p.storage, architecture: 'san', infraVolLunId: 'PURE1234567890ABCDEF', infraPerfLunId: 'PURE0987654321MNOPQR' };
+  p.networking = { ...p.networking, clusterSubnets: ['10.10.100.0/24', '10.10.101.0/24'] };
+  return p;
+};
+
 describe.each([
   ['local identity', (): Project => createExampleProject(), 'create-adless-cluster' as TemplateName],
   ['Active Directory', adVariant, 'create-cluster' as TemplateName],
+  ['disaggregated SAN', sanVariant, 'create-cluster-san' as TemplateName],
 ])('the ARM parameters export for %s matches the Microsoft template', (_label, make, name) => {
   const p = make();
   const params = buildCreateClusterParams(p);
@@ -153,5 +162,15 @@ describe('switchless storage addresses (three and four nodes)', () => {
     expect(list[0].storageAdapterIPInfo).toHaveLength(3);
     expect(buildCreateClusterParams(p).networkingType).toBe('switchlessMultiServerDeployment');
     expect(buildCreateClusterParams(p).enableStorageAutoIp).toBe(false);
+  });
+});
+describe('the disaggregated template', () => {
+  it('describes the cluster networks, the infrastructure LUNs and no storage networks', () => {
+    const params = buildCreateClusterParams(sanVariant());
+    expect(params.storageNetworkList).toBeUndefined();
+    expect(params.configurationMode).toBe('InfraOnly');
+    expect(params.infraVolLunId).toBe('PURE1234567890ABCDEF');
+    const net = (params.sanNetworkList as { clusterNetworkConfig: { adapterIPConfig: { name: string; vlanId: number; addressPrefix: string }[] } }).clusterNetworkConfig;
+    expect(net.adapterIPConfig.map((a) => [a.name, a.vlanId, a.addressPrefix])).toEqual([['clusterNetwork-A', 1711, '10.10.100.0/24'], ['clusterNetwork-B', 1712, '10.10.101.0/24']]);
   });
 });

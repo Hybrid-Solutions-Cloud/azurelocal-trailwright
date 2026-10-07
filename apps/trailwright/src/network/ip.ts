@@ -42,3 +42,7 @@ export const sameSubnet = (a: string, b: string, mask: string): boolean => {
   const nb = toNum(b);
   return bits !== undefined && nb !== undefined && inRange(a, b, bits);
 };
+export const isCidr = (value: string): boolean => {
+  const m = /^(\d+\.\d+\.\d+\.\d+)\/(\d+)$/.exec(value.trim());
+  return !!m && toNum(m[1]) !== undefined && Number(m[2]) >= 8 && Number(m[2]) <= 30;
+};

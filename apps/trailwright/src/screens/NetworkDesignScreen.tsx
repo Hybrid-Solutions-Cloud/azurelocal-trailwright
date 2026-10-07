@@ -152,6 +152,10 @@ export const NetworkDesignScreen: FC = () => {
               </li>
             ))}
           </ul>
+          <div className="flex flex-wrap gap-4">
+            <TextInput id="cluster-subnet-a" label="Cluster network A subnet" value={net.clusterSubnets[0] ?? ''} onChange={(v) => update({ clusterSubnets: [v, net.clusterSubnets[1] ?? ''] })} hint="CIDR, for example 10.10.100.0/24. No default gateway on this port." />
+            <TextInput id="cluster-subnet-b" label="Cluster network B subnet" value={net.clusterSubnets[1] ?? ''} onChange={(v) => update({ clusterSubnets: [net.clusterSubnets[0] ?? '', v] })} hint="CIDR, for example 10.10.101.0/24." />
+          </div>
           <div className="flex items-start gap-3">
             <input id="backup-network" type="checkbox" className="mt-1 h-4 w-4 accent-brand-600" checked={net.backupNetwork} onChange={(e) => update({ backupNetwork: e.target.checked })} />
             <label htmlFor="backup-network" className="text-sm text-gray-700">
@@ -184,7 +188,7 @@ export const NetworkDesignScreen: FC = () => {
         </div>
       )}
 
-      <FindingsPanel prefixes={['networking.storage', 'networking.portsPerNode', 'networking.storageAutoIp', 'networking.storageSubnets', 'networking.torSwitches', 'networking.cards', 'networking.fcHbaPorts', 'networking.intentGrouping']} />
+      <FindingsPanel prefixes={['networking.storage', 'networking.portsPerNode', 'networking.storageAutoIp', 'networking.storageSubnets', 'networking.torSwitches', 'networking.cards', 'networking.fcHbaPorts', 'networking.intentGrouping', 'networking.clusterSubnets']} />
     </section>
   );
 };
