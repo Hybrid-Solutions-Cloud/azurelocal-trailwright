@@ -21,6 +21,8 @@ function merge(base: Record<string, unknown>, overrides: Record<string, unknown>
 
 // A project that satisfies every rule; tests change one thing at a time.
 const compliant: DeepPartial<Project> = {
+  connectivity: { path: 'private-path', proxyUrl: '' },
+  landingZone: { subscriptionName: 'sub-example', resourceGroup: 'rg-example', keyVaultName: '', witnessStorageAccount: 'stwitness01' },
   hardware: { topology: 'standard', witness: 'cloud', nodes: makeNodes(2) },
   identity: { mode: 'active-directory', domain: 'example.com' },
   networking: {

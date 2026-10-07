@@ -62,7 +62,7 @@ const networkingSchema = z.object({
 });
 
 const connectivitySchema = z.object({
-  path: z.enum(['direct', 'proxy', 'arc-gateway', 'private']),
+  path: z.enum(['direct', 'proxy', 'arc-gateway', 'proxy-arc-gateway', 'private-path']),
   proxyUrl: z.string().optional(),
 });
 
@@ -77,7 +77,7 @@ const landingZoneSchema = z.object({
 const volumeSchema = z.object({
   name: z.string(),
   sizeGiB: z.number(),
-  resiliency: z.enum(['two-way', 'three-way', 'parity']),
+  resiliency: z.enum(['two-way', 'three-way', 'four-way', 'parity']),
 });
 
 const storageSchema = z.object({

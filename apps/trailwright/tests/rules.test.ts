@@ -22,6 +22,17 @@ const fires: Record<string, DeepPartial<Project>> = {
   'NET-004': { networking: { vlans: [{ name: 'Other', id: 100 }] } },
   'NET-005': { networking: { intents: [{ name: 'Management', traffic: ['management'], adapters: ['p1'] }] } },
   'REL-001': { release: { version: '2608' } },
+  'CON-001': { connectivity: { path: 'proxy', proxyUrl: '' } },
+  'CON-002': { connectivity: { path: 'proxy', proxyUrl: 'http://proxy.corp.local:8080' } },
+  'CON-003': { release: { version: '2607' }, connectivity: { path: 'private-path' } },
+  'CON-004': { connectivity: { path: 'direct' } },
+  'CON-005': { connectivity: { path: 'arc-gateway' } },
+  'LZ-001': { landingZone: { witnessStorageAccount: '' } },
+  'LZ-002': { landingZone: { resourceGroup: '' } },
+  'LZ-003': { landingZone: { keyVaultName: 'kv-example' } },
+  'STO-001': { hardware: { topology: 'rack-aware', nodes: makeNodes(4) }, storage: { volumes: [{ name: 'v', sizeGiB: 100, resiliency: 'three-way' }] } },
+  'STO-002': { hardware: { topology: 'rack-aware', nodes: makeNodes(4) }, storage: { volumes: [{ name: 'v', sizeGiB: 100, resiliency: 'two-way' }] } },
+  'STO-003': { hardware: { nodes: makeNodes(2) }, storage: { volumes: [{ name: 'v', sizeGiB: 100, resiliency: 'three-way' }] } },
 };
 
 describe('rules', () => {

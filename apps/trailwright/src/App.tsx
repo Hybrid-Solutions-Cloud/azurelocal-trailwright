@@ -1,26 +1,24 @@
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { screens } from './screens/screens';
-import { ScreenPlaceholder } from './screens/ScreenPlaceholder';
 import { ProjectScreen } from './screens/ProjectScreen';
 import { HardwareScreen } from './screens/HardwareScreen';
 import { IdentityScreen } from './screens/IdentityScreen';
 import { NetworkingScreen } from './screens/NetworkingScreen';
-import type { Project } from './model/schema';
-
-// Screens that are not built yet show their section of the project as JSON.
-const placeholderSection: Record<string, keyof Project> = {
-  connectivity: 'connectivity',
-  'landing-zone': 'landingZone',
-  storage: 'storage',
-  operations: 'operations',
-  review: 'findings',
-};
-
+import { ConnectivityScreen } from './screens/ConnectivityScreen';
+import { LandingZoneScreen } from './screens/LandingZoneScreen';
+import { StorageScreen } from './screens/StorageScreen';
+import { OperationsScreen } from './screens/OperationsScreen';
+import { ReviewScreen } from './screens/ReviewScreen';
 const built = {
   project: <ProjectScreen />,
   hardware: <HardwareScreen />,
   identity: <IdentityScreen />,
   networking: <NetworkingScreen />,
+  connectivity: <ConnectivityScreen />,
+  'landing-zone': <LandingZoneScreen />,
+  storage: <StorageScreen />,
+  operations: <OperationsScreen />,
+  review: <ReviewScreen />,
 } as const;
 
 export default function App() {
@@ -50,13 +48,7 @@ export default function App() {
               <Route
                 key={screen.path}
                 path={`/${screen.path}`}
-                element={
-                  screen.path in built ? (
-                    built[screen.path as keyof typeof built]
-                  ) : (
-                    <ScreenPlaceholder title={screen.title} section={placeholderSection[screen.path]} />
-                  )
-                }
+                element={built[screen.path]}
               />
             ))}
           </Routes>
