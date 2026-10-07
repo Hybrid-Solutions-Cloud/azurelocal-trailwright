@@ -21,10 +21,8 @@ const fires: Record<string, DeepPartial<Project>> = {
   'NET-003': { hardware: { topology: 'rack-aware', nodes: makeNodes(4) }, networking: { intents: [{ name: 'All', traffic: ['management', 'compute', 'storage'], adapters: ['p1'] }] } },
   'NET-004': { networking: { vlans: [{ name: 'Other', id: 100 }] } },
   'NET-005': { networking: { intents: [{ name: 'Management', traffic: ['management'], adapters: ['p1'] }] } },
-  'REL-001': { release: { version: '2608' } },
   'CON-001': { connectivity: { path: 'proxy', proxyUrl: '' } },
   'CON-002': { connectivity: { path: 'proxy', proxyUrl: 'http://proxy.corp.local:8080' } },
-  'CON-003': { release: { version: '2607' }, connectivity: { path: 'private-path' } },
   'CON-004': { connectivity: { path: 'direct' } },
   'CON-005': { connectivity: { path: 'arc-gateway' } },
   'LZ-001': { landingZone: { witnessStorageAccount: '' } },
@@ -38,6 +36,7 @@ const fires: Record<string, DeepPartial<Project>> = {
   'CON-008': { connectivity: { privatePath: { arcPrivateLinkScopeOnNetwork: true } } },
   'CON-009': { connectivity: { arcGatewayName: '' } },
   'CON-010': { connectivity: { privatePath: { proxyBypass: '*.svc,<local>' } } },
+  'HW-007': { hardware: { topology: 'rack-aware', nodes: makeNodes(4), witness: 'none' } },
   'STO-004': { storage: { architecture: 'san', sanLuns: [] } },
   'STO-005': { storage: { architecture: 'san', sanLuns: [{ name: 'lun1', sizeGiB: 100 }] }, hardware: { nodes: makeNodes(65) } },
   'LZ-004': { landingZone: { region: 'usgovvirginia' } },
@@ -69,9 +68,6 @@ describe('rules', () => {
     expect(ids(project({ hardware: { topology: 'rack-aware', nodes: makeNodes(4) } }))).not.toContain('HW-005');
   });
 
-  it('a release without rules (2605) gets only the release note', () => {
-    expect(ids(project({ release: { version: '2605' } }))).toEqual(['REL-001']);
-  });
 });
 
 describe('storage architecture gating', () => {

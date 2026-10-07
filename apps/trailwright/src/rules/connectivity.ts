@@ -37,15 +37,6 @@ export const connectivityRules: Rule[] = [
     },
   },
   {
-    id: 'CON-003',
-    release: RELEASES,
-    learnUrl: PRIVATE_PATH_URL,
-    check: (p) =>
-      p.connectivity.path === 'private-path' && p.release.version < '2608'
-        ? [{ id: 'CON-003', severity: 'error', field: 'connectivity.path', message: 'The private path network needs Azure Local 2608 or later.', learnUrl: PRIVATE_PATH_URL }]
-        : [],
-  },
-  {
     id: 'CON-004',
     release: RELEASES,
     learnUrl: OUTBOUND_URL,

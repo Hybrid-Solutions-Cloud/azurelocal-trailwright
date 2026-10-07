@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { regionValues } from './regions';
 
-const releaseVersionSchema = z.enum(['2605', '2606', '2607', '2608', '2609']);
+import { CURRENT_RELEASE } from './release';
 
 const metaSchema = z.object({
   schema: z.literal(1),
@@ -10,7 +10,8 @@ const metaSchema = z.object({
 });
 
 const releaseSchema = z.object({
-  version: releaseVersionSchema.default('2609'),
+  // Recorded for the handoff; the rules always follow the current release.
+  version: z.string().default(CURRENT_RELEASE),
 });
 
 const projectDetailsSchema = z.object({

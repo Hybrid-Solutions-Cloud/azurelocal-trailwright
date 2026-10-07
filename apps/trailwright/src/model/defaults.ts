@@ -1,9 +1,10 @@
 import { projectSchema, type Project } from './schema';
+import { CURRENT_RELEASE } from './release';
 
 export function createEmptyProject(name: string): Project {
   const project: Project = {
     meta: { schema: 1, name, createdAt: new Date().toISOString() },
-    release: { version: '2609' },
+    release: { version: CURRENT_RELEASE },
     project: { customer: '', owner: '', notes: '' },
     hardware: { topology: 'standard', nodes: [], witness: 'none' },
     identity: { mode: 'local-identity-key-vault' },

@@ -1,5 +1,5 @@
 export const screens = [
-  { path: 'project', title: 'Project and release' },
+  { path: 'project', title: 'Project' },
   { path: 'hardware', title: 'Hardware and topology' },
   { path: 'identity', title: 'Identity' },
   { path: 'networking', title: 'Networking' },

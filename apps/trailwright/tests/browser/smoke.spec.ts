@@ -4,7 +4,7 @@ test('the guided flow lists the nine screens and states that nothing deploys', a
   await page.goto('/');
   const steps = page.locator('nav a');
   await expect(steps).toHaveCount(9);
-  await expect(steps.first()).toContainText('Project and release');
+  await expect(steps.first()).toContainText('Project');
   await expect(steps.last()).toContainText('Review and export');
   await expect(page.getByText('Design record only: nothing here deploys anything')).toBeVisible();
 });

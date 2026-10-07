@@ -17,7 +17,7 @@ export const LandingZoneScreen: FC = () => {
         <TextInput id="lz-subscription" label="Subscription name" value={lz.subscriptionName} onChange={(subscriptionName) => set({ subscriptionName })} />
         <TextInput id="lz-rg" label="Resource group" value={lz.resourceGroup} onChange={(resourceGroup) => set({ resourceGroup })} />
         <TextInput id="lz-kv" label="Landing zone Key Vault name" value={lz.keyVaultName} onChange={(keyVaultName) => set({ keyVaultName })} />
-        <TextInput id="lz-witness" label="Witness storage account" value={lz.witnessStorageAccount ?? ''} onChange={(witnessStorageAccount) => set({ witnessStorageAccount })} />
+        <TextInput id="lz-witness" label="Witness storage account" hint="One storage account per Azure Local system; this release does not share it across systems." value={lz.witnessStorageAccount ?? ''} onChange={(witnessStorageAccount) => set({ witnessStorageAccount })} />
         <TextInput id="lz-custom-location" label="Custom location" value={lz.customLocation ?? ''} onChange={(customLocation) => set({ customLocation })} />
       </div>
       <FindingsPanel prefixes={['landingZone']} />

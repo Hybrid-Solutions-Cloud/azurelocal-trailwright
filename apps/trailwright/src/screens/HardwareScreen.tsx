@@ -12,9 +12,8 @@ const topologyOptions = [
 ];
 
 const witnessOptions = [
-  { value: 'cloud', label: 'Cloud witness', description: 'A storage account in Azure. Required for two nodes.' },
-  { value: 'file-share', label: 'File share witness', description: 'An SMB share. Not supported for two-node ARM deployments.' },
-  { value: 'none', label: 'No witness', description: 'Only valid from five nodes.' },
+  { value: 'cloud', label: 'Cloud witness', description: 'An Azure storage account holds the vote. Required for two nodes and for rack-aware.' },
+  { value: 'none', label: 'No witness', description: 'Not needed from five nodes. Required for two nodes, strongly recommended for three and four.' },
 ];
 
 type Node = Hardware['nodes'][number];

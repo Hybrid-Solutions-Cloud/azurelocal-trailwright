@@ -14,6 +14,14 @@ test('a two-node cluster without a witness is flagged and the flag clears with a
   await expect(findings).not.toContainText('requires a witness');
 });
 
+test('only a cloud witness or no witness is offered for connected deployments', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Hardware and topology' }).click();
+  await expect(page.getByRole('radio', { name: 'Cloud witness' })).toBeVisible();
+  await expect(page.getByRole('radio', { name: 'No witness' })).toBeVisible();
+  await expect(page.getByRole('radio', { name: /file share/i })).toHaveCount(0);
+});
+
 test('local identity without a Key Vault name is flagged, with the Learn source', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Identity' }).click();

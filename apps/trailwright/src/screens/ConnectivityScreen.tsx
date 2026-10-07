@@ -12,7 +12,7 @@ const pathOptions = [
   { value: 'proxy', label: 'Enterprise proxy', description: 'Outbound traffic goes through a non-authenticated proxy.' },
   { value: 'arc-gateway', label: 'Arc gateway', description: 'Fewer endpoints to allow. Chosen before deployment, cannot be added later.' },
   { value: 'proxy-arc-gateway', label: 'Enterprise proxy and Arc gateway', description: 'Arc gateway traffic through the enterprise proxy.' },
-  { value: 'private-path', label: 'Private path', description: 'Private network path to Azure. Needs 2608 or later.' },
+  { value: 'private-path', label: 'Private path', description: 'Private network path to Azure through an Azure Firewall explicit proxy.' },
 ];
 
 export const ConnectivityScreen: FC = () => {
@@ -51,7 +51,7 @@ export const ConnectivityScreen: FC = () => {
         <div className="space-y-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
           <h2 className="text-lg font-medium text-gray-800">Private path network</h2>
           <p className="text-sm text-gray-700">
-            Machines register through Azure Firewall acting as an explicit proxy in an Azure virtual network, reached over a private connection. Needs Azure Local 2608 or later.
+            Machines register through Azure Firewall acting as an explicit proxy in an Azure virtual network, reached over a private connection. 
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             <SelectInput

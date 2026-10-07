@@ -1,13 +1,12 @@
 import { useState, type FC } from 'react';
 import { useProjectStore } from '../model/store';
-import type { Project } from '../model/schema';
-import { FindingsPanel } from '../components/FindingsPanel';
-import { Field, SelectInput, TextInput } from '../components/Field';
+import { Field, TextInput } from '../components/Field';
+import { CURRENT_RELEASE } from '../model/release';
 import { createExampleProject } from '../examples/exampleLab';
 import { createEmptyProject } from '../model/defaults';
 import { ImportPanel } from '../components/ImportPanel';
 
-const releaseOptions = ['2605', '2606', '2607', '2608', '2609'].map((v) => ({ value: v, label: v }));
+
 
 export const ProjectScreen: FC = () => {
   const { project, setSection, replaceProject } = useProjectStore();
@@ -15,16 +14,10 @@ export const ProjectScreen: FC = () => {
 
   return (
     <section className="panel space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-900">Project and release</h1>
+      <h1 className="text-2xl font-semibold text-gray-900">Project</h1>
+      <p className="text-sm text-gray-600">Checks follow the current Azure Local release ({CURRENT_RELEASE}).</p>
       <div className="grid gap-6 md:grid-cols-2">
         <TextInput id="project-name" label="Project name" value={project.meta.name} onChange={(name) => setSection('meta', { ...project.meta, name })} />
-        <SelectInput
-          id="release-version"
-          label="Release"
-          value={project.release.version}
-          onChange={(version) => setSection('release', { ...project.release, version: version as Project['release']['version'] })}
-          options={releaseOptions}
-        />
         <TextInput id="customer" label="Customer" value={project.project.customer} onChange={(customer) => setSection('project', { ...project.project, customer })} />
         <TextInput id="owner" label="Owner" value={project.project.owner} onChange={(owner) => setSection('project', { ...project.project, owner })} />
         <div className="md:col-span-2">
@@ -72,7 +65,7 @@ export const ProjectScreen: FC = () => {
             )}
           </div>
         </div>
-      </div>      <FindingsPanel prefixes={['release']} />
+      </div>
     </section>
   );
 };

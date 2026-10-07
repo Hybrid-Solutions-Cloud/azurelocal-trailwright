@@ -18,13 +18,13 @@ Complete the screens in order. Each screen shows findings for the fields on that
 
 | Screen | What you enter |
 |---|---|
-| 1. Project and release | Project name, customer, owner, notes, and release. Releases range from 2605 to 2609; 2609 is the baseline. **Load the example project** replaces the current design with the bundled example after you confirm. |
-| 2. Hardware and topology | Standard or rack-aware topology; nodes with a name, serial number, core count, memory in GiB, and drive count; and a witness choice of cloud, file share, or none. |
+| 1. Project | Project name, customer, owner and notes. Checks always follow the current Azure Local release; there is no release to choose. Start a clean design, import a Surveyor plan or saved project, or load the bundled example (after you confirm). |
+| 2. Hardware and topology | Standard or rack-aware topology; nodes with a name, serial number, core count, memory in GiB, and drive count; and a witness choice of cloud witness or no witness (connected deployments offer only a cloud witness; two-node and rack-aware clusters need one). |
 | 3. Identity | Active Directory with a domain, or Local Identity with a Key Vault name. |
 | 4. Networking | Switched or switchless storage; VLANs; Network ATC intents with management, compute, or storage traffic types and adapters; and an IP plan. |
-| 5. Connectivity | Direct, proxy, Arc gateway, proxy and Arc gateway, or private path. Enter a proxy address when using a proxy. |
-| 6. Azure landing zone | Subscription name, resource group, Key Vault name, witness storage account, and custom location. |
-| 7. Storage | Volumes with a name, size in GiB, and resiliency: two-way, three-way, four-way, or parity. |
+| 5. Connectivity | Direct, proxy, Arc gateway, proxy and Arc gateway, or private path. A proxy asks for its address; Arc gateway asks for the gateway resource; private path asks for the private connection, virtual network, subnets, Azure Firewall address and port, and bypass list. |
+| 6. Azure landing zone | Azure region (only regions where Azure Local is supported), subscription name, resource group, Key Vault name, witness storage account, and custom location. |
+| 7. Storage | Storage architecture first: Storage Spaces Direct, SAN (disaggregated) or both. S2D asks for volumes and resiliency (and drives per node); a SAN asks for LUNs and drops the storage network questions. |
 | 8. Operations | Monitoring, Azure Update Manager, backup, and disaster recovery choices as checkboxes. |
 | 9. Review and export | Review all findings, import a project or plan, and export handoff data. |
 

@@ -29,7 +29,7 @@ const built = {
 
 // Which findings belong to which screen, by the start of the field name.
 const screenFields: Record<string, string[]> = {
-  project: ['release'],
+  project: [],
   hardware: ['hardware'],
   identity: ['identity'],
   networking: ['networking'],

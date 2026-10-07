@@ -16,7 +16,7 @@ export type Rule = {
   id: string;
   // Runs only when the storage architecture includes this kind of storage.
   requires?: 's2d' | 'san';
-  release: string[];
+  release?: string[];
   learnUrl: string;
   check: (p: Project) => Finding[];
 };
