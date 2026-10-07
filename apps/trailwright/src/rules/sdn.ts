@@ -45,7 +45,7 @@ export const sdnRules: Rule[] = [
     check: (p) => {
       if (!p.sdn.enabled || p.deployment.architecture === 'disaggregated') return [];
       const ip = ncAddress(p.infrastructure.startIp);
-      const dns = p.sdn.dnsRecords === 'static' ? ` Create the DNS A record ${p.sdn.prefix || '<prefix>'}-NC before you run the command; it must point to the fifth address of the infrastructure range${ip ? ` (${ip})` : ''}.` : ' With Active Directory integrated dynamic DNS the action plan creates the record.';
+      const dns = p.sdn.dnsRecords === 'static' ? ` Create the DNS A record ${p.sdn.prefix || '<prefix>'}-NC before you run the command; it must point to the fifth address of the infrastructure IP range (the start address plus four${ip ? `: ${ip}` : ''}); confirm that against your range.` : ' With Active Directory integrated dynamic DNS the action plan creates the record.';
       return [f('SDN-003', 'info', 'sdn.enabled', `You cannot roll back or disable SDN once it is enabled. Plan a maintenance window: workloads see a short network interruption. Enable it after deployment with Add-EceFeature -Name NC -SDNPrefix ${p.sdn.prefix || '<prefix>'} (Azure Local 2506 or later, OS build 26100).${dns}`, ENABLE)];
     },
   },
@@ -60,7 +60,7 @@ export const sdnRules: Rule[] = [
         const label = l.name || `Logical network ${k + 1}`;
         if (!l.name.trim()) out.push(f('SDN-004', 'error', 'sdn.logicalNetworks', `Logical network ${k + 1} needs a name.`, F));
         if (!isCidr(l.addressPrefix)) out.push(f('SDN-004', 'error', 'sdn.logicalNetworks', `${label}: enter the address prefix in CIDR notation, for example 192.168.1.0/24.`, F));
-        if (seen.has(l.vlan)) out.push(f('SDN-004', 'error', 'sdn.logicalNetworks', `${label}: VLAN ${l.vlan} is used by another logical network; each logical network has its own VLAN.`, F));
+        if (l.vlan > 0 && seen.has(l.vlan)) out.push(f('SDN-004', 'warning', 'sdn.logicalNetworks', `${label}: VLAN ${l.vlan} is also used by another logical network; confirm that this is intended.`, F));
         seen.add(l.vlan);
       });
       return out;
