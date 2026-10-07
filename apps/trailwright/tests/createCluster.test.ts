@@ -9,7 +9,7 @@ import { makeIntent } from '../src/model/defaults';
 // The contract: Microsoft's own templates (tests/fixtures, from azure-quickstart-templates, MIT).
 type TemplateParam = { type: string; allowedValues?: unknown[]; defaultValue?: unknown; minLength?: number };
 const template = (name: TemplateName): Record<string, TemplateParam> => {
-  const file = { 'create-cluster': 'create-cluster.azuredeploy.json', 'create-adless-cluster': 'create-adless-cluster.azuredeploy.json', 'create-cluster-san': 'san-azuredeploy.json' }[name];
+  const file = { 'create-cluster': 'create-cluster.azuredeploy.json', 'create-adless-cluster': 'create-adless-cluster.azuredeploy.json', 'create-cluster-san': 'san-azuredeploy.json', 'create-cluster-adless-san': 'adless-san-azuredeploy.json', 'create-cluster-rac-enabled': 'rac-azuredeploy.json', 'create-rack-aware-adless-cluster-external-dns': 'rac-adless-azuredeploy.json', 'create-cluster-rac-enabled-disconnected': 'rac-disconnected-azuredeploy.json' }[name];
   return (JSON.parse(readFileSync(resolve(__dirname, 'fixtures', file), 'utf8')) as { parameters: Record<string, TemplateParam> }).parameters;
 };
 
@@ -46,10 +46,35 @@ const sanVariant = (): Project => {
   return p;
 };
 
+const withRacks = (p: Project): Project => {
+  p.hardware = { ...p.hardware, topology: 'rack-aware', witness: 'cloud', nodes: ['n1', 'n2', 'n3', 'n4'].map((name, i) => ({ name, ip: `192.0.2.${11 + i}`, cores: 16, memoryGiB: 256, drives: 4 })) };
+  return p;
+};
+const sanLocalVariant = (): Project => {
+  const p = createExampleProject();
+  p.deployment = { ...p.deployment, architecture: 'disaggregated', sanType: 'iscsi' };
+  p.storage = { ...p.storage, architecture: 'san', infraVolLunId: 'PURE1234567890ABCDEF', infraPerfLunId: 'PURE0987654321MNOPQR' };
+  p.networking = { ...p.networking, clusterSubnets: ['10.10.100.0/24', '10.10.101.0/24'] };
+  return p;
+};
+const racVariant = (): Project => withRacks(adVariant());
+const racLocalVariant = (): Project => withRacks(createExampleProject());
+const racDisconnectedVariant = (): Project => {
+  const p = withRacks(adVariant());
+  p.deployment = { ...p.deployment, mode: 'disconnected' };
+  p.hardware = { ...p.hardware, witness: 'file-share', witnessPath: '\\\\fs01.lab.example.com\\witness' };
+  p.disconnected = { ...p.disconnected, domainSuffix: 'autonomous.cloud.private' };
+  return p;
+};
+
 describe.each([
   ['local identity', (): Project => createExampleProject(), 'create-adless-cluster' as TemplateName],
   ['Active Directory', adVariant, 'create-cluster' as TemplateName],
   ['disaggregated SAN', sanVariant, 'create-cluster-san' as TemplateName],
+  ['disaggregated SAN with local identity', sanLocalVariant, 'create-cluster-adless-san' as TemplateName],
+  ['rack-aware', racVariant, 'create-cluster-rac-enabled' as TemplateName],
+  ['rack-aware with local identity', racLocalVariant, 'create-rack-aware-adless-cluster-external-dns' as TemplateName],
+  ['rack-aware, disconnected', racDisconnectedVariant, 'create-cluster-rac-enabled-disconnected' as TemplateName],
 ])('the ARM parameters export for %s matches the Microsoft template', (_label, make, name) => {
   const p = make();
   const params = buildCreateClusterParams(p);
@@ -172,5 +197,26 @@ describe('the disaggregated template', () => {
     expect(params.infraVolLunId).toBe('PURE1234567890ABCDEF');
     const net = (params.sanNetworkList as { clusterNetworkConfig: { adapterIPConfig: { name: string; vlanId: number; addressPrefix: string }[] } }).clusterNetworkConfig;
     expect(net.adapterIPConfig.map((a) => [a.name, a.vlanId, a.addressPrefix])).toEqual([['clusterNetwork-A', 1711, '10.10.100.0/24'], ['clusterNetwork-B', 1712, '10.10.101.0/24']]);
+  });
+});
+
+describe('rack-aware zones', () => {
+  it('splits the machines into two zones, by default the first half and the second half', () => {
+    expect(buildCreateClusterParams(racVariant()).localAvailabilityZones).toEqual([{ localAvailabilityZoneName: 'Zone1', nodes: ['n1', 'n2'] }, { localAvailabilityZoneName: 'Zone2', nodes: ['n3', 'n4'] }]);
+    expect(buildCreateClusterParams(racVariant()).clusterPattern).toBe('RackAware');
+  });
+  it('uses the zone each machine is given', () => {
+    const p = racVariant();
+    p.hardware.nodes[1].zone = 'Room B';
+    p.hardware.nodes[0].zone = 'Room A';
+    p.hardware.nodes[2].zone = 'Room A';
+    p.hardware.nodes[3].zone = 'Room B';
+    expect(buildCreateClusterParams(p).localAvailabilityZones).toEqual([{ localAvailabilityZoneName: 'Room A', nodes: ['n1', 'n3'] }, { localAvailabilityZoneName: 'Room B', nodes: ['n2', 'n4'] }]);
+  });
+  it('takes a file share witness in the disconnected template', () => {
+    const params = buildCreateClusterParams(racDisconnectedVariant());
+    expect(params.witnessType).toBe('FileShare');
+    expect(params.witnessPath).toBe('\\\\fs01.lab.example.com\\witness');
+    expect(params.keyVaultSuffix).toBe('.vault.autonomous.cloud.private');
   });
 });

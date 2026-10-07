@@ -8,13 +8,38 @@ import { allPorts, roleOf } from '../network/ports';
 // Every template parameter is produced from the design. Secure values are never stored: they are null in the JSON file
 // (as in Microsoft's sample) and read from environment variables in the Bicep parameter file.
 
-export type TemplateName = 'create-cluster' | 'create-adless-cluster' | 'create-cluster-san';
+export type TemplateName =
+  | 'create-cluster'
+  | 'create-adless-cluster'
+  | 'create-cluster-san'
+  | 'create-cluster-adless-san'
+  | 'create-cluster-rac-enabled'
+  | 'create-rack-aware-adless-cluster-external-dns'
+  | 'create-cluster-rac-enabled-disconnected';
 export type Params = Record<string, unknown>;
 
 export const SECURE_PARAMS = ['localAdminPassword', 'AzureStackLCMAdminPassword'] as const;
 
-export const templateFor = (p: Project): TemplateName =>
-  p.deployment.architecture === 'disaggregated' ? 'create-cluster-san' : p.identity.mode === 'local-identity-key-vault' ? 'create-adless-cluster' : 'create-cluster';
+// Microsoft publishes a template for each combination of architecture, topology and identity.
+export function templateFor(p: Project): TemplateName {
+  const local = p.identity.mode === 'local-identity-key-vault';
+  if (p.deployment.architecture === 'disaggregated') return local ? 'create-cluster-adless-san' : 'create-cluster-san';
+  if (p.hardware.topology === 'rack-aware') return p.deployment.mode === 'disconnected' ? 'create-cluster-rac-enabled-disconnected' : local ? 'create-rack-aware-adless-cluster-external-dns' : 'create-cluster-rac-enabled';
+  return local ? 'create-adless-cluster' : 'create-cluster';
+}
+
+// Rack-aware: the machines of each rack. A machine without a zone goes to Zone1 in the first half and Zone2 in the second.
+export function zonesOf(p: Project): { localAvailabilityZoneName: string; nodes: string[] }[] {
+  const n = p.hardware.nodes.length;
+  const zones: { localAvailabilityZoneName: string; nodes: string[] }[] = [];
+  p.hardware.nodes.forEach((node, i) => {
+    const name = node.zone?.trim() || (i < n / 2 ? 'Zone1' : 'Zone2');
+    const found = zones.find((z) => z.localAvailabilityZoneName === name);
+    if (found) found.nodes.push(node.name);
+    else zones.push({ localAvailabilityZoneName: name, nodes: [node.name] });
+  });
+  return zones;
+}
 
 export function witnessTypeFor(p: Project): 'Cloud' | 'No Witness' {
   if (p.hardware.nodes.length === 2) return 'Cloud';
@@ -179,15 +204,10 @@ export function buildCreateClusterParams(p: Project, mode: 'Validate' | 'Deploy'
     partnerCredentiallist: [],
   };
   if (p.deployment.architecture === 'disaggregated') {
-    // create-cluster-san: Active Directory only, infrastructure volumes on the SAN, cluster networks instead of storage networks.
+    // create-cluster-san and create-cluster-adless-san: infrastructure volumes on the SAN, cluster networks instead of storage networks.
     delete params.storageNetworkList;
     delete params.enableStorageAutoIp;
-    for (const k of ['identityProvider', 'dnsServerConfig', 'dnsZones']) delete params[k];
     Object.assign(params, {
-      domainFqdn: p.identity.domain ?? '',
-      adouPath: p.identity.ouPath ?? '',
-      AzureStackLCMAdminUsername: p.identity.lcmUsername ?? '',
-      AzureStackLCMAdminPassword: null,
       configurationMode: 'InfraOnly',
       infraVolLunId: p.storage.infraVolLunId,
       infraPerfLunId: p.storage.infraPerfLunId,
@@ -197,7 +217,15 @@ export function buildCreateClusterParams(p: Project, mode: 'Validate' | 'Deploy'
       storageConnectivitySwitchless: false,
     });
   }
-  return params;
+  if (p.hardware.topology === 'rack-aware') {
+    params.clusterPattern = 'RackAware';
+    params.localAvailabilityZones = zonesOf(p);
+  }
+  if (templateFor(p) === 'create-cluster-rac-enabled-disconnected') {
+    // The disconnected rack-aware template has no diagnostic storage or SBE parameters, and takes a file share witness.
+    for (const k of ['diagnosticStorageAccountName', 'logsRetentionInDays', 'storageAccountType', 'clusterWitnessStorageAccountName', 'sbeVersion', 'sbeFamily', 'sbePublisher', 'sbeManifestSource', 'sbeManifestCreationDate', 'partnerProperties', 'partnerCredentiallist']) delete params[k];
+    Object.assign(params, { witnessType: 'FileShare', witnessPath: p.hardware.witnessPath, keyVaultSuffix: `.vault.${p.disconnected.domainSuffix}`, edgeDevicesBatchSize: 8 });
+  }  return params;
 }
 
 // The ARM deployment parameters file: Microsoft's format, parameters wrapped in value.

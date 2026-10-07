@@ -21,12 +21,4 @@ export const disaggregatedRules: Rule[] = [
         ? [{ id: 'DA-002', severity: 'error', field: 'networking.clusterSubnets', message: 'Enter the subnet of cluster network A and of cluster network B in CIDR notation, for example 10.10.100.0/24; each standalone cluster port has its own subnet.', learnUrl: ARM }]
         : [],
   },
-  {
-    id: 'DA-003',
-    learnUrl: ARM,
-    check: (p) =>
-      p.deployment.architecture === 'disaggregated' && p.identity.mode === 'local-identity-key-vault'
-        ? [{ id: 'DA-003', severity: 'warning', field: 'identity.mode', message: 'The Microsoft template for disaggregated deployments (create-cluster-san) has Active Directory parameters only; the export uses the Active Directory form, so prepare the domain and OU.', learnUrl: ARM }]
-        : [],
-  },
 ];

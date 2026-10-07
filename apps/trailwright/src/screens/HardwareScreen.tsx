@@ -5,6 +5,7 @@ import { usesS2d } from '../rules/types';
 import { FindingsPanel } from '../components/FindingsPanel';
 import { NumberInput, TextInput } from '../components/Field';
 import { ChoiceCards } from '../components/ChoiceCards';
+import { zonesOf } from '../exports/createCluster';
 
 const topologyOptions = [
   { value: 'standard', label: 'Single rack', description: 'All nodes and a pair of top-of-rack switches in one rack, up to 16 nodes.' },
@@ -54,6 +55,10 @@ export const HardwareScreen: FC = () => {
         <ChoiceCards name="witness" legend="Witness" value={hardware.witness} onChange={(v) => update({ witness: v as Hardware['witness'] })} choices={project.deployment.mode === 'disconnected' ? [...witnessOptions.slice(0, 1), fileShareOption, ...witnessOptions.slice(1)] : witnessOptions} />
       </div>
 
+      {hardware.witness === 'file-share' && (
+        <TextInput id="witness-path" label="File share witness path" value={hardware.witnessPath} onChange={(witnessPath) => update({ witnessPath })} hint="A local UNC path on a Windows server in the same Active Directory forest, for example \\fs01\witness." />
+      )}
+
       <div>
         <h2 className="mb-3 text-lg font-medium text-gray-800">Nodes</h2>
         <ul className="space-y-3">
@@ -63,6 +68,7 @@ export const HardwareScreen: FC = () => {
               <TextInput id={`node-${index}-serial`} label={`Node ${index + 1} serial`} value={node.serial ?? ''} onChange={(serial) => updateNode(index, { serial })} />
               <NumberInput id={`node-${index}-cores`} label={`Node ${index + 1} cores`} value={node.cores} onChange={(cores) => updateNode(index, { cores })} />
               <NumberInput id={`node-${index}-memory`} label={`Node ${index + 1} memory (GiB)`} value={node.memoryGiB} onChange={(memoryGiB) => updateNode(index, { memoryGiB })} />
+              {hardware.topology === 'rack-aware' && <TextInput id={`node-${index}-zone`} label={`Node ${index + 1} zone (rack)`} value={node.zone ?? ''} onChange={(zone) => updateNode(index, { zone })} hint={`Now: ${zonesOf(project).find((z) => z.nodes.includes(node.name))?.localAvailabilityZoneName ?? ''}. Empty: first half Zone1, second half Zone2.`} />}
               {usesS2d(project) && <NumberInput id={`node-${index}-drives`} label={`Node ${index + 1} drives`} value={node.drives} onChange={(drives) => updateNode(index, { drives })} />}
               <button type="button" onClick={() => removeNode(index)} className="text-sm font-medium text-red-700 hover:underline">
                 Remove node {index + 1}

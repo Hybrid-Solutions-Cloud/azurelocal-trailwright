@@ -16,6 +16,7 @@ import { s2dRules } from './s2d';
 import { portRules } from './ports';
 import { disaggregatedRules } from './disaggregated';
 import { sdnRules } from './sdn';
+import { rackRules } from './rack';
 import { disconnectedRules } from './disconnected';
 
 export const rules: Rule[] = [
@@ -35,6 +36,7 @@ export const rules: Rule[] = [
   ...portRules,
   ...disaggregatedRules,
   ...sdnRules,
+  ...rackRules,
   ...disconnectedRules,
 ];
 

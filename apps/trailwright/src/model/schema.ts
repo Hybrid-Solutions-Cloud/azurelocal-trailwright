@@ -28,6 +28,8 @@ const nodeSchema = z.object({
   cores: z.number(),
   memoryGiB: z.number(),
   drives: z.number(),
+  // Rack-aware: the local availability zone (rack) the machine is in. Empty means the first half of the machines are in Zone1 and the rest in Zone2.
+  zone: z.string().optional(),
 });
 
 const hardwareSchema = z.object({
@@ -38,6 +40,8 @@ const hardwareSchema = z.object({
   racks: z.number().int().min(1).max(8).default(1),
   nodes: z.array(nodeSchema),
   witness: z.enum(['cloud', 'file-share', 'none']),
+  // Disconnected operations: the UNC path of the file share witness.
+  witnessPath: z.string().default(''),
 });
 
 const identitySchema = z.object({
