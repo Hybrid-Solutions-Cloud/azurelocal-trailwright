@@ -11,6 +11,7 @@ const ATC_URL = 'https://learn.microsoft.com/azure/azure-local/concepts/network-
 export const networkingRules: Rule[] = [
   {
     id: 'NET-001',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: FOUR_NODE_SW_URL,
     check: (p) =>
@@ -20,6 +21,7 @@ export const networkingRules: Rule[] = [
   },
   {
     id: 'NET-002',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: THREE_NODE_SW_URL,
     check: (p) =>
@@ -29,6 +31,7 @@ export const networkingRules: Rule[] = [
   },
   {
     id: 'NET-003',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: DISCONNECTED_URL,
     check: (p) => {
@@ -44,6 +47,7 @@ export const networkingRules: Rule[] = [
   },
   {
     id: 'NET-004',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: TWO_NODE_SW_URL,
     check: (p) =>
@@ -58,10 +62,12 @@ export const networkingRules: Rule[] = [
     check: (p) => {
       if (p.hardware.nodes.length === 0) return [];
       const traffic = p.networking.intents.flatMap((i) => i.traffic);
-      const missing = (['management', 'storage'] as const).filter((t) => !traffic.includes(t));
+      // With a SAN only, storage runs on Fibre Channel and Network ATC manages the management and compute intent only.
+      const needed = p.storage.architecture === 'san' ? (['management'] as const) : (['management', 'storage'] as const);
+      const missing = needed.filter((t) => !traffic.includes(t));
       return missing.length === 0
         ? []
-        : [{ id: 'NET-005', severity: 'error', field: 'networking.intents', message: `Management and storage traffic must each appear in at least one intent; missing: ${missing.join(', ')}.`, learnUrl: ATC_URL }];
+        : [{ id: 'NET-005', severity: 'error', field: 'networking.intents', message: `Required traffic must appear in at least one intent (); missing: ${missing.join(', ')}.`, learnUrl: ATC_URL }];
     },
   },
 ];

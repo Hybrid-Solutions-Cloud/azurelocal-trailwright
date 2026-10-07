@@ -2,11 +2,13 @@ import type { FC } from 'react';
 import { useProjectStore } from '../model/store';
 import type { Networking } from '../model/schema';
 import { FindingsPanel } from '../components/FindingsPanel';
-import { NumberInput, SelectInput, TextInput } from '../components/Field';
+import { NumberInput, TextInput } from '../components/Field';
+import { ChoiceCards } from '../components/ChoiceCards';
+import { usesS2d } from '../rules/types';
 
 const storageOptions = [
-  { value: 'switched', label: 'Switched' },
-  { value: 'switchless', label: 'Switchless' },
+  { value: 'switched', label: 'Switched', description: 'Storage traffic goes through the top-of-rack switches.' },
+  { value: 'switchless', label: 'Switchless', description: 'Nodes connect directly for storage. 2, 3 or 4 nodes only.' },
 ];
 
 const trafficTypes = ['management', 'compute', 'storage'] as const;
@@ -41,7 +43,11 @@ export const NetworkingScreen: FC = () => {
     <section className="space-y-8 p-6">
       <h1 className="text-2xl font-semibold text-slate-900">Networking</h1>
 
-      <SelectInput id="storage" label="Storage connectivity" value={net.storage} onChange={(v) => update({ storage: v as Networking['storage'] })} options={storageOptions} />
+      {usesS2d(project) ? (
+        <ChoiceCards name="storage-connectivity" legend="Storage connectivity" value={net.storage} onChange={(v) => update({ storage: v as Networking['storage'] })} choices={storageOptions} />
+      ) : (
+        <p className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">Storage runs on the SAN (Fibre Channel), so there is no storage network or storage intent to design.</p>
+      )}
 
       <div>
         <h2 className="mb-3 text-lg font-medium text-slate-800">VLANs</h2>
@@ -82,7 +88,7 @@ export const NetworkingScreen: FC = () => {
               <fieldset>
                 <legend className="mb-2 text-sm font-medium text-slate-700">Traffic types of intent {i + 1}</legend>
                 <div className="flex gap-6">
-                  {trafficTypes.map((type) => (
+                  {trafficTypes.filter((type) => type !== 'storage' || usesS2d(project)).map((type) => (
                     <div key={type} className="flex items-center gap-2">
                       <input
                         id={`intent-${i}-traffic-${type}`}

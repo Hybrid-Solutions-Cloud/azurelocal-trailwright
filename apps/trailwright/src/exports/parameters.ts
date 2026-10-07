@@ -24,6 +24,7 @@ export const SECURE_PARAMETERS = [
 
 export function deriveParameters(p: Project, template: Template): Derived {
   const out: Derived = [
+    { name: 'location', value: p.landingZone.region },
     { name: 'clusterName', value: p.meta.name },
     { name: 'witnessType', value: witnessType(p) },
   ];
@@ -42,6 +43,6 @@ export function deriveParameters(p: Project, template: Template): Derived {
 
 // What a person still has to supply before the template can run.
 export function stillNeeded(template: Template): string[] {
-  const common = ['location', 'tenantId', 'arcNodeResourceIds', 'hciResourceProviderObjectID', 'networking settings', 'storage settings'];
+  const common = ['tenantId', 'arcNodeResourceIds', 'hciResourceProviderObjectID', 'networking settings', 'storage settings'];
   return template === 'active-directory' ? [...common, 'Active Directory organizational unit and DNS servers'] : [...common, 'DNS zone name and DNS servers'];
 }

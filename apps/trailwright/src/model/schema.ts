@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { regionValues } from './regions';
 
 const releaseVersionSchema = z.enum(['2605', '2606', '2607', '2608', '2609']);
 
@@ -72,6 +73,7 @@ const landingZoneSchema = z.object({
   keyVaultName: z.string(),
   witnessStorageAccount: z.string().optional(),
   customLocation: z.string().optional(),
+  region: z.enum(regionValues).default('eastus'),
 });
 
 const volumeSchema = z.object({
@@ -80,8 +82,16 @@ const volumeSchema = z.object({
   resiliency: z.enum(['two-way', 'three-way', 'four-way', 'parity']),
 });
 
+const sanLunSchema = z.object({
+  name: z.string(),
+  sizeGiB: z.number(),
+});
+
 const storageSchema = z.object({
+  // s2d: Storage Spaces Direct only; san: external SAN (disaggregated) only; hybrid: both.
+  architecture: z.enum(['s2d', 'san', 'hybrid']).default('s2d'),
   volumes: z.array(volumeSchema),
+  sanLuns: z.array(sanLunSchema).default([]),
 });
 
 const operationsSchema = z.object({

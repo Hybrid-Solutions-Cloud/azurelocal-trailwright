@@ -4,9 +4,32 @@ const RELEASES = ['2607', '2608', '2609'];
 const RACK_URL = 'https://learn.microsoft.com/azure/azure-local/concepts/rack-aware-cluster-requirements?view=azloc-2609#supported-node-configurations';
 const ADD_NODE_URL = 'https://learn.microsoft.com/azure/azure-local/manage/add-server?view=azloc-2609#supported-scenarios';
 
+const SAN_URL = 'https://learn.microsoft.com/azure/azure-local/plan/fiber-channel-no-backup-disaggregated-pattern?view=azloc-2609#when-to-use-this-pattern';
+
 export const storageRules: Rule[] = [
   {
+    id: 'STO-004',
+    requires: 'san',
+    release: RELEASES,
+    learnUrl: SAN_URL,
+    check: (p) =>
+      p.storage.sanLuns.length === 0
+        ? [{ id: 'STO-004', severity: 'warning', field: 'storage.sanLuns', message: 'A SAN design needs at least one LUN or volume on the external storage array.', learnUrl: SAN_URL }]
+        : [],
+  },
+  {
+    id: 'STO-005',
+    requires: 'san',
+    release: RELEASES,
+    learnUrl: SAN_URL,
+    check: (p) =>
+      p.hardware.nodes.length > 64
+        ? [{ id: 'STO-005', severity: 'error', field: 'hardware.nodes', message: 'The disaggregated Fibre Channel SAN pattern covers clusters of up to 64 nodes.', learnUrl: SAN_URL }]
+        : [],
+  },
+  {
     id: 'STO-001',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: RACK_URL,
     check: (p) =>
@@ -16,6 +39,7 @@ export const storageRules: Rule[] = [
   },
   {
     id: 'STO-002',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: RACK_URL,
     check: (p) =>
@@ -25,6 +49,7 @@ export const storageRules: Rule[] = [
   },
   {
     id: 'STO-003',
+    requires: 's2d',
     release: RELEASES,
     learnUrl: ADD_NODE_URL,
     check: (p) =>

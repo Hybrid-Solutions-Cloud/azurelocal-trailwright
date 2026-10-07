@@ -33,6 +33,9 @@ const fires: Record<string, DeepPartial<Project>> = {
   'STO-001': { hardware: { topology: 'rack-aware', nodes: makeNodes(4) }, storage: { volumes: [{ name: 'v', sizeGiB: 100, resiliency: 'three-way' }] } },
   'STO-002': { hardware: { topology: 'rack-aware', nodes: makeNodes(4) }, storage: { volumes: [{ name: 'v', sizeGiB: 100, resiliency: 'two-way' }] } },
   'STO-003': { hardware: { nodes: makeNodes(2) }, storage: { volumes: [{ name: 'v', sizeGiB: 100, resiliency: 'three-way' }] } },
+  'STO-004': { storage: { architecture: 'san', sanLuns: [] } },
+  'STO-005': { storage: { architecture: 'san', sanLuns: [{ name: 'lun1', sizeGiB: 100 }] }, hardware: { nodes: makeNodes(65) } },
+  'LZ-004': { landingZone: { region: 'usgovvirginia' } },
 };
 
 describe('rules', () => {
@@ -63,5 +66,28 @@ describe('rules', () => {
 
   it('a release without rules (2605) gets only the release note', () => {
     expect(ids(project({ release: { version: '2605' } }))).toEqual(['REL-001']);
+  });
+});
+
+describe('storage architecture gating', () => {
+  const s2dOnlyIds = ['STO-001', 'STO-002', 'STO-003', 'NET-001', 'NET-002', 'NET-003', 'NET-004'];
+
+  it('a SAN-only design gets no S2D or storage-network findings', () => {
+    const san = project({ storage: { architecture: 'san', sanLuns: [{ name: 'lun1', sizeGiB: 100 }] }, networking: { vlans: [], storage: 'switchless', intents: [{ name: 'Management', traffic: ['management', 'compute'], adapters: ['p1', 'p2'] }] }, hardware: { topology: 'rack-aware', nodes: makeNodes(6) } });
+    const found = runRules(san).map((f) => f.id);
+    for (const id of s2dOnlyIds) expect(found).not.toContain(id);
+    expect(found).not.toContain('NET-005');
+  });
+
+  it('an S2D-only design gets no SAN findings', () => {
+    const found = runRules(project({ storage: { architecture: 's2d' } })).map((f) => f.id);
+    expect(found).not.toContain('STO-004');
+  });
+
+  it('a hybrid design is checked for both', () => {
+    const hybrid = project({ storage: { architecture: 'hybrid', sanLuns: [] } , networking: { storage: 'switchless' }, hardware: { nodes: makeNodes(6) } });
+    const found = runRules(hybrid).map((f) => f.id);
+    expect(found).toContain('STO-004');
+    expect(found).toContain('NET-001');
   });
 });

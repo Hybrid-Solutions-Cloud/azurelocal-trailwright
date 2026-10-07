@@ -2,11 +2,12 @@ import type { FC } from 'react';
 import { useProjectStore } from '../model/store';
 import type { Project } from '../model/schema';
 import { FindingsPanel } from '../components/FindingsPanel';
-import { SelectInput, TextInput } from '../components/Field';
+import { TextInput } from '../components/Field';
+import { ChoiceCards } from '../components/ChoiceCards';
 
 const modeOptions = [
-  { value: 'active-directory', label: 'Active Directory' },
-  { value: 'local-identity-key-vault', label: 'Local identity with Key Vault' },
+  { value: 'active-directory', label: 'Active Directory', description: 'Domain-joined machines. Needs prepared Active Directory and DNS.' },
+  { value: 'local-identity-key-vault', label: 'Local identity with Key Vault', description: 'No Active Directory. Secrets in Azure Key Vault. Windows Admin Center is not supported.' },
 ];
 
 export const IdentityScreen: FC = () => {
@@ -16,13 +17,7 @@ export const IdentityScreen: FC = () => {
   return (
     <section className="space-y-6 p-6">
       <h1 className="text-2xl font-semibold text-slate-900">Identity</h1>
-      <SelectInput
-        id="identity-mode"
-        label="Identity mode"
-        value={identity.mode}
-        onChange={(mode) => setSection('identity', { ...identity, mode: mode as Project['identity']['mode'] })}
-        options={modeOptions}
-      />
+      <ChoiceCards name="identity-mode" legend="Identity mode" value={identity.mode} onChange={(mode) => setSection('identity', { ...identity, mode: mode as Project['identity']['mode'] })} choices={modeOptions} />
       {identity.mode === 'active-directory' && (
         <TextInput id="domain" label="Domain" value={identity.domain ?? ''} onChange={(domain) => setSection('identity', { ...identity, domain })} />
       )}

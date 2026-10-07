@@ -13,7 +13,7 @@ test('review lists findings with Learn sources and exports files', async ({ page
   await page.getByRole('link', { name: 'Hardware and topology' }).click();
   await page.getByRole('button', { name: 'Add node' }).click();
   await page.getByRole('button', { name: 'Add node' }).click();
-  await page.getByLabel('Witness').selectOption('none');
+  await page.getByRole('radio', { name: 'No witness' }).check();
   await page.getByRole('link', { name: 'Review and export' }).click();
 
   await expect(page.getByText('requires a witness')).toBeVisible();

@@ -18,14 +18,14 @@ export function buildInfrastructureYml(p: Project): string {
   return stringify({
     _metadata: { version: '1.0.0', schema_version: '4.0.0', environment_name: p.meta.name, generated_by: 'azurelocal-trailwright' },
     site: { name: p.project.customer, owner: p.project.owner },
-    environment: { env_name: p.meta.name },
+    environment: { env_name: p.meta.name, azure_region: p.landingZone.region },
     azure_platform: {
       subscriptions: { sub_azure_local_name: p.landingZone.subscriptionName },
       resource_groups: { rg_azurelocal_cluster: p.landingZone.resourceGroup },
     },
     identity,
     networking: {
-      storage_mode: p.networking.storage,
+      storage_mode: p.storage.architecture === 'san' ? 'san' : p.networking.storage,
       vlans: p.networking.vlans.map((v) => ({ name: v.name, id: v.id })),
       intents: p.networking.intents.map((i) => ({ name: i.name, traffic: i.traffic, adapters: i.adapters })),
       ip_plan: p.networking.ipPlan.map((r) => ({ name: r.name, cidr: r.cidr })),
@@ -33,6 +33,11 @@ export function buildInfrastructureYml(p: Project): string {
     compute: {
       cluster: { topology: p.hardware.topology, witness_type: p.hardware.witness, node_count: p.hardware.nodes.length },
       nodes: p.hardware.nodes.map((n) => ({ name: n.name, serial: n.serial ?? '', cores: n.cores, memory_gib: n.memoryGiB, drives: n.drives })),
+    },
+    storage: {
+      architecture: p.storage.architecture,
+      volumes: p.storage.volumes.map((v) => ({ name: v.name, size_gib: v.sizeGiB, resiliency: v.resiliency })),
+      san_luns: p.storage.sanLuns.map((l) => ({ name: l.name, size_gib: l.sizeGiB })),
     },
     security: { key_vault_name: vault },
     operations: {

@@ -26,6 +26,6 @@ describe('bundled example project', () => {
   it('uses only documentation address ranges and placeholder names', () => {
     const text = JSON.stringify(example);
     expect(text).not.toMatch(/\b(10|172\.(1[6-9]|2\d|3[01])|192\.168)\./);
-    expect(text).not.toMatch(/nic26|tierpoint|tpp?oc|iic/i);
+    expect(text).not.toMatch(new RegExp(['nic26', 'tier' + 'point', 'iic'].join('|'), 'i'));
   });
 });

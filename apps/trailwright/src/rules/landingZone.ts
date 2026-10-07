@@ -4,7 +4,18 @@ const RELEASES = ['2607', '2608', '2609'];
 const ARM_URL = 'https://learn.microsoft.com/azure/azure-local/deploy/deployment-azure-resource-manager-template?view=azloc-2609#arm-template-parameters-reference';
 const OUTBOUND_URL = 'https://learn.microsoft.com/azure/azure-local/plan/cloud-deployment-network-considerations?view=azloc-2609#decision-10-determine-outbound-connectivity';
 
+const REGIONS_URL = 'https://learn.microsoft.com/azure/azure-local/concepts/system-requirements-23h2?view=azloc-2609#azure-requirements';
+
 export const landingZoneRules: Rule[] = [
+  {
+    id: 'LZ-004',
+    release: RELEASES,
+    learnUrl: REGIONS_URL,
+    check: (p) =>
+      p.landingZone.region === 'usgovvirginia'
+        ? [{ id: 'LZ-004', severity: 'info', field: 'landingZone.region', message: 'US Gov Virginia is the Azure Government region for Azure Local; some Azure public cloud features differ there.', learnUrl: REGIONS_URL }]
+        : [],
+  },
   {
     id: 'LZ-001',
     release: RELEASES,
