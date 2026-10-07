@@ -39,6 +39,9 @@ export function makeIntent(partial: Pick<Intent, 'name' | 'traffic' | 'adapters'
     jumboPacket: '9014',
     networkDirect: 'Enabled',
     networkDirectTechnology: 'RoCEv2',
+    overrideVSwitch: false,
+    enableIov: 'true',
+    loadBalancingAlgorithm: 'Dynamic',
     ...partial,
   };
 }

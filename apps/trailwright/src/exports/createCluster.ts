@@ -80,8 +80,8 @@ export function intentList(p: Project): unknown[] {
     name: i.name,
     trafficType: i.traffic.map(cap),
     adapter: i.adapters,
-    overrideVirtualSwitchConfiguration: false,
-    virtualSwitchConfigurationOverrides: { enableIov: '', loadBalancingAlgorithm: '' },
+    overrideVirtualSwitchConfiguration: i.overrideVSwitch ?? false,
+    virtualSwitchConfigurationOverrides: i.overrideVSwitch ? { enableIov: i.enableIov ?? 'true', loadBalancingAlgorithm: i.loadBalancingAlgorithm ?? 'Dynamic' } : { enableIov: '', loadBalancingAlgorithm: '' },
     overrideQosPolicy: i.overrideQos ?? false,
     qosPolicyOverrides: {
       priorityValue8021Action_Cluster: i.qosClusterPriority ?? '7',

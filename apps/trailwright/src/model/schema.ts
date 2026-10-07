@@ -73,6 +73,9 @@ const intentSchema = z.object({
   jumboPacket: z.enum(['1514', '4088', '9014']).default('9014'),
   networkDirect: z.enum(['Enabled', 'Disabled']).default('Enabled'),
   networkDirectTechnology: z.enum(['iWARP', 'RoCE', 'RoCEv2']).default('RoCEv2'),
+  overrideVSwitch: z.boolean().default(false),
+  enableIov: z.enum(['true', 'false']).default('true'),
+  loadBalancingAlgorithm: z.enum(['Dynamic', 'HyperVPort']).default('Dynamic'),
 });
 
 const ipPlanSchema = z.object({

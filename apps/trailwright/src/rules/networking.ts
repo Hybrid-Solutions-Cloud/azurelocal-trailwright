@@ -51,7 +51,7 @@ export const networkingRules: Rule[] = [
     release: RELEASES,
     learnUrl: TWO_NODE_SW_URL,
     check: (p) =>
-      p.networking.vlans.some((v) => v.id === 711 || v.id === 712)
+      p.networking.storageVlans.every((v) => v === 711 || v === 712)
         ? []
         : [{ id: 'NET-004', severity: 'warning', field: 'networking.vlans', message: 'The default storage VLANs are 711 and 712; confirm that custom storage VLAN ids are intentional.', learnUrl: TWO_NODE_SW_URL }],
   },

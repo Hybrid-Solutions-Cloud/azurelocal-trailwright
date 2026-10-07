@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useProjectStore } from '../model/store';
 import type { Networking } from '../model/schema';
 import { FindingsPanel } from '../components/FindingsPanel';
-import { NumberInput, TextInput } from '../components/Field';
+import { CheckInput, NumberInput, SelectInput, TextInput } from '../components/Field';
 import { usesS2d } from '../rules/types';
 import { makeIntent } from '../model/defaults';
 
@@ -58,9 +58,24 @@ export const NetworkingScreen: FC = () => {
         </button>
       </div>
 
+      {usesS2d(project) && (
+        <div>
+          <h2 className="mb-3 text-lg font-medium text-gray-800">Storage VLANs</h2>
+          <p className="mb-3 text-sm text-gray-600">One VLAN per storage network, as the deployment template expects (defaults 711 and 712). Each storage network carries its own VLAN on the storage adapters.</p>
+          <div className="flex flex-wrap gap-4">
+            {net.storageVlans.map((id, k) => (
+              <NumberInput key={k} id={`storage-vlan-${k}`} label={`Storage network ${k + 1} VLAN`} value={id} onChange={(value) => update({ storageVlans: net.storageVlans.map((x, j) => (j === k ? value : x)) })} />
+            ))}
+          </div>
+          <button type="button" onClick={() => update({ storageVlans: [...net.storageVlans, (net.storageVlans[net.storageVlans.length - 1] ?? 711) + 1] })} className={buttonClass}>Add storage VLAN</button>
+          {net.storageVlans.length > 2 && (
+            <button type="button" onClick={() => update({ storageVlans: net.storageVlans.slice(0, -1) })} className={`${removeClass} ml-4`}>Remove last storage VLAN</button>
+          )}
+        </div>
+      )}
+
       <div>
-        <h2 className="mb-3 text-lg font-medium text-gray-800">Network ATC intents</h2>
-        <ul className="space-y-4">
+        <h2 className="mb-3 text-lg font-medium text-gray-800">Network ATC intents</h2>        <ul className="space-y-4">
           {net.intents.map((intent, i) => (
             <li key={i} className="rounded-md border border-gray-200 p-4">
               <div className="mb-3 flex flex-wrap items-end gap-4">
@@ -95,6 +110,46 @@ export const NetworkingScreen: FC = () => {
                   ))}
                 </div>
               </fieldset>
+              <details className="mt-3">
+                <summary className="cursor-pointer text-sm font-medium text-gray-700">Advanced overrides for intent {i + 1} (leave off unless your hardware vendor says otherwise)</summary>
+                <div className="mt-3 space-y-4">
+                  {intent.traffic.includes('storage') && (
+                    <div className="space-y-2">
+                      <CheckInput id={`intent-${i}-override-qos`} label={`Override QoS policy for intent ${i + 1}`} checked={intent.overrideQos} onChange={(overrideQos) => updateIntent(i, { overrideQos })} hint="Defaults: cluster priority 7, SMB priority 3, SMB bandwidth 50%. Change only on OEM guidance." />
+                      {intent.overrideQos && (
+                        <div className="flex flex-wrap gap-4">
+                          <TextInput id={`intent-${i}-qos-cluster`} label="Cluster priority" value={intent.qosClusterPriority} onChange={(qosClusterPriority) => updateIntent(i, { qosClusterPriority })} />
+                          <TextInput id={`intent-${i}-qos-smb`} label="SMB priority" value={intent.qosSmbPriority} onChange={(qosSmbPriority) => updateIntent(i, { qosSmbPriority })} />
+                          <TextInput id={`intent-${i}-qos-bw`} label="SMB bandwidth percentage" value={intent.qosSmbBandwidth} onChange={(qosSmbBandwidth) => updateIntent(i, { qosSmbBandwidth })} />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="space-y-2">
+                    <CheckInput id={`intent-${i}-override-adapter`} label={`Override adapter properties for intent ${i + 1}`} checked={intent.overrideAdapter} onChange={(overrideAdapter) => updateIntent(i, { overrideAdapter })} hint="Jumbo packet size and RDMA (NetworkDirect)." />
+                    {intent.overrideAdapter && (
+                      <div className="flex flex-wrap gap-4">
+                        <SelectInput id={`intent-${i}-jumbo`} label="Jumbo packet" value={intent.jumboPacket} onChange={(jumboPacket) => updateIntent(i, { jumboPacket: jumboPacket as typeof intent.jumboPacket })} options={[{ value: '1514', label: '1514 (standard)' }, { value: '4088', label: '4088' }, { value: '9014', label: '9014 (jumbo)' }]} />
+                        <SelectInput id={`intent-${i}-nd`} label="NetworkDirect (RDMA)" value={intent.networkDirect} onChange={(networkDirect) => updateIntent(i, { networkDirect: networkDirect as typeof intent.networkDirect })} options={[{ value: 'Enabled', label: 'Enabled' }, { value: 'Disabled', label: 'Disabled' }]} />
+                        {intent.networkDirect === 'Enabled' && (
+                          <SelectInput id={`intent-${i}-ndt`} label="RDMA technology" value={intent.networkDirectTechnology} onChange={(networkDirectTechnology) => updateIntent(i, { networkDirectTechnology: networkDirectTechnology as typeof intent.networkDirectTechnology })} options={[{ value: 'iWARP', label: 'iWARP' }, { value: 'RoCE', label: 'RoCE' }, { value: 'RoCEv2', label: 'RoCEv2' }]} />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {intent.traffic.includes('compute') && (
+                    <div className="space-y-2">
+                      <CheckInput id={`intent-${i}-override-vswitch`} label={`Override virtual switch for intent ${i + 1}`} checked={intent.overrideVSwitch} onChange={(overrideVSwitch) => updateIntent(i, { overrideVSwitch })} hint="SR-IOV and the SET load balancing algorithm." />
+                      {intent.overrideVSwitch && (
+                        <div className="flex flex-wrap gap-4">
+                          <SelectInput id={`intent-${i}-iov`} label="SR-IOV (enableIov)" value={intent.enableIov} onChange={(enableIov) => updateIntent(i, { enableIov: enableIov as typeof intent.enableIov })} options={[{ value: 'true', label: 'Enabled' }, { value: 'false', label: 'Disabled' }]} />
+                          <SelectInput id={`intent-${i}-lb`} label="Load balancing algorithm" value={intent.loadBalancingAlgorithm} onChange={(loadBalancingAlgorithm) => updateIntent(i, { loadBalancingAlgorithm: loadBalancingAlgorithm as typeof intent.loadBalancingAlgorithm })} options={[{ value: 'Dynamic', label: 'Dynamic' }, { value: 'HyperVPort', label: 'Hyper-V port' }]} hint="SET supports only these two (switch independent)." />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </details>
             </li>
           ))}
         </ul>
@@ -121,7 +176,7 @@ export const NetworkingScreen: FC = () => {
         </button>
       </div>
 
-      <FindingsPanel prefixes={['networking.intents', 'networking.vlans', 'networking.ipPlan']} />
+      <FindingsPanel prefixes={['networking.intents', 'networking.vlans', 'networking.ipPlan', 'networking.storageVlans']} />
     </section>
   );
 };

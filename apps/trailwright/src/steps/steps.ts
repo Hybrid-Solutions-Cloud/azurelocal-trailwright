@@ -38,7 +38,7 @@ export const steps: Step[] = [
     title: 'Intents, VLANs and IP plan',
     group: 'Network',
     visible: always,
-    fields: ['networking.intents', 'networking.vlans', 'networking.ipPlan'],
+    fields: ['networking.intents', 'networking.vlans', 'networking.ipPlan', 'networking.storageVlans'],
     gate: true,
   },
   { path: 'infrastructure', title: 'Management network', group: 'Network', visible: always, fields: ['infrastructure', 'hardware.nodes'], gate: true },

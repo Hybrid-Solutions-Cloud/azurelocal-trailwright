@@ -81,4 +81,14 @@ export const intentRules: Rule[] = [
         : [];
     },
   },
+  {
+    id: 'INT-008',
+    learnUrl: 'https://learn.microsoft.com/windows-server/networking/network-atc/manage-network-atc?view=azloc-2609#update-or-override-network-settings',
+    check: (p) => {
+      const names = p.networking.intents.filter((i) => i.overrideQos || i.overrideAdapter || i.overrideVSwitch).map((i) => i.name);
+      return names.length
+        ? [{ id: 'INT-008', severity: 'info', field: 'networking.intents', message: `${names.join(', ')}: Network ATC overrides are set. Microsoft recommends the defaults, and the QoS values (priority 7 for cluster, 3 for SMB, 50% bandwidth for SMB) should only change on OEM guidance with OEM validation.`, learnUrl: 'https://learn.microsoft.com/windows-server/networking/network-atc/manage-network-atc?view=azloc-2609#update-or-override-network-settings' }]
+        : [];
+    },
+  },
 ];
