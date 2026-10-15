@@ -10,10 +10,12 @@ import { buildProjectJson } from './projectJson';
 import { buildProvisioningManifest } from './provisioning';
 import { buildSwitchPortsCsv } from './switchPorts';
 import { buildDisconnectedScript } from './disconnectedScript';
+import { buildEnvironmentFile } from './environmentFile';
+import { buildTerraformVars, terraformSupports } from './terraformVars';
 
 export type { ExportKind } from './types';
 export { slug } from './types';
-export { buildHandoffMarkdown, buildHandoffPdf, buildInfrastructureYml, buildArmParametersFile, buildBicepParamFile, buildSchedulesCsv, buildSchedulesXlsx, buildTopologyDrawio, buildProjectJson };
+export { buildHandoffMarkdown, buildHandoffPdf, buildInfrastructureYml, buildArmParametersFile, buildBicepParamFile, buildSchedulesCsv, buildSchedulesXlsx, buildTopologyDrawio, buildProjectJson, buildEnvironmentFile, buildTerraformVars };
 export { buildCreateClusterParams, templateFor } from './createCluster';
 
 const named = (suffix: string) => (p: Project) => `${slug(p.meta.name)}${suffix}`;
@@ -22,9 +24,11 @@ export const exportKinds: ExportKind[] = [
   { id: 'handoff-md', label: 'Design handoff (Markdown)', filename: named('-handoff.md'), mime: 'text/markdown', build: buildHandoffMarkdown },
   { id: 'handoff-pdf', label: 'Design handoff (PDF)', filename: named('-handoff.pdf'), mime: 'application/pdf', build: buildHandoffPdf },
   { id: 'infrastructure-yml', label: 'infrastructure.yml (Toolkit registry shape)', filename: () => 'infrastructure.yml', mime: 'application/yaml', build: buildInfrastructureYml },
+  { id: 'environment-yml', label: 'Environment file (deploy automation)', filename: () => 'environment.yml', mime: 'application/yaml', build: buildEnvironmentFile },
   { id: 'arm-validate', label: 'ARM parameters, validate (azuredeploy.parameters.json)', filename: named('-validate.parameters.json'), mime: 'application/json', build: (p) => buildArmParametersFile(p, 'Validate') },
   { id: 'arm-deploy', label: 'ARM parameters, deploy', filename: named('-deploy.parameters.json'), mime: 'application/json', build: (p) => buildArmParametersFile(p, 'Deploy') },
   { id: 'bicepparam', label: 'Bicep parameters', filename: named('.bicepparam'), mime: 'text/plain', build: (p) => buildBicepParamFile(p, 'Validate') },
+  { id: 'terraform-tfvars', label: 'Terraform variables (deploy automation, tfvars.json)', filename: () => 'terraform.tfvars.json', mime: 'application/json', build: buildTerraformVars, available: terraformSupports },
   { id: 'provisioning', label: 'Machine provisioning manifest (JSON)', filename: named('-provisioning.json'), mime: 'application/json', build: buildProvisioningManifest },
   { id: 'disconnected-script', label: 'Disconnected operations deployment script (PowerShell)', filename: named('-disconnected-operations.ps1'), mime: 'text/plain', build: buildDisconnectedScript, available: (p) => p.deployment.mode === 'disconnected' },
   { id: 'switch-ports-csv', label: 'Switch port plan (CSV)', filename: named('-switch-ports.csv'), mime: 'text/csv', build: buildSwitchPortsCsv },

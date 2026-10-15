@@ -15,13 +15,14 @@ export const ProjectScreen: FC = () => {
   return (
     <section className="panel space-y-6">
       <h1 className="text-2xl font-semibold text-gray-900">Project</h1>
-      <p className="text-sm text-gray-600">Checks follow the current Azure Local release ({CURRENT_RELEASE}).</p>
+      <p className="text-sm text-gray-600">Checks follow the current Azure Local release, 12.{CURRENT_RELEASE} (latest).</p>
       <div className="grid gap-6 md:grid-cols-2">
         <TextInput id="project-name" label="Project name" value={project.meta.name} onChange={(name) => setSection('meta', { ...project.meta, name })} />
         <TextInput id="customer" label="Customer" value={project.project.customer} onChange={(customer) => setSection('project', { ...project.project, customer })} />
         <TextInput id="owner" label="Owner" value={project.project.owner} onChange={(owner) => setSection('project', { ...project.project, owner })} />
+        <TextInput id="release-build" label="Release build (optional)" value={project.release.build} placeholder={`12.${CURRENT_RELEASE}.x.y`} hint={`The full build of the release you will deploy, if you know it. Exports carry it as written; Trailwright never guesses it.`} onChange={(build) => setSection('release', { ...project.release, build })} />
         <div className="md:col-span-2">
-          <Field label="Notes" htmlFor="notes">
+          <Field label="Notes" htmlFor="notes" hint="Notes are written to the project JSON and the handoff document. Do not type passwords, keys or other secrets here.">
             <textarea
               id="notes"
               value={project.project.notes}

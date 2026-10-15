@@ -12,6 +12,8 @@ const metaSchema = z.object({
 const releaseSchema = z.object({
   // Recorded for the handoff; the rules always follow the current release.
   version: z.string().default(CURRENT_RELEASE),
+  // Optional: the full build string of the deployed release (for example 12.2609.1003.7), when it is known. Handoff and automation files use it; Trailwright never guesses it.
+  build: z.string().default(''),
 });
 
 const projectDetailsSchema = z.object({

@@ -51,10 +51,10 @@ export function witnessTypeFor(p: Project): 'Cloud' | 'No Witness' {
   return p.hardware.witness === 'cloud' ? 'Cloud' : 'No Witness';
 }
 
-const patternName = (p: Project): string =>
+export const patternName = (p: Project): string =>
   ({ all: 'hyperConverged', 'mgmt-compute': 'convergedManagementCompute', 'compute-storage': 'convergedComputeStorage', custom: 'custom' })[p.networking.intentGrouping];
 
-const networkingType = (p: Project): string =>
+export const networkingType = (p: Project): string =>
   p.hardware.nodes.length === 1 ? 'singleServerDeployment' : p.networking.storage === 'switchless' ? 'switchlessMultiServerDeployment' : 'switchedMultiServerDeployment';
 
 const cap = (t: string): string => t.charAt(0).toUpperCase() + t.slice(1);

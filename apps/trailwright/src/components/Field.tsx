@@ -14,11 +14,11 @@ export const Field: FC<FieldProps> = ({ label, htmlFor, hint, children }) => (
   </div>
 );
 
-type TextInputProps = { id: string; label: string; value: string; onChange: (value: string) => void; hint?: string };
+type TextInputProps = { id: string; label: string; value: string; onChange: (value: string) => void; hint?: string; placeholder?: string };
 
-export const TextInput: FC<TextInputProps> = ({ id, label, value, onChange, hint }) => (
+export const TextInput: FC<TextInputProps> = ({ id, label, value, onChange, hint, placeholder }) => (
   <Field label={label} htmlFor={id} hint={hint}>
-    <input id={id} type="text" value={value} onChange={(e) => onChange(e.target.value)} className={inputClass} />
+    <input id={id} type="text" value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className={inputClass} />
   </Field>
 );
 
