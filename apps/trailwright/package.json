@@ -10,7 +10,8 @@
     "test": "vitest run",
     "check": "tsc --noEmit",
     "test:browser": "playwright test",
-    "test:contracts": "vitest run tests/infrastructureSchema.test.ts"
+    "test:contracts": "vitest run tests/infrastructureSchema.test.ts tests/rulesDoc.test.ts",
+    "docs:rules": "vite-node scripts/generate-rules.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",

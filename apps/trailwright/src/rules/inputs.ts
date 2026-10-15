@@ -9,6 +9,8 @@ const WITNESS = 'https://learn.microsoft.com/azure/azure-local/deploy/deployment
 const SECURITY = 'https://learn.microsoft.com/azure/azure-local/manage/manage-secure-baseline?view=azloc-2609#configure-security-settings-during-deployment';
 const ARM = 'https://learn.microsoft.com/azure/azure-local/deploy/deployment-azure-resource-manager-template?view=azloc-2609#arm-template-parameters-reference';
 
+const NAMES = 'https://learn.microsoft.com/troubleshoot/windows-server/active-directory/naming-conventions-for-computer-domain-site-ou#computer-names';
+const DEPLOYMENT_SETTINGS = 'https://learn.microsoft.com/azure/templates/microsoft.azurestackhci/2025-02-01-preview/clusters/deploymentsettings#property-values';
 const GUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const PUBLIC_DNS = ['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1', '9.9.9.9', '149.112.112.112'];
 const f = (id: string, severity: Finding['severity'], field: string, message: string, learnUrl: string): Finding => ({ id, severity, field, message, learnUrl });
@@ -186,7 +188,31 @@ export const inputRules: Rule[] = [
       if (!name) out.push(f('AZ-002', 'warning', 'landingZone.instanceName', 'Name the Azure Local instance (clusterName).', ARM));
       else if (p.hardware.nodes.some((n) => n.name.trim().toLowerCase() === name.toLowerCase())) out.push(f('AZ-002', 'error', 'landingZone.instanceName', 'The instance name must be different from every machine name.', ARM));
       p.hardware.nodes.forEach((n) => n.name.length > 15 && out.push(f('AZ-002', 'error', 'hardware.nodes', `${n.name} is longer than 15 characters, the NetBIOS limit for a machine name.`, D8)));
+      // Machine names are also DNS host names: letters, numbers and hyphens; no leading or trailing hyphen; not only digits (Learn, naming conventions in Active Directory).
+      const badName = (n: string) => !/^[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?$/.test(n) || /^\d+$/.test(n);
+      p.hardware.nodes.forEach((n) => n.name.trim() && n.name.length <= 15 && badName(n.name.trim()) && out.push(f('AZ-002', 'error', 'hardware.nodes', `${n.name} is not a valid machine name: use letters, numbers and hyphens only, do not start or end with a hyphen, and do not use only numbers.`, NAMES)));
+      if (name && name.length <= 63 && badName(name)) out.push(f('AZ-002', 'warning', 'landingZone.instanceName', `The instance name ${name} should use letters, numbers and hyphens only, and not only numbers; the cluster name is also created as a NetBIOS and DNS name.`, NAMES));
       return out;
+    },
+  },
+  {
+    id: 'AZ-005',
+    learnUrl: DEPLOYMENT_SETTINGS,
+    check: (p) => {
+      const prefix = p.landingZone.namingPrefix.trim();
+      return prefix && !/^[a-zA-Z0-9-]{1,8}$/.test(prefix)
+        ? [f('AZ-005', 'error', 'landingZone.namingPrefix', `The deployment prefix is 1 to 8 characters of letters, numbers and hyphens (the deployment settings pattern is ^[a-zA-Z0-9-]{1,8}$); ${prefix} has ${prefix.length}.`, DEPLOYMENT_SETTINGS)]
+        : [];
+    },
+  },
+  {
+    id: 'REL-001',
+    learnUrl: PORTAL,
+    check: (p) => {
+      const build = p.release.build.trim();
+      return build && !(/^\d+\.\d+\.\d+\.\d+$/.test(build) && build.startsWith(`12.${p.release.version}.`))
+        ? [f('REL-001', 'warning', 'release.build', `The release build should look like 12.${p.release.version}.x.y (the current release is 12.${p.release.version}); exports ignore a build that does not.`, PORTAL)]
+        : [];
     },
   },
   {
