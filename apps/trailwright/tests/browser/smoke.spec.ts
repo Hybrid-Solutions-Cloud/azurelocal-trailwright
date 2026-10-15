@@ -4,9 +4,9 @@ import { expect, test } from '@playwright/test';
 test('the guided flow lists the guided steps and states that nothing deploys', async ({ page }) => {
   await page.goto('/');
   const steps = page.locator('nav a');
-  await expect(steps).toHaveCount(15);
+  await expect(steps).toHaveCount(16);
   await expect(steps.first()).toContainText('Project');
-  await expect(steps.last()).toContainText('Review and export');
+  await expect(steps.last()).toContainText('As-built compare');
   await expect(page.getByText('Design record only: nothing here deploys anything')).toBeVisible();
 });
 
