@@ -9,6 +9,8 @@ export type ImportPatch = {
   notes?: string;
   name?: string;
   driveLayout?: Project['storage']['driveLayout'];
+  // Set only when the Surveyor file says so (newer Surveyor versions plan a rack-aware cluster); undefined leaves the design's topology alone.
+  topology?: Project['hardware']['topology'];
 };
 
 export type Conflict = { field: string; current: string; incoming: string };
@@ -90,6 +92,14 @@ export function parseSurveyorPlan(text: string): { ok: true; patch: ImportPatch 
   }
   if (Number(hardware.cacheDrivesPerNode) > 0) facts.push(`${String(hardware.cacheDrivesPerNode)} cache drives per node of ${String(hardware.cacheDriveSizeTB)} TB`);
   if (isRecord(parsed.inputs.advanced) && Number(parsed.inputs.advanced.infraVolumeSizeTB) > 0) facts.push(`infrastructure volume ${String(parsed.inputs.advanced.infraVolumeSizeTB)} TB`);
+  // Newer Surveyor files may describe a rack-aware cluster or a single machine. The field names are read defensively (old files have none of them),
+  // and the design's own topology is only changed when the file clearly says rack-aware.
+  const advanced = isRecord(parsed.inputs.advanced) ? parsed.inputs.advanced : {};
+  const says = (v: unknown, word: RegExp): boolean => v === true || (typeof v === 'string' && word.test(v));
+  const rackAware = [hardware.rackAware, hardware.rackAwareEnabled, hardware.topology, hardware.clusterType, hardware.deploymentType, hardware.clusterTopology, advanced.rackAware, parsed.inputs.rackAware].some((v) => says(v, /rack[-_ ]?aware/i));
+  const singleNode = nodeCount === 1 || [hardware.singleNode, hardware.deploymentType, hardware.clusterType].some((v) => says(v, /single[-_ ]?(node|machine|server)/i));
+  if (rackAware) facts.push('rack-aware cluster');
+  if (singleNode) facts.push('single machine');
   const provenance = isRecord(parsed.provenance) && typeof parsed.provenance.notes === 'string' ? parsed.provenance.notes : undefined;
   const appVersion = typeof parsed.appVersion === 'string' ? parsed.appVersion : typeof parsed.surveyorVersion === 'string' ? parsed.surveyorVersion : undefined;
   const summary = `Imported from Surveyor${planName ? ` plan "${planName}"` : ''}${appVersion ? ` (Surveyor ${appVersion})` : ''}${facts.length ? `: ${facts.join('; ')}.` : '.'}`;
@@ -103,7 +113,7 @@ export function parseSurveyorPlan(text: string): { ok: true; patch: ImportPatch 
         cache: { media: media(hardware.cacheMediaType) ?? 'nvme', count: Number(hardware.cacheDrivesPerNode) || 0, sizeTB: Number(hardware.cacheDriveSizeTB) || 0 },
       }
     : undefined;
-  return { ok: true, patch: { nodes, volumes, notes, ...(planName ? { name: planName } : {}), ...(driveLayout ? { driveLayout } : {}) } };
+  return { ok: true, patch: { nodes, volumes, notes, ...(planName ? { name: planName } : {}), ...(driveLayout ? { driveLayout } : {}), ...(rackAware ? { topology: 'rack-aware' as const } : {}) } };
 }
 // Differences that matter, listed only where the design already holds data, so an empty design previews no conflicts.
 export function previewConflicts(current: Project, patch: ImportPatch): Conflict[] {
@@ -115,6 +125,7 @@ export function previewConflicts(current: Project, patch: ImportPatch): Conflict
     if (a && b && a.cores !== b.cores) conflicts.push({ field: 'nodes[0].cores', current: String(a.cores), incoming: String(b.cores) });
     if (a && b && a.memoryGiB !== b.memoryGiB) conflicts.push({ field: 'nodes[0].memoryGiB', current: String(a.memoryGiB), incoming: String(b.memoryGiB) });
   }
+  if (nodes.length > 0 && patch.topology && patch.topology !== current.hardware.topology) conflicts.push({ field: 'hardware.topology', current: current.hardware.topology, incoming: patch.topology });
   const volumes = current.storage.volumes;
   if (volumes.length > 0 && volumes.length !== patch.volumes.length) {
     conflicts.push({ field: 'volumes.count', current: String(volumes.length), incoming: String(patch.volumes.length) });
@@ -130,7 +141,7 @@ export function applyPatch(current: Project, patch: ImportPatch): Project {
   const notes = incoming ? (existing ? `${existing}\n${incoming}` : incoming) : current.project.notes;
   return projectSchema.parse({
     ...current,
-    hardware: { ...current.hardware, nodes: patch.nodes },
+    hardware: { ...current.hardware, nodes: patch.nodes, ...(patch.topology ? { topology: patch.topology } : {}) },
     storage: { ...current.storage, volumes: patch.volumes, ...(patch.driveLayout ? { driveLayout: patch.driveLayout } : {}) },
     project: { ...current.project, notes },
     // A design still carrying the default name takes the Surveyor plan's name.
