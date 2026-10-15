@@ -191,6 +191,12 @@ export const inputRules: Rule[] = [
       // Machine names are also DNS host names: letters, numbers and hyphens; no leading or trailing hyphen; not only digits (Learn, naming conventions in Active Directory).
       const badName = (n: string) => !/^[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?$/.test(n) || /^\d+$/.test(n);
       p.hardware.nodes.forEach((n) => n.name.trim() && n.name.length <= 15 && badName(n.name.trim()) && out.push(f('AZ-002', 'error', 'hardware.nodes', `${n.name} is not a valid machine name: use letters, numbers and hyphens only, do not start or end with a hyphen, and do not use only numbers.`, NAMES)));
+      const seen = new Set<string>();
+      p.hardware.nodes.forEach((n) => {
+        const key = n.name.trim().toLowerCase();
+        if (key && seen.has(key)) out.push(f('AZ-002', 'error', 'hardware.nodes', `${n.name} is used more than once; machine names are not case-sensitive and must be unique.`, NAMES));
+        seen.add(key);
+      });
       if (name && name.length <= 63 && badName(name)) out.push(f('AZ-002', 'warning', 'landingZone.instanceName', `The instance name ${name} should use letters, numbers and hyphens only, and not only numbers; the cluster name is also created as a NetBIOS and DNS name.`, NAMES));
       return out;
     },

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import * as XLSX from 'xlsx';
+import { readXlsx } from './xlsxRead';
 import { parse } from 'yaml';
 import { exportKinds, buildArmParametersFile, buildBicepParamFile, buildInfrastructureYml, buildSchedulesCsv, buildSchedulesXlsx, buildTopologyDrawio, buildHandoffMarkdown, buildProjectJson } from '../src/exports';
 import { projectSchema } from '../src/model/schema';
@@ -23,8 +23,8 @@ function hostile() {
 describe('every export', () => {
   const p = hostile();
   for (const kind of exportKinds) {
-    it(`${kind.id} builds non-empty output with a sensible file name`, () => {
-      const out = kind.build(p);
+    it(`${kind.id} builds non-empty output with a sensible file name`, async () => {
+      const out = await kind.build(p);
       expect(out.length).toBeGreaterThan(0);
       expect(kind.filename(p)).toMatch(/^[a-z0-9.-]+$/);
     });
@@ -72,10 +72,9 @@ describe('no secrets and no executable content', () => {
   it('a spreadsheet cell that starts with a formula character is stored as text', () => {
     expect(buildSchedulesCsv(p, 'nodes')).toContain("'=node1");
     expect(buildSchedulesCsv(p, 'vlans')).toContain("'@mgmt");
-    const book = XLSX.read(buildSchedulesXlsx(p), { type: 'array' });
-    const csv = XLSX.utils.sheet_to_csv(book.Sheets['Nodes']);
-    expect(csv).toContain("'=node1");
-    expect(Object.values(book.Sheets['Nodes']).some((c) => typeof c === 'object' && c !== null && 'f' in c)).toBe(false);
+    const { sheets, formulas } = readXlsx(buildSchedulesXlsx(p));
+    expect(sheets['Nodes'].flat()).toContain("'=node1");
+    expect(formulas).toBe(0);
   });
 
   it('the draw.io file is well-formed XML with escaped labels and no scripts or links', () => {
@@ -109,8 +108,8 @@ describe('derived values', () => {
     expect(doc._metadata.schema_version).toBe('4.0.0');
   });
 
-  it('a PDF is produced', () => {
-    const pdf = exportKinds.find((k) => k.id === 'handoff-pdf')!.build(hostile()) as Uint8Array;
+  it('a PDF is produced', async () => {
+    const pdf = (await exportKinds.find((k) => k.id === 'handoff-pdf')!.build(hostile())) as Uint8Array;
     expect(new TextDecoder().decode(pdf.slice(0, 5))).toBe('%PDF-');
   });
 });

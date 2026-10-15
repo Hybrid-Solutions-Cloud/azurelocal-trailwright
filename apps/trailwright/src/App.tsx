@@ -96,6 +96,7 @@ export default function App() {
             Open Azure Local Surveyor <ExternalLink className="inline h-3.5 w-3.5" aria-hidden="true" />
           </a>
           <p className="mt-4 px-1 text-xs text-blue-300">Design record only: nothing here deploys anything</p>
+          <p className="px-1 text-xs text-blue-300">Trailwright v{version}</p>
         </div>
       </aside>
 
@@ -107,7 +108,7 @@ export default function App() {
               <input aria-label="Active design name" className="input mt-1" value={project.meta.name} onChange={(e) => setSection('meta', { ...project.meta, name: e.target.value })} />
             </label>
             {saveKind && (
-              <button type="button" className="action" onClick={() => downloadFile(saveKind.filename(project), saveKind.mime, saveKind.build(project))}>
+              <button type="button" className="action" onClick={() => downloadFile(saveKind.filename(project), saveKind.mime, saveKind.build(project) as string)}>
                 Save project
               </button>
             )}

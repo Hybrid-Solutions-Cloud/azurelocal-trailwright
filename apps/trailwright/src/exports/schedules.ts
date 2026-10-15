@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx';
+import { buildXlsx } from './xlsx';
 import type { Project } from '../model/schema';
 
 export type ScheduleKind = 'nodes' | 'vlans' | 'ip-plan';
@@ -44,10 +44,6 @@ export function buildSchedulesCsv(p: Project, kind: ScheduleKind): string {
 }
 
 export function buildSchedulesXlsx(p: Project): Uint8Array {
-  const book = XLSX.utils.book_new();
   const sheets: [string, ScheduleKind][] = [['Nodes', 'nodes'], ['VLANs', 'vlans'], ['IP plan', 'ip-plan']];
-  for (const [name, kind] of sheets) {
-    XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet(rows(p, kind).map((r) => r.map((c) => guard(c)))), name);
-  }
-  return new Uint8Array(XLSX.write(book, { bookType: 'xlsx', type: 'array' }) as ArrayBuffer);
+  return buildXlsx(sheets.map(([name, kind]) => ({ name, rows: rows(p, kind).map((r) => r.map((c) => guard(c))) })));
 }

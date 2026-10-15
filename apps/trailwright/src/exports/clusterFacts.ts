@@ -89,7 +89,7 @@ export function buildClusterFacts(p: Project): Facts {
   const rawName = lz.instanceName.trim() || p.meta.name;
   const clusterName = toNetbios(rawName);
   if (clusterName !== rawName) notes.push(`The cluster name "${rawName}" became "${clusterName}" (lowercase NetBIOS name, at most 15 characters).`);
-  facts.cluster_name = RX.netbios.test(clusterName) ? clusterName : mark(['cluster_name'], 'The cluster name could not be made a valid NetBIOS name');
+  facts.cluster_name = RX.netbios.test(clusterName) && !/^\d+$/.test(clusterName) ? clusterName : mark(['cluster_name'], 'The cluster name could not be made a valid NetBIOS name');
 
   facts.subscription_id = take(['subscription_id'], lz.subscriptionId, (v) => RX.guid.test(v), 'Subscription ID');
   facts.azl_rp_app_object_id = take(['azl_rp_app_object_id'], lz.hciResourceProviderObjectId, (v) => RX.guid.test(v), 'Azure Local resource provider object ID');
@@ -160,12 +160,15 @@ export function buildClusterFacts(p: Project): Facts {
     if (/(^|[^a-z0-9])(compute|workload|vms?)([^a-z0-9]|$)/.test(n)) return 'compute';
     if (/(^|[^a-z0-9])avd([^a-z0-9]|$)/.test(n)) return 'avd';
     if (/(^|[^a-z0-9])(oob|bmc|idrac|ilo)([^a-z0-9]|$)/.test(n)) return 'oob';
+    if (id === p.networking.storageVlans[0]) return 'storage_a';
+    if (id === p.networking.storageVlans[1]) return 'storage_b';
     if (/storage|smb|rdma/.test(n)) {
       if (/(^|[^a-z0-9])(a|1)$/.test(n) || id === p.networking.storageVlans[0]) return 'storage_a';
       if (/(^|[^a-z0-9])(b|2)$/.test(n) || id === p.networking.storageVlans[1]) return 'storage_b';
       return `storage_${index}`;
     }
-    return n.replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || `vlan_${id}`;
+    const own = n.replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    return /^[a-z]/.test(own) ? own : `vlan_${own || id}`;
   };
   const vlans: Record<string, unknown> = {};
   const planByName = (name: string): string | undefined => p.networking.ipPlan.find((r) => r.name.trim().toLowerCase() === name.trim().toLowerCase())?.cidr;
@@ -308,6 +311,10 @@ export function buildClusterFacts(p: Project): Facts {
       continue;
     }
     const base = slug(v.name).replace(/^csv-/, '');
+    if (!/[a-z0-9]/i.test(v.name)) {
+      notes.push(`Volume "${v.name}" has no name that can be used after the csv- prefix; it was left out.`);
+      continue;
+    }
     volumes.push({ name: `csv-${base}`, resiliency: r, size_gb: Math.max(10, Math.round(v.sizeGiB)) });
   }
   if (p.storage.volumes.length) {

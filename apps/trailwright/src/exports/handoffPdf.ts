@@ -1,23 +1,24 @@
-import { jsPDF } from 'jspdf';
-import * as autoTableModule from 'jspdf-autotable';
+import type { jsPDF } from 'jspdf';
 import { runRules } from '../rules';
 import type { Project } from '../model/schema';
 
 type WithTable = jsPDF & { lastAutoTable?: { finalY: number } };
 type AutoTable = (doc: jsPDF, options: object) => void;
 
-// jspdf-autotable is a CommonJS package: depending on the bundler the function is the default export or its default.
-const candidate = (autoTableModule as unknown as { autoTable?: unknown; default?: unknown }).autoTable ?? (autoTableModule as unknown as { default?: unknown }).default;
-const autoTable = (typeof candidate === 'function' ? candidate : (candidate as { default: unknown }).default) as AutoTable;
-
 const nextY = (doc: WithTable): number => (doc.lastAutoTable?.finalY ?? 40) + 10;
 
-export function buildHandoffPdf(p: Project): Uint8Array {
-  const doc: WithTable = new jsPDF();
+// The PDF libraries are loaded on demand, so the main bundle stays small and they cost nothing until someone exports a PDF.
+export async function buildHandoffPdf(p: Project): Promise<Uint8Array> {
+  const [{ jsPDF: PDF }, tableModule] = await Promise.all([import('jspdf'), import('jspdf-autotable')]);
+  // jspdf-autotable exports the function as a named export and as the default, depending on the build.
+  const candidate = (tableModule as unknown as { autoTable?: unknown; default?: unknown }).autoTable ?? (tableModule as unknown as { default?: unknown }).default;
+  const autoTable = (typeof candidate === 'function' ? candidate : (candidate as { default: unknown }).default) as AutoTable;
+
+  const doc: WithTable = new PDF();
   doc.setFontSize(18);
   doc.text(p.meta.name, 14, 22);
   doc.setFontSize(11);
-  doc.text(`Release ${p.release.version}. Topology ${p.hardware.topology}, witness ${p.hardware.witness}.`, 14, 32);
+  doc.text(`Azure Local 12.${p.release.version} (latest). Topology ${p.hardware.topology}, witness ${p.hardware.witness}.`, 14, 32);
 
   autoTable(doc, { startY: 40, head: [['Node', 'Serial', 'Cores', 'Memory (GiB)', 'Drives']], body: p.hardware.nodes.map((n) => [n.name, n.serial ?? '', String(n.cores), String(n.memoryGiB), String(n.drives)]) });
   autoTable(doc, { startY: nextY(doc), head: [['VLAN', 'ID']], body: p.networking.vlans.map((v) => [v.name, String(v.id)]) });

@@ -5,7 +5,7 @@ export type ExportKind = {
   label: string;
   filename: (p: Project) => string;
   mime: string;
-  build: (p: Project) => string | Uint8Array;
+  build: (p: Project) => string | Uint8Array | Promise<string | Uint8Array>;
   // Shown only when the design needs it.
   available?: (p: Project) => boolean;
 };

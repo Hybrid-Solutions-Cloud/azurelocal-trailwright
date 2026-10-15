@@ -21,7 +21,7 @@ export function buildHandoffMarkdown(p: Project): string {
   const pattern = patternFor(p);
   const file = slug(p.meta.name);
   const template = templateFor(p);
-  const out: string[] = [`# ${p.meta.name}`, '', `Azure Local release: ${p.release.version}`, ''];
+  const out: string[] = [`# ${p.meta.name}`, '', `Azure Local release: 12.${p.release.version} (latest)${p.release.build ? `, build ${p.release.build}` : ""}`, ''];
   if (p.project.customer || p.project.owner) out.push(`Customer: ${p.project.customer}. Owner: ${p.project.owner}.`, '');
   if (p.project.notes) out.push('## Notes', '', p.project.notes, '');
 

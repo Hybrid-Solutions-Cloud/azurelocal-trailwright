@@ -29,6 +29,9 @@ describe('AZ-002: machine and instance name character set', () => {
     expect(ids({ hardware: { nodes: [node('Node-01', 0), node('n2', 1)] } }, 'AZ-002').filter((f) => f.field === 'hardware.nodes')).toEqual([]);
     expect(ids({ hardware: { nodes: [node('a-very-long-name-here', 0), node('n2', 1)] } }, 'AZ-002').filter((f) => f.field === 'hardware.nodes')).toHaveLength(1);
   });
+  it('rejects a machine name used twice, ignoring case', () => {
+    expect(ids({ hardware: { nodes: [node('Node1', 0), node('node1', 1)] } }, 'AZ-002').some((f) => f.message.includes('more than once'))).toBe(true);
+  });
   it('warns about an instance name with characters that are not valid in a NetBIOS or DNS name', () => {
     expect(ids({ landingZone: { instanceName: 'my_cluster' } }, 'AZ-002').some((f) => f.field === 'landingZone.instanceName' && f.severity === 'warning')).toBe(true);
   });
