@@ -31,6 +31,8 @@ export function efficiency(resiliency: Resiliency, servers: number, hybrid = fal
       return 1 / 3;
     case 'four-way':
       return 0.25; // rack-aware four-way mirror keeps four copies
+    case 'nested-two-way':
+      return 0.25; // nested two-way mirror (two servers): four copies of the data
     case 'parity':
       return parityEfficiency(servers, hybrid);
   }
@@ -73,7 +75,7 @@ export function capacitySummary(p: Project): CapacitySummary {
 }
 
 // The resiliency types a node count allows: two-way from two servers, three-way from three, dual parity from four (nested resiliency is for two servers).
-export const allowedResiliency = (nodes: number): Resiliency[] => (nodes <= 1 ? ['two-way'] : nodes === 2 ? ['two-way'] : nodes === 3 ? ['two-way', 'three-way'] : ['two-way', 'three-way', 'parity']);
+export const allowedResiliency = (nodes: number): Resiliency[] => (nodes <= 1 ? ['two-way'] : nodes === 2 ? ['two-way', 'nested-two-way'] : nodes === 3 ? ['two-way', 'three-way'] : ['two-way', 'three-way', 'parity']);
 
 // What the deployment creates by default (Express): one infrastructure volume and at least one workload volume per machine.
 export const defaultResiliency = (nodes: number): Resiliency => (nodes >= 3 ? 'three-way' : 'two-way');

@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://labs.hybridsolutions.cloud/azurelocal-trailwright/schema/infrastructure.schema.json",
+  "title": "Azure Local Trailwright infrastructure.yml",
+  "description": "The file written by the infrastructure.yml export (src/exports/infrastructureYml.ts). It is a design record in the shape of a subset of the Azure Local Toolkit registry (schema_version 4.0.0); it is not the full Toolkit registry. Secrets are never values: they are keyvault://<vault>/<secret> references. A test validates every export fixture against this schema, and the build fails when the exporter and the schema drift apart.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_metadata", "site", "environment", "azure_platform", "provisioning", "identity", "connectivity", "infrastructure_network", "networking", "compute", "storage", "sdn", "security", "operations", "arm_parameters"],
+  "$defs": {
+    "textList": { "type": "array", "items": { "type": "string" } },
+    "vlanId": { "type": "integer", "minimum": 1, "maximum": 4094 },
+    "ipRange": { "type": "object", "additionalProperties": false, "required": ["start", "end"], "properties": { "start": { "type": "string" }, "end": { "type": "string" } } },
+    "secretReference": { "type": "object", "additionalProperties": false, "required": ["name", "value"], "properties": { "name": { "enum": ["local-admin-password", "lcm-password"] }, "value": { "type": "string", "pattern": "^keyvault://[^/]*/[a-z-]+$" } } }
+  },
+  "properties": {
+    "_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "schema_version", "environment_name", "generated_by", "azure_local_release"],
+      "properties": {
+        "version": { "type": "string" },
+        "schema_version": { "const": "4.0.0" },
+        "environment_name": { "type": "string" },
+        "generated_by": { "const": "azurelocal-trailwright" },
+        "azure_local_release": { "type": "string", "pattern": "^\\d{4}$", "description": "The release train the rules followed, for example 2609 for 12.2609." }
+      }
+    },
+    "site": { "type": "object", "additionalProperties": false, "required": ["name", "owner"], "properties": { "name": { "type": "string" }, "owner": { "type": "string" } } },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["env_name", "azure_region", "azure_cloud", "connectivity_mode", "architecture"],
+      "properties": {
+        "env_name": { "type": "string" },
+        "azure_region": { "enum": ["eastus", "westeurope", "australiaeast", "southeastasia", "centralindia", "canadacentral", "japaneast", "southcentralus", "usgovvirginia"] },
+        "azure_cloud": { "enum": ["public", "government"] },
+        "connectivity_mode": { "enum": ["connected", "disconnected"] },
+        "architecture": { "enum": ["hyperconverged", "hybrid", "disaggregated"] }
+      }
+    },
+    "azure_platform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subscriptions", "tenant_id", "resource_groups", "instance_name", "naming_prefix", "hci_resource_provider_object_id", "custom_location", "key_vault", "witness_storage_account"],
+      "properties": {
+        "subscriptions": { "type": "object", "additionalProperties": false, "required": ["sub_azure_local_name", "sub_azure_local_id"], "properties": { "sub_azure_local_name": { "type": "string" }, "sub_azure_local_id": { "type": "string" } } },
+        "tenant_id": { "type": "string" },
+        "resource_groups": { "type": "object", "additionalProperties": false, "required": ["rg_azurelocal_cluster"], "properties": { "rg_azurelocal_cluster": { "type": "string" } } },
+        "instance_name": { "type": "string" },
+        "naming_prefix": { "type": "string" },
+        "hci_resource_provider_object_id": { "type": "string" },
+        "custom_location": { "type": "string" },
+        "key_vault": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "soft_delete_retention_days", "audit_storage_account", "audit_retention_days"],
+          "properties": { "name": { "type": "string" }, "soft_delete_retention_days": { "type": "integer" }, "audit_storage_account": { "type": "string" }, "audit_retention_days": { "type": "integer" } }
+        },
+        "witness_storage_account": { "type": "string" }
+      }
+    },
+    "provisioning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os_install", "deploy_method", "deployment_template"],
+      "properties": {
+        "os_install": { "enum": ["iso", "simplified"] },
+        "deploy_method": { "enum": ["portal", "arm"] },
+        "deployment_template": { "type": "string", "description": "The Microsoft quickstart template the ARM parameters are written for." },
+        "site": { "type": "object", "additionalProperties": false, "required": ["hardware", "time_zone", "time_server"], "properties": { "hardware": { "type": "string" }, "time_zone": { "type": "string" }, "time_server": { "type": "string" } } }
+      },
+      "if": { "properties": { "os_install": { "const": "simplified" } }, "required": ["os_install"] },
+      "then": { "required": ["site"] },
+      "else": { "not": { "required": ["site"] } }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "local_admin_username", "secrets"],
+      "properties": {
+        "mode": { "enum": ["active-directory", "local-identity-key-vault"] },
+        "local_admin_username": { "type": "string" },
+        "secrets": { "type": "array", "minItems": 1, "maxItems": 2, "items": { "$ref": "#/$defs/secretReference" } },
+        "active_directory": { "type": "object", "additionalProperties": false, "required": ["ad_domain_fqdn", "ou_path", "lcm_username"], "properties": { "ad_domain_fqdn": { "type": "string" }, "ou_path": { "type": "string" }, "lcm_username": { "type": "string" } } },
+        "local_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dns_server_config", "dns_zone", "dns_forwarders"],
+          "properties": { "dns_server_config": { "enum": ["UseDnsServer", "UseForwarder"] }, "dns_zone": { "type": "string" }, "dns_forwarders": { "$ref": "#/$defs/textList" } }
+        }
+      },
+      "oneOf": [
+        { "properties": { "mode": { "const": "active-directory" }, "secrets": { "type": "array", "minItems": 2 } }, "required": ["active_directory"], "not": { "required": ["local_identity"] } },
+        { "properties": { "mode": { "const": "local-identity-key-vault" }, "secrets": { "type": "array", "maxItems": 1 } }, "required": ["local_identity"], "not": { "required": ["active_directory"] } }
+      ]
+    },
+    "connectivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outbound_path", "proxy_url", "arc_gateway_name"],
+      "properties": {
+        "outbound_path": { "enum": ["direct", "proxy", "arc-gateway", "proxy-arc-gateway", "private-path"] },
+        "proxy_url": { "type": "string" },
+        "arc_gateway_name": { "type": "string" },
+        "private_path": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["transport", "virtual_network", "workload_subnet", "firewall_subnet", "firewall_private_ip", "firewall_port", "proxy_bypass"],
+          "properties": {
+            "transport": { "enum": ["", "expressroute", "site-to-site-vpn"] },
+            "virtual_network": { "type": "string" },
+            "workload_subnet": { "type": "string" },
+            "firewall_subnet": { "type": "string" },
+            "firewall_private_ip": { "type": "string" },
+            "firewall_port": { "type": "string" },
+            "proxy_bypass": { "type": "string" }
+          }
+        }
+      },
+      "if": { "properties": { "outbound_path": { "const": "private-path" } }, "required": ["outbound_path"] },
+      "then": { "required": ["private_path"] },
+      "else": { "not": { "required": ["private_path"] } }
+    },
+    "infrastructure_network": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["use_dhcp", "subnet_mask", "default_gateway", "ip_pool", "dns_servers", "management_vlan"],
+      "properties": {
+        "use_dhcp": { "type": "boolean" },
+        "subnet_mask": { "type": "string" },
+        "default_gateway": { "type": "string" },
+        "ip_pool": { "$ref": "#/$defs/ipRange" },
+        "dns_servers": { "$ref": "#/$defs/textList" },
+        "management_vlan": { "type": "integer", "minimum": 0, "maximum": 4094 }
+      }
+    },
+    "networking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storage_mode", "tor_switches", "ports_per_node", "intent_grouping", "storage_auto_ip", "storage_vlans", "vlans", "intents", "ip_plan"],
+      "properties": {
+        "storage_mode": { "enum": ["switched", "switchless", "san"] },
+        "tor_switches": { "enum": [1, 2] },
+        "ports_per_node": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "intent_grouping": { "enum": ["all", "mgmt-compute", "compute-storage", "custom"] },
+        "storage_auto_ip": { "type": "boolean" },
+        "storage_vlans": { "type": "array", "items": { "$ref": "#/$defs/vlanId" } },
+        "vlans": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name", "id"], "properties": { "name": { "type": "string" }, "id": { "$ref": "#/$defs/vlanId" } } } },
+        "intents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "traffic", "adapters", "override_qos", "override_adapter"],
+            "properties": {
+              "name": { "type": "string" },
+              "traffic": { "type": "array", "items": { "enum": ["management", "compute", "storage"] } },
+              "adapters": { "$ref": "#/$defs/textList" },
+              "override_qos": { "type": "boolean" },
+              "override_adapter": { "type": "boolean" }
+            }
+          }
+        },
+        "ip_plan": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name", "cidr"], "properties": { "name": { "type": "string" }, "cidr": { "type": "string" } } } }
+      }
+    },
+    "compute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cluster", "nodes"],
+      "properties": {
+        "cluster": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["topology", "witness_type", "node_count"],
+          "properties": { "topology": { "enum": ["standard", "rack-aware"] }, "witness_type": { "enum": ["cloud", "file-share", "none"] }, "node_count": { "type": "integer", "minimum": 0 } }
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "ip", "serial", "cores", "memory_gib", "drives"],
+            "properties": { "name": { "type": "string" }, "ip": { "type": "string" }, "serial": { "type": "string" }, "cores": { "type": "number" }, "memory_gib": { "type": "number" }, "drives": { "type": "number" } }
+          }
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["architecture", "configuration_mode", "volumes", "san_luns"],
+      "properties": {
+        "architecture": { "enum": ["s2d", "san", "hybrid"] },
+        "configuration_mode": { "enum": ["Express", "InfraOnly", "KeepStorage"] },
+        "volumes": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name", "size_gib", "resiliency"], "properties": { "name": { "type": "string" }, "size_gib": { "type": "number" }, "resiliency": { "enum": ["two-way", "three-way", "four-way", "parity", "nested-two-way"] } } } },
+        "san_luns": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name", "size_gib"], "properties": { "name": { "type": "string" }, "size_gib": { "type": "number" } } } },
+        "infra_volume_lun_id": { "type": "string" },
+        "infra_performance_lun_id": { "type": "string" }
+      },
+      "dependentRequired": { "infra_volume_lun_id": ["infra_performance_lun_id"], "infra_performance_lun_id": ["infra_volume_lun_id"] }
+    },
+    "sdn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "prefix": { "type": "string" },
+        "dns_records": { "enum": ["dynamic", "static"] },
+        "default_access_policy": { "type": "boolean" },
+        "logical_networks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "vlan", "address_prefix", "gateway", "dns_servers", "ip_pool"],
+            "properties": { "name": { "type": "string" }, "vlan": { "type": "integer", "minimum": 0, "maximum": 4094 }, "address_prefix": { "type": "string" }, "gateway": { "type": "string" }, "dns_servers": { "$ref": "#/$defs/textList" }, "ip_pool": { "$ref": "#/$defs/ipRange" } }
+          }
+        }
+      },
+      "if": { "properties": { "enabled": { "const": true } }, "required": ["enabled"] },
+      "then": { "required": ["prefix", "dns_records", "default_access_policy", "logical_networks"] },
+      "else": { "maxProperties": 1 }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "drift_control", "credential_guard", "wdac", "bitlocker_boot_volume", "bitlocker_data_volumes", "smb_signing", "smb_cluster_encryption", "backup_key_vault", "telemetry", "key_vault_name"],
+      "properties": {
+        "level": { "enum": ["Recommended", "Customized"] },
+        "drift_control": { "type": "boolean" },
+        "credential_guard": { "type": "boolean" },
+        "wdac": { "type": "boolean" },
+        "bitlocker_boot_volume": { "type": "boolean" },
+        "bitlocker_data_volumes": { "type": "boolean" },
+        "smb_signing": { "type": "boolean" },
+        "smb_cluster_encryption": { "type": "boolean" },
+        "backup_key_vault": { "type": "string" },
+        "telemetry": { "type": "object", "additionalProperties": false, "required": ["streaming_data", "episodic_data_upload", "eu_location"], "properties": { "streaming_data": { "type": "boolean" }, "episodic_data_upload": { "type": "boolean" }, "eu_location": { "type": "boolean" } } },
+        "key_vault_name": { "type": "string" }
+      }
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["update_method", "monitoring", "backup", "disaster_recovery"],
+      "properties": {
+        "update_method": { "enum": ["portal", "powershell", "powershell-limited"] },
+        "monitoring": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "log_analytics_workspace": { "type": "string" },
+            "workspace_resource_group": { "type": "string" },
+            "data_collection_rule": { "type": "string" },
+            "data_collection_endpoint": { "type": "string" },
+            "refs_dedup_monitoring": { "type": "boolean" },
+            "health_alerts": { "type": "boolean" },
+            "alert_email": { "type": "string" }
+          },
+          "if": { "properties": { "enabled": { "const": true } }, "required": ["enabled"] },
+          "then": { "required": ["log_analytics_workspace", "workspace_resource_group", "data_collection_rule", "data_collection_endpoint", "refs_dedup_monitoring", "health_alerts", "alert_email"] },
+          "else": { "maxProperties": 1 }
+        },
+        "backup": { "type": "object", "additionalProperties": false, "required": ["enabled", "approach", "solution"], "properties": { "enabled": { "type": "boolean" }, "approach": { "enum": ["host", "guest", "both"] }, "solution": { "type": "string" } } },
+        "disaster_recovery": { "enum": ["none", "asr", "hyperv-replica"] }
+      }
+    },
+    "arm_parameters": {
+      "type": "object",
+      "description": "The same parameter set the ARM parameter export writes (values only, no value wrappers). Secure parameters are null. The parameter names follow the Microsoft quickstart template named in provisioning.deployment_template; each template is covered by its own fixture test.",
+      "required": ["deploymentMode", "clusterName", "location", "tenantId", "namingPrefix"],
+      "properties": {
+        "deploymentMode": { "enum": ["Validate", "Deploy"] },
+        "clusterName": { "type": "string" },
+        "location": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "namingPrefix": { "type": "string" },
+        "localAdminPassword": { "type": "null" },
+        "AzureStackLCMAdminPassword": { "type": "null" },
+        "arcNodeResourceIds": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

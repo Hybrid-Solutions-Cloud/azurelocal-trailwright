@@ -23,6 +23,9 @@ function mapResiliency(input: string): Resiliency | undefined {
       return 'two-way';
     case 'three-way-mirror':
       return 'three-way';
+    case 'nested-two-way':
+    case 'nested-two-way-mirror':
+      return 'nested-two-way';
     case 'dual-parity':
       return 'parity';
     default:

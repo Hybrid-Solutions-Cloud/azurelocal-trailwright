@@ -10,7 +10,7 @@ type Volume = Project['storage']['volumes'][number];
 type Lun = Project['storage']['sanLuns'][number];
 
 
-const resiliencyLabels = { 'two-way': 'Two-way mirror', 'three-way': 'Three-way mirror', 'four-way': 'Four-way mirror (rack-aware)', parity: 'Dual parity' } as const;
+const resiliencyLabels = { 'two-way': 'Two-way mirror', 'three-way': 'Three-way mirror', 'four-way': 'Four-way mirror (rack-aware)', parity: 'Dual parity', 'nested-two-way': 'Nested two-way mirror (two servers)' } as const;
 
 const mediaOptions = [
   { value: 'nvme', label: 'NVMe' },

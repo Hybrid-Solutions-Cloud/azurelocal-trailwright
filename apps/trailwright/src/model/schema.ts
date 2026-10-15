@@ -173,7 +173,7 @@ const landingZoneSchema = z.object({
 const volumeSchema = z.object({
   name: z.string(),
   sizeGiB: z.number(),
-  resiliency: z.enum(['two-way', 'three-way', 'four-way', 'parity']),
+  resiliency: z.enum(['two-way', 'three-way', 'four-way', 'parity', 'nested-two-way']),
 });
 
 // The drives in every node (the layout is symmetric): capacity drives and, optionally, a cache tier.

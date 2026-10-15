@@ -103,6 +103,10 @@ export const s2dRules: Rule[] = [
       const out: Finding[] = [];
       for (const v of p.storage.volumes) {
         if (v.resiliency === 'four-way') continue; // rack-aware, covered by STO-001 and STO-002
+        if (v.resiliency === 'nested-two-way' && nodes !== 2) {
+          out.push(f('S2D-007', 'error', 'storage.volumes', `Volume ${v.name || '(unnamed)'}: nested two-way mirror is for a two-server cluster; the design has ${nodes}.`, FAULT));
+          continue;
+        }
         if (!allowed.includes(v.resiliency)) {
           const need = v.resiliency === 'three-way' ? 'three servers' : 'four servers';
           out.push(f('S2D-007', 'error', 'storage.volumes', `Volume ${v.name || '(unnamed)'}: ${v.resiliency === 'three-way' ? 'three-way mirror' : 'dual parity'} needs at least ${need}; the design has ${nodes}.`, FAULT));
