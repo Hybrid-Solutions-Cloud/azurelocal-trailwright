@@ -1,0 +1,87 @@
+{
+  "schema": "as-built-snapshot.v1",
+  "capturedAt": "2026-10-15T09:20:00Z",
+  "source": {
+    "tool": "ranger",
+    "version": "2.0.0",
+    "note": "manifest schema 1.1.0-draft"
+  },
+  "cluster": {
+    "name": "example-azl-01",
+    "release": "12.2609.1003.7"
+  },
+  "identity": {
+    "model": "local-identity-key-vault",
+    "domain": "lab.example.com"
+  },
+  "witness": {
+    "type": "cloud"
+  },
+  "nodes": [
+    {
+      "name": "node1",
+      "serial": "EXAMPLE-0001"
+    },
+    {
+      "name": "node2",
+      "serial": "EXAMPLE-0099"
+    }
+  ],
+  "vlans": [
+    {
+      "id": 100
+    },
+    {
+      "id": 300
+    },
+    {
+      "id": 711
+    },
+    {
+      "id": 712
+    }
+  ],
+  "intents": [
+    {
+      "name": "Management_Compute",
+      "traffic": [
+        "management",
+        "compute"
+      ],
+      "adapters": [
+        "pNIC01",
+        "pNIC02"
+      ]
+    },
+    {
+      "name": "Storage",
+      "traffic": [
+        "storage"
+      ],
+      "adapters": [
+        "pNIC03",
+        "pNIC04"
+      ]
+    }
+  ],
+  "dnsServers": [
+    "192.0.2.10"
+  ],
+  "volumes": [
+    {
+      "name": "infrastructure",
+      "sizeGiB": 256.0,
+      "resiliency": "two-way"
+    },
+    {
+      "name": "workloads",
+      "sizeGiB": 1024.0,
+      "resiliency": "two-way"
+    },
+    {
+      "name": "scratch",
+      "sizeGiB": 100.0,
+      "resiliency": "two-way"
+    }
+  ]
+}

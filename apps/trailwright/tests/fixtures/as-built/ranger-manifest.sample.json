@@ -1,0 +1,28 @@
+{
+  "run": { "toolVersion": "2.0.0", "schemaVersion": "1.1.0-draft", "startTimeUtc": "2026-10-15T09:00:00Z", "endTimeUtc": "2026-10-15T09:20:00Z", "mode": "as-built" },
+  "target": { "clusterName": "example-azl-01" },
+  "topology": { "identityMode": "local-key-vault" },
+  "domains": {
+    "clusterNode": {
+      "cluster": { "name": "example-azl-01", "domain": "lab.example.com" },
+      "nodes": [ { "name": "node1", "state": "Up" }, { "name": "node2", "state": "Up" } ],
+      "quorum": { "quorumType": "NodeAndFileShareMajority", "witnessDetail": { "type": "CloudWitness", "parameters": [] } }
+    },
+    "hardware": { "nodes": [ { "node": "node1", "serialNumber": "EXAMPLE-0001" }, { "node": "node2", "serialNumber": "EXAMPLE-0099" } ] },
+    "networking": {
+      "vlan": [ { "VMNetworkAdapterName": "vManagement", "AccessVlanId": 100 }, { "VMNetworkAdapterName": "vSMB1", "AccessVlanId": 711 }, { "VMNetworkAdapterName": "vSMB2", "AccessVlanId": 712 }, { "VMNetworkAdapterName": "vExtra", "AccessVlanId": 300 } ],
+      "intents": [
+        { "name": "Management_Compute", "trafficType": ["Management", "Compute"], "adapter": ["pNIC01", "pNIC02"] },
+        { "name": "Storage", "trafficType": ["Storage"], "adapter": ["pNIC03", "pNIC04"] }
+      ],
+      "dns": [ { "InterfaceAlias": "vManagement", "ServerAddresses": ["192.0.2.10"] } ]
+    },
+    "storage": {
+      "virtualDisks": [
+        { "friendlyName": "infrastructure", "resiliencySettingName": "Mirror", "numberOfDataCopies": 2, "sizeGiB": 256 },
+        { "friendlyName": "workloads", "resiliencySettingName": "Mirror", "numberOfDataCopies": 2, "sizeGiB": 1024 },
+        { "friendlyName": "scratch", "resiliencySettingName": "Mirror", "numberOfDataCopies": 2, "sizeGiB": 100 }
+      ]
+    }
+  }
+}

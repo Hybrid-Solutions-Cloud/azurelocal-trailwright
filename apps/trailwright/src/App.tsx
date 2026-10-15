@@ -23,6 +23,7 @@ import { SdnScreen } from './screens/SdnScreen';
 import { DisconnectedScreen } from './screens/DisconnectedScreen';
 import { OperationsScreen } from './screens/OperationsScreen';
 import { ReviewScreen } from './screens/ReviewScreen';
+import { AsBuiltScreen } from './screens/AsBuiltScreen';
 
 const built: Record<string, JSX.Element> = {
   project: <ProjectScreen />,
@@ -41,6 +42,7 @@ const built: Record<string, JSX.Element> = {
   disconnected: <DisconnectedScreen />,
   operations: <OperationsScreen />,
   review: <ReviewScreen />,
+  'as-built': <AsBuiltScreen />,
 };
 export default function App() {
   const project = useProjectStore((s) => s.project);

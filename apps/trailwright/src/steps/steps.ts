@@ -51,6 +51,7 @@ export const steps: Step[] = [
   { path: 'landing-zone', title: 'Azure resources', group: 'Identity', visible: always, fields: ['landingZone'] },
   { path: 'operations', title: 'Operations', group: 'Operations', visible: always, fields: ['operations'] },
   { path: 'review', title: 'Review and export', group: 'Output', visible: always, fields: [] },
+  { path: 'as-built', title: 'As-built compare', group: 'Output', visible: always, fields: [] },
 ];
 
 export const visibleSteps = (p: Project): Step[] => steps.filter((s) => s.visible(p));
