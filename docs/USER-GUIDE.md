@@ -2,11 +2,11 @@
 
 ## What it is
 
-Azure Local Trailwright is a guided design tool for Azure Local. You answer questions in order, and each answer decides which questions come next. At the end it produces files you can use directly in your automation: the ARM and Bicep parameters for the Microsoft deployment templates, the Azure Local Toolkit `infrastructure.yml`, a machine provisioning manifest, schedules, a topology diagram and a design document.
+Azure Local Trailwright is a guided design tool for Azure Local. You answer questions in order, and each answer decides which questions come next. At the end it produces files you can use directly in your automation: the ARM and Bicep parameters for the Microsoft deployment templates, the Azure Local Toolkit `infrastructure.yml`, an environment file and Terraform variables for the deploy automation, a machine provisioning manifest, schedules, a topology diagram and a design document.
 
 Surveyor answers "does it fit" for sizing. Trailwright answers "how is it built." Neither tool deploys anything.
 
-Every question and every rule comes from Microsoft Learn and follows the current Azure Local release. There is no release to choose.
+Every question and every rule comes from Microsoft Learn and follows the current Azure Local release, 12.2609 (latest). There is no release to choose. If you know the full build you will deploy (for example 12.2609.x.y), you can enter it on the Project step; exports carry it as written and never guess it. The rules are listed in [RULES.md](RULES.md).
 
 ## Before you start
 
@@ -20,7 +20,7 @@ The steps appear in the left sidebar in groups. A step is shown only when your e
 
 | Step | What you decide |
 |---|---|
-| Project | Name, customer, owner and notes. Start clean, import a Surveyor plan or a saved project, or load the example. |
+| Project | Name, customer, owner, optional release build and notes. Start clean, import a Surveyor plan or a saved project, or load the example. Notes are exported as typed: never type passwords, keys or other secrets into them. |
 | Connectivity mode and architecture | Connected or disconnected operations; hyperconverged, hybrid (Storage Spaces Direct plus a SAN attached on day 2) or disaggregated (Fibre Channel or iSCSI SAN); the cloud and the Azure region. Only regions where Azure Local is supported are listed. |
 | Hardware and topology | Standard or rack-aware topology, the nodes (name, serial number, cores, memory, management IP), racks and uplinks for rack-aware, and the witness (cloud witness for connected deployments, file share only for disconnected operations; two-node and rack-aware clusters need one). |
 | Storage | For Storage Spaces Direct: the drive layout (capacity and cache media, count and size), the capacity summary, resiliency (limited by node count), volumes and the volume creation mode. For a SAN: the LUNs. The questions follow the architecture you chose, so a SAN design gets no Storage Spaces Direct questions. |
@@ -36,6 +36,7 @@ The steps appear in the left sidebar in groups. A step is shown only when your e
 | Azure resources | Subscription, tenant, resource group, naming prefix, Key Vault, diagnostic storage, retention, resource provider object ID, custom location. |
 | Operations | The update method (Azure portal or PowerShell), monitoring with Insights (workspace, data collection rule, alerts), backup and disaster recovery. |
 | Review and export | All findings grouped by step, and the exports. |
+| As-built compare | Load an as-built snapshot (`as-built-snapshot.v1`, for example made from an Azure Local Ranger manifest) and see what matches, drifts or is missing against the design. See [AS-BUILT.md](AS-BUILT.md). |
 
 ## Reading findings
 
@@ -57,7 +58,9 @@ Each export has its own button on the Review step.
 | Export | Use |
 |---|---|
 | Design handoff (Markdown, PDF) | Every answer and the deployment commands, for the people who build the cluster. |
-| infrastructure.yml | The Azure Local Toolkit registry shape, including the ARM parameters. |
+| infrastructure.yml | The Azure Local Toolkit registry shape, including the ARM parameters. Described by a published schema; see [INFRASTRUCTURE-YML.md](INFRASTRUCTURE-YML.md). |
+| Environment file (deploy automation) | The cluster facts of the deploy automation's `environment.yml`. What a design cannot know is `CHANGE-ME` with a TODO comment. See [ENVIRONMENT-FILE.md](ENVIRONMENT-FILE.md). |
+| Terraform variables | `terraform.tfvars.json` for the deploy automation's cluster-deploy Terraform root (local identity with a cloud witness). |
 | ARM parameters, validate | Parameter file for Microsoft's template with `deploymentMode` set to `Validate`. |
 | ARM parameters, deploy | The same file with `deploymentMode` set to `Deploy`. |
 | Bicep parameters | A `.bicepparam` file; secrets are read from environment variables. |

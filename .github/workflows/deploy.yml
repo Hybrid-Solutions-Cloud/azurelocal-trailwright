@@ -28,6 +28,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run lint
       - run: npm test
       - run: npx playwright install --with-deps chromium
         working-directory: apps/trailwright

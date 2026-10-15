@@ -8,7 +8,6 @@ const CHOOSE = 'https://learn.microsoft.com/windows-server/storage/storage-space
 const PLAN = 'https://learn.microsoft.com/windows-server/storage/storage-spaces/plan-volumes#choosing-the-resiliency-type';
 const RESERVE = 'https://learn.microsoft.com/windows-server/storage/storage-spaces/plan-volumes#reserve-capacity';
 const FAULT = 'https://learn.microsoft.com/windows-server/storage/storage-spaces/fault-tolerance#summary';
-const PORTAL = 'https://learn.microsoft.com/azure/azure-local/deploy/deploy-via-portal?view=azloc-2609#optionally-change-advanced-settings-and-apply-tags';
 
 const f = (id: string, severity: Finding['severity'], field: string, message: string, learnUrl: string): Finding => ({ id, severity, field, message, learnUrl });
 const usesS2d = (arch: string): boolean => arch !== 'san';

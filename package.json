@@ -10,6 +10,8 @@
     "build": "npm run build --workspace apps/trailwright",
     "test": "npm run test --workspace apps/trailwright",
     "test:browser": "npm run test:browser --workspace apps/trailwright",
-    "check": "npm run check --workspace apps/trailwright"
+    "check": "npm run check --workspace apps/trailwright",
+    "lint": "npm run lint --workspace apps/trailwright",
+    "docs:rules": "npm run docs:rules --workspace apps/trailwright"
   }
 }

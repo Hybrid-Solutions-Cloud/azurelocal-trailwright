@@ -19,7 +19,7 @@ export function buildRulesDoc(): string {
     '| Rule | Severity | Applies to | Example message | Learn source |',
     '|---|---|---|---|---|',
   ];
-  const cell = (v: string) => v.replace(/\|/g, '\|').replace(/\n/g, ' ');
+  const cell = (v: string) => v.replace(/\|/g, '\\|').replace(/\n/g, ' ');
   for (const rule of [...rules].sort((a, b) => a.id.localeCompare(b.id))) {
     const found = runRules(project(fires[rule.id] ?? {})).filter((f) => f.id === rule.id);
     const first = found[0];

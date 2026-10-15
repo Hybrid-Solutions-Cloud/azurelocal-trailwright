@@ -1,112 +1,33 @@
-# Azure Local Trailwright: rebuild plan
+# History of the Trailwright rebuild
 
-Drafted by `gpt-6-luna`, reviewed and corrected by the maintainer. Work happens on the `rebuild` branch; `main` keeps deploying the old application until cutover.
-
-## Purpose
-
-Design Azure Local deployments, validate architecture choices, and export reports for automation.
-
-Surveyor answers "does it fit"; Trailwright answers "how is it built". Neither tool deploys anything.
+This file records why Trailwright was rebuilt and how the result differs from the original plan. For what the tool does today, read the [README](../README.md) and the [user guide](USER-GUIDE.md). The earlier plan (`REBUILD.md`) is replaced by this page.
 
 ## Why a rebuild
 
-The owner decision of 6 October 2026 (D-032) is to rebuild, not patch, because:
+The decision of 6 October 2026 was to rebuild rather than patch, because the imported application:
 
-- The imported app was built for a private company catalog, with company-default component gates, a private registry pin and a GitLab-only release process.
-- It has fourteen screens and about 4,300 lines of minified, one-line TypeScript. Its contract, adapter, evidence and qualification layers validate paperwork rather than a design.
-- Its support baseline is frozen at 2604 while the session deploys 2609.
-- Its `xlsx` dependency is a vendor CDN tarball, which breaks `npm ci` where remote tarballs are blocked.
-- Its standalone Pages entry was never verified.
-- Its user guide refers to the private catalog.
+- was built for a private catalog, with company-default component gates and a private registry pin;
+- was about 4,300 lines of minified, one-line TypeScript, and its contract, adapter, evidence and qualification layers validated paperwork rather than a design;
+- had a frozen support baseline and a vendor tarball dependency that broke `npm ci` where remote tarballs are blocked;
+- had a user guide that referred to the private catalog.
 
-## Scope and non-goals
+The rebuild uses the same stack as Surveyor so the tools feel like one family: Vite, React 18, TypeScript, Tailwind, Zustand, Zod, Radix UI, Vitest and Playwright, with readable source and one concern per file. Dependencies come from the npm registry only.
 
-Trailwright is a design-record web tool for Azure Local. It captures a design, validates the choices against the selected release and exports data for handoff and automation.
+## What was built (as of version 1.0.0)
 
-It uses generic defaults and puts no company names in a design. The bundled "IIC" lab is an example project, not a default.
+| Planned | As built |
+|---|---|
+| Nine screens | A guided flow of sixteen steps ending with Review and export (the steps shown depend on earlier answers), plus As-built compare |
+| Rules in `src/rules`, one file per area, with `docs/RULES.md` | Done. `docs/RULES.md` is generated from the registry and a test keeps it current |
+| Exports: handoff, `infrastructure.yml`, ARM, Bicep, schedules, topology, project | Done, plus the switch port plan, the provisioning manifest, the disconnected operations script, an environment file and Terraform variables for the deploy automation |
+| `infrastructure.yml` shape was an open question | A subset of the Toolkit registry shape (schema 4.0.0) with a published JSON Schema and a build-failing contract test |
+| Surveyor import with a conflict preview | Done (project and plan formats), including nested two-way mirror volumes |
+| Browser journeys, a no-secrets test and a no-executable-export test | Done |
+| Spreadsheet export with the `xlsx` package | A small built-in writer, because the package has known vulnerabilities and no fix on npm |
+| Deploy to GitHub Pages from `main` | Done: https://labs.hybridsolutions.cloud/azurelocal-trailwright/ |
 
-It does not deploy anything. Deployment stays outside the tool.
+Open questions from the plan, resolved: the field mapping from Surveyor is in `src/imports/surveyor.ts` (tested); the `infrastructure.yml` shape is in `docs/INFRASTRUCTURE-YML.md`; the PDF is a compact handoff of the schedules and findings.
 
-## Stack and layout
+## Branches
 
-The stack is the same as Surveyor 2.8.0, so the azurelocal.cloud tools feel like one family: Vite, React 18, TypeScript, Tailwind, Zustand, Zod, Radix UI, Vitest and Playwright. Dependencies come from the npm registry only, with no tarball URLs. Source is readable, with one concern per file and no minified code.
-
-```text
-.
-├── apps/
-│   └── trailwright/
-│       ├── src/
-│       │   ├── model/        project schema, defaults, store
-│       │   ├── rules/        release-aware validation rules
-│       │   ├── screens/      the nine screens
-│       │   ├── imports/      Surveyor and project import
-│       │   └── exports/      handoff, infrastructure.yml, parameters, schedules, topology
-│       └── tests/            unit tests and browser journeys
-├── docs/
-└── .github/workflows/
-```
-
-## Data model
-
-A saved project uses schema 1. The top-level sections are `meta`, `release` and `findings`, plus one section per screen: `project`, `hardware`, `identity`, `networking`, `connectivity`, `landingZone`, `storage`, `operations`. Review and export (screen 9) holds no design data of its own.
-
-## Screens
-
-The flow follows the azurelocal.cloud lifecycle.
-
-| # | Screen | What it captures | What it validates |
-|---:|---|---|---|
-| 1 | Project and release | Project details, selected release | The release is supported and its rule set is loaded |
-| 2 | Hardware and topology | Nodes, witness, rack-aware or standard | Node count and witness against the topology and release |
-| 3 | Identity | Active Directory, or Local Identity with Key Vault | Identity mode against release support and the landing-zone Key Vault |
-| 4 | Networking | VLANs, Network ATC intents, switched or switchless storage, IP plan | Intent and storage design against node count; IP plan and VLAN consistency |
-| 5 | Connectivity | Direct, proxy, Arc gateway or private path; endpoint allow-list | The chosen path against the release's endpoint requirements |
-| 6 | Azure landing zone | Subscription, resource group, Key Vault, witness storage, Arc, custom location | Required resources and names are present and consistent |
-| 7 | Storage | Volumes, resiliency | Resiliency against node count |
-| 8 | Operations | Monitoring, update, backup, disaster recovery | Required operations settings for the release |
-| 9 | Review and export | Findings summary, export choices | All findings resolved or accepted before export |
-
-The concrete rules per screen are listed in the code and in `docs/RULES.md` as they land.
-
-## Rules
-
-Rules live in `src/rules/`, one file per area, and are selected by the project's release; 2609 is the baseline. Every finding carries the field it concerns and the Microsoft Learn URL of its source, so a reviewer can check the claim.
-
-## Imports
-
-- Surveyor plan JSON (schema 2.8.0), with a conflict preview before anything is applied.
-- A saved Trailwright project (schema 1).
-
-## Exports
-
-Exports are data only, never executable content. Secrets appear only as references.
-
-| Export | Format | Contents | Secrets |
-|---|---|---|---|
-| Design handoff | Markdown, PDF | The design as a readable report | References only |
-| `infrastructure.yml` | YAML in the Toolkit registry shape | Design data for the Toolkit | References only |
-| ARM parameters | JSON, one file per template (Microsoft AD, Local Identity) | Template parameters | References only |
-| Bicep parameters | `.bicepparam` | The same values for Bicep | References only |
-| Schedules | CSV, XLSX | IP, VLAN and node schedules | References only |
-| Topology | draw.io | The cluster and network diagram | None |
-| Project | JSON (schema 1) | The full project | References only |
-
-## Tests
-
-- Unit tests for the model, the rules and each exporter.
-- Browser journeys for the guided flow and the exports.
-- A no-secrets test: no export contains a secret value.
-- A no-executable-export test: no export contains executable content.
-
-## CI and deployment
-
-GitHub Actions runs type check, unit tests, build and the browser journeys, and deploys the build to GitHub Pages. On the `rebuild` branch the workflow runs but does not deploy.
-
-## Cutover
-
-
-## Open questions
-
-- The field-by-field mapping from Surveyor 2.8.0.
-- The exact Toolkit `infrastructure.yml` shape.
-- The PDF layout.
+The `rebuild` branch was the working branch before cutover. It can be deleted once nothing needs its history.

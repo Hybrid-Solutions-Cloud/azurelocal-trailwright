@@ -1,7 +1,6 @@
 import type { Finding, Rule } from './types';
 import { inRange, maskBits, toNum } from '../network/ip';
 
-const OVERVIEW = 'https://learn.microsoft.com/azure/azure-local/manage/disconnected-operations-overview?view=azloc-2609';
 const DEPLOY = 'https://learn.microsoft.com/azure/azure-local/manage/disconnected-operations-deploy?view=azloc-2609#checklist-for-deploying-disconnected-operations';
 const NETWORK = 'https://learn.microsoft.com/azure/azure-local/manage/disconnected-operations-network?view=azloc-2609#network-checklist';
 const IDENTITY = 'https://learn.microsoft.com/azure/azure-local/manage/disconnected-operations-identity?view=azloc-2609';
