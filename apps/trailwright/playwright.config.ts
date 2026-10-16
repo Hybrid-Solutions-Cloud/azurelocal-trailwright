@@ -2,6 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: 'tests/browser',
+  // On the runner: one retry for timing noise, and GitHub annotations so a failure names its test and step.
+  retries: process.env.CI ? 1 : 0,
+  reporter: process.env.CI ? [['github'], ['list']] : 'list',
   webServer: {
     command: 'npm run build && npm run preview -- --port 4331 --strictPort',
     port: 4331,
