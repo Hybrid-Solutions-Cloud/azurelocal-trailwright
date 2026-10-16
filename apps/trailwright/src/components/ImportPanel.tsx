@@ -16,12 +16,13 @@ export const ImportPanel: FC = () => {
   const [importError, setImportError] = useState<string | null>(null);
 
   const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    event.target.value = '';
+    const input = event.target;
+    const file = input.files?.[0];
     if (!file) return;
     setPending(null);
     setImportError(null);
     try {
+      // Read the file before the input is reset: clearing the value first can leave the File unreadable on some browsers.
       const text = await readFileText(file);
       const asProject = parseProjectFile(text);
       if (asProject.ok) return setPending({ mode: 'project', project: asProject.project });
@@ -30,6 +31,9 @@ export const ImportPanel: FC = () => {
       setImportError(`Not a Trailwright project (${asProject.error}) and not a Surveyor plan (${asSurveyor.error}).`);
     } catch (e) {
       setImportError(e instanceof Error ? e.message : String(e));
+    } finally {
+      // Allow the same file to be chosen again.
+      input.value = '';
     }
   };
 

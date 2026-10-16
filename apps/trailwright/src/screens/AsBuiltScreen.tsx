@@ -19,11 +19,12 @@ export const AsBuiltScreen: FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    event.target.value = '';
+    const input = event.target;
+    const file = input.files?.[0];
     if (!file) return;
     setError(null);
     try {
+      // Read the file before the input is reset (clearing it first can leave the File unreadable on some browsers).
       const parsed = parseSnapshot(await readFileText(file));
       if (parsed.ok) setSnapshot(parsed.snapshot);
       else {
@@ -32,6 +33,8 @@ export const AsBuiltScreen: FC = () => {
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      input.value = '';
     }
   };
 

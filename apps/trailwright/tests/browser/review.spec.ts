@@ -31,18 +31,16 @@ test('review lists findings with Learn sources and exports files', async ({ page
 });
 
 test('a Surveyor plan shows its conflicts and applies on confirmation', async ({ page }) => {
-  const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(String(e)));
-  page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   await page.goto('/');
   await step(page, 'Review and export').click();
+  await expect(page.getByRole('heading', { name: /Review/ }).first()).toBeVisible();
+  await page.waitForLoadState('networkidle');
   await page.getByLabel('Open a Surveyor plan or a Trailwright project (JSON)').setInputFiles({
     name: 'plan.json',
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(manifest)),
   });
-  await expect(page.getByText(/Conflicts|No conflicts/), 'page text: ' + (await page.locator('body').innerText()).slice(0, 700) + ' | browser errors: ' + errors.join(' || ')).toBeVisible();
-  
+  await expect(page.getByText(/Conflicts|No conflicts/)).toBeVisible();
   await page.getByRole('button', { name: 'Apply import' }).click();
 
   await step(page, 'Hardware and topology').click();
@@ -54,6 +52,8 @@ test('a Surveyor plan shows its conflicts and applies on confirmation', async ({
 test('a file that is neither a project nor a plan is refused with a reason', async ({ page }) => {
   await page.goto('/');
   await step(page, 'Review and export').click();
+  await expect(page.getByRole('heading', { name: /Review/ }).first()).toBeVisible();
+  await page.waitForLoadState('networkidle');
   await page.getByLabel('Open a Surveyor plan or a Trailwright project (JSON)').setInputFiles({
     name: 'bad.json',
     mimeType: 'application/json',
