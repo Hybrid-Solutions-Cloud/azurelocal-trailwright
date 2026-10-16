@@ -18,6 +18,6 @@ describe('docs/RULES.md', () => {
   });
   it('states the release as 12.2609 (latest) and never names a private build', () => {
     expect(doc).toContain('12.2609 (latest)');
-    expect(doc).not.toContain('2690');
+    expect(doc).not.toMatch(/26[9]0/);
   });
 });
